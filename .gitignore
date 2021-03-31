@@ -3,10 +3,6 @@
 /public/storage
 /storage/*.key
 /vendor
-/app/Modules/Api
-/database/migrations
-/database/factories
-/resources/view/welcome.blade.php
 .env
 .env.testing
 .env.backup
