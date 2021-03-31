@@ -49,4 +49,9 @@ class User extends Authenticable
     {
         return $this->hasMany(Review::class, 'buyer_id');
     }
+
+    public static function getUserByEmail($email)
+    {
+        return self::where('email_address', $email)->first();
+    }
 }

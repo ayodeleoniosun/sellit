@@ -22,14 +22,13 @@ class CreateUserTable extends Migration
             $table->string('password');
             $table->string('bearer_token');
             $table->dateTime('token_expires_at');
-            $table->string('business')->nullable();
-            $table->string('business_url')->nullable();
-            $table->longText('about')->nullable();
+            $table->string('business_name')->nullable();
+            $table->string('business_slug')->nullable();
+            $table->longText('business_description')->nullable();
             $table->unsignedInteger('state_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedInteger('file_id')->default(1);
-            $table->string('address')->nullable();
-            $table->string('started_at')->nullable();
+            $table->string('business_address')->nullable();
             $table->string('activation_code')->nullable();
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
