@@ -42,7 +42,7 @@ class UserService implements UserRepository
         $user->password = bcrypt($data['password']);
         $user->save();
 
-        // SendUserWelcomeMail::dispatch($user);
+        SendUserWelcomeMail::dispatch($user);
 
         return [
             'user' => $user,
@@ -110,7 +110,7 @@ class UserService implements UserRepository
 
         return [
             'user' => new UserResource($user),
-            'message' => 'Your profile was successfully updated.'
+            'message' => 'Your business profile was successfully updated.'
         ];
     }
 
