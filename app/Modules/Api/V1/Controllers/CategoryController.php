@@ -103,12 +103,12 @@ class CategoryController extends Controller
             [
                 'category_id' => 'required|string',
                 'name' => 'required|string',
-                'sort_option' => 'required|array'
+                'sort_options' => 'required|array'
             ],
             [
                 'category_id.required' => 'Category is required',
                 'name.required' => 'Category name is required',
-                'sort_option.required' => 'The options for sorting ads in this sub category is required'
+                'sort_options.required' => 'The options for sorting ads in this sub category is required'
             ]
         );
 

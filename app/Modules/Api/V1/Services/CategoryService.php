@@ -179,7 +179,7 @@ class CategoryService implements CategoryRepository
         $sub_category->category_id = $data['category_id'];
         $sub_category->save();
 
-        $sort_options = $data['sort_option'];
+        $sort_options = $data['sort_options'];
         
         $added_sort_options = [];
 
@@ -247,7 +247,7 @@ class CategoryService implements CategoryRepository
         $sub_category->save();
 
         $current_sort_options = $sub_category->sortOptions->pluck('sort_option_id')->toArray();
-        $req_sort_options = $data['sort_option'];
+        $req_sort_options = $data['sort_options'];
         
         $sort_options = SortOption::whereIn('name', $req_sort_options)
             ->where('active_status', ActiveStatus::ACTIVE)
