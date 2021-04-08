@@ -21,7 +21,6 @@ class CreateAdsMigration extends Migration
             $table->string('name');
             $table->longText('description');
             $table->string('price');
-            $table->string('metadata');
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 
@@ -30,7 +29,6 @@ class CreateAdsMigration extends Migration
             $table->foreign('seller_id')->references('id')->on('user');
             $table->foreign('active_status')->references('id')->on('active_status');
         });
-
 
         Schema::create('ads_picture', function (Blueprint $table) {
             $table->increments('id');
@@ -42,6 +40,19 @@ class CreateAdsMigration extends Migration
 
             $table->foreign('ads_id')->references('id')->on('ads');
             $table->foreign('file_id')->references('id')->on('file');
+            $table->foreign('active_status')->references('id')->on('active_status');
+        });
+
+        Schema::create('ads_sort_option', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('ads_id');
+            $table->unsignedInteger('sort_option_id');
+            $table->string('value');
+            $table->timestamps();
+            $table->unsignedInteger('active_status')->default(1);
+
+            $table->foreign('ads_id')->references('id')->on('ads');
+            $table->foreign('sort_option_id')->references('id')->on('sort_option');
             $table->foreign('active_status')->references('id')->on('active_status');
         });
     }

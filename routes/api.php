@@ -46,6 +46,17 @@ Route::group(
                     ->name('user.profile-picture.upload');
                 Route::put('/password/change', 'UserController@changePassword')
                     ->name('user.password.change');
+
+                Route::group(
+                    ['prefix' => 'ads'],
+                    function () {
+                        Route::get('/', 'AdsController@index')->name('ads.index');
+                        Route::post('/', 'AdsController@post')->name('ads.post');
+                        Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
+                        Route::get('/{id}', 'AdsController@details')->name('ads.details')->where('id', '[0-9]+');
+                        Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
+                    }
+                );
             }
         );
 
