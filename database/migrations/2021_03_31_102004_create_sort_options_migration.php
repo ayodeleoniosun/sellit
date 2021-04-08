@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMetadataMigration extends Migration
+class CreateSortOptionsMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,36 @@ class CreateMetadataMigration extends Migration
         Schema::create('brand', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('type', ['vehicle', 'phone', 'computer', '']);
+            $table->enum('type', ['vehicle', 'phone', 'computer']);
+            $table->timestamps();
+            $table->unsignedInteger('active_status')->default(1);
+
+            $table->foreign('active_status')->references('id')->on('active_status');
+        });
+
+        Schema::create('condition', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->enum('type', ['vehicle', 'property', 'general', 'electronics'])->default('general');
+            $table->timestamps();
+            $table->unsignedInteger('active_status')->default(1);
+
+            $table->foreign('active_status')->references('id')->on('active_status');
+        });
+
+        Schema::create('furnishing', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+            $table->unsignedInteger('active_status')->default(1);
+
+            $table->foreign('active_status')->references('id')->on('active_status');
+        });
+
+        Schema::create('price', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->enum('type', ['general', 'vehicle', 'property'])->default('general');
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 
@@ -77,7 +106,17 @@ class CreateMetadataMigration extends Migration
             $table->foreign('active_status')->references('id')->on('active_status');
         });
 
-        Schema::create('property_type', function (Blueprint $table) {
+        Schema::create('type', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->enum('type', ['property', 'computer', 'equipment', 'furniture', 'body', 'hair'])->default('property');
+            $table->timestamps();
+            $table->unsignedInteger('active_status')->default(1);
+
+            $table->foreign('active_status')->references('id')->on('active_status');
+        });
+
+        Schema::create('gender', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -202,14 +241,16 @@ class CreateMetadataMigration extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('gender');
         Schema::dropIfExists('brand');
+        Schema::dropIfExists('condition');
         Schema::dropIfExists('second_condition');
         Schema::dropIfExists('body');
         Schema::dropIfExists('fuel');
         Schema::dropIfExists('transmission');
         Schema::dropIfExists('color');
         Schema::dropIfExists('ram');
-        Schema::dropIfExists('property_type');
+        Schema::dropIfExists('type');
         Schema::dropIfExists('facility');
         Schema::dropIfExists('storage_capacity');
         Schema::dropIfExists('storage_type');

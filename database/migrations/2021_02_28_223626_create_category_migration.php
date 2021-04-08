@@ -18,10 +18,11 @@ class CreateCategoryMigration extends Migration
         Schema::create('category', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('icon')->nullable()->default('default.jpg');
+            $table->unsignedInteger('file_id')->default(1);
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 
+            $table->foreign('file_id')->references('id')->on('file');
             $table->foreign('active_status')->references('id')->on('active_status');
         });
 
@@ -29,7 +30,6 @@ class CreateCategoryMigration extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->string('metadata')->nullable();
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 

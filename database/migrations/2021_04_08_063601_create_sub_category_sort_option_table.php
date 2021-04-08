@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Modules\Api\V1\Models\File;
 
-class CreateFileTable extends Migration
+class CreateSubCategorySortOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +13,17 @@ class CreateFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('file', function (Blueprint $table) {
+        Schema::create('sub_category_sort_option', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filename');
-            $table->enum('type', ['general', 'user', 'ads', 'category'])->default('general');
+            $table->unsignedBigInteger('sub_category_id');
+            $table->unsignedInteger('sort_option_id');
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 
+            $table->foreign('sub_category_id')->references('id')->on('sub_category');
+            $table->foreign('sort_option_id')->references('id')->on('sort_option');
             $table->foreign('active_status')->references('id')->on('active_status');
         });
-
-        File::create(['filename' => 'default.jpg']);
     }
 
     /**
@@ -34,6 +33,6 @@ class CreateFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file');
+        Schema::dropIfExists('sub_category_sort_option');
     }
 }
