@@ -11,7 +11,7 @@ use App\Modules\Api\V1\Repositories\AdsRepository;
 use App\Modules\Api\V1\Models\File;
 use App\Modules\Api\V1\Models\SortOption;
 use App\Modules\Api\V1\Models\SubCategorySortOption;
-use App\Modules\Api\V1\Resources\CategoryResource;
+use App\Modules\Api\V1\Resources\AdsResource;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,21 @@ class AdsService implements AdsRepository
 {
     public function index()
     {
-        return Ads::where('active_status', ActiveStatus::ACTIVE)->get();
+        return AdsResource::collection(Ads::where('active_status', ActiveStatus::ACTIVE)->get());
+    }
+
+    public function myAds(array $data)
+    {
+        $user_id = $data['auth_user']->id;
+
+        return AdsResource::collection(
+            Ads::where(
+                [
+                    'seller_id' => $user_id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ]
+            )->get()
+        );
     }
 
     public function post(array $data)
