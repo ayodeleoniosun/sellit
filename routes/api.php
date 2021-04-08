@@ -20,8 +20,7 @@ Route::group(
         'namespace' => 'App\Modules\Api\V1\Controllers'
     ],
     function () {
-        //user routes
-
+        //account routes
         Route::group(
             ['prefix' => 'account'],
             function () {
@@ -30,6 +29,15 @@ Route::group(
             }
         );
 
+        //ads routes
+        Route::group(
+            ['prefix' => 'ads'],
+            function () {
+                Route::get('/', 'AdsController@index')->name('ads.index');
+            }
+        );
+
+        //user routes
         Route::group(
             [
                 'prefix' => 'user',
@@ -50,7 +58,7 @@ Route::group(
                 Route::group(
                     ['prefix' => 'ads'],
                     function () {
-                        Route::get('/', 'AdsController@index')->name('ads.index');
+                        Route::get('/', 'AdsController@myAds')->name('ads.mine');
                         Route::post('/', 'AdsController@post')->name('ads.post');
                         Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
                         Route::get('/{id}', 'AdsController@details')->name('ads.details')->where('id', '[0-9]+');
@@ -60,6 +68,7 @@ Route::group(
             }
         );
 
+        //categories routes
         Route::group(
             ['prefix' => 'category'],
             function () {
@@ -74,7 +83,6 @@ Route::group(
         );
 
         //admin routes
-
         Route::group(
             ['prefix' => 'admin'],
             function () {

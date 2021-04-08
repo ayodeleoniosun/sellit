@@ -6,6 +6,8 @@ interface AdsRepository
 {
     public function index();
 
+    public function myAds(array $data);
+
     public function post(array $data);
 
     public function addSortOptions(int $id, array $data);

@@ -32,6 +32,22 @@ class AdsController extends Controller
         );
     }
 
+    public function myAds()
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        
+        $response = $this->adsRepository->myAds($body);
+    
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $response
+            ],
+            200
+        );
+    }
+
     public function post()
     {
         ApiUtility::auth_user($this->request);

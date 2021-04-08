@@ -10,4 +10,9 @@ class Ads extends Model
     use HasFactory;
 
     protected $table = 'ads';
+
+    public function sortOptions()
+    {
+        return $this->hasMany(AdsSortOption::class);
+    }
 }

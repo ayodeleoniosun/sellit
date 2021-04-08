@@ -20,6 +20,11 @@ class User extends Authenticable
         'token_expires_at'
     ];
 
+    public function fullname()
+    {
+        return ucwords(sprintf("%s %s", $this->first_name, $this->last_name));
+    }
+
     public function state()
     {
         return $this->belongsTo(State::class);
