@@ -20,6 +20,8 @@ Route::group(
         'namespace' => 'App\Modules\Api\V1\Controllers'
     ],
     function () {
+        //user routes
+
         Route::group(
             ['prefix' => 'account'],
             function () {
@@ -53,10 +55,30 @@ Route::group(
                 Route::get('/', 'CategoryController@index')->name('category.index');
                 Route::get('/{id}', 'CategoryController@categoryDetails')->name('category.details')->where('id', '[0-9]+');
                 Route::get('/{id}/sub-categories', 'CategoryController@subCategories')
-                    ->name('category.sub-categories')->where('id', '[0-9]+');
+                    ->name('sub-categories.index')->where('id', '[0-9]+');
                 Route::get('/{id}/sub-category/{subId}', 'CategoryController@subCategoryDetails')
-                    ->name('category.sub-category.details')->where('id', '[0-9]+')
+                    ->name('sub-category.details')->where('id', '[0-9]+')
                     ->where('subId', '[0-9]+');
+            }
+        );
+
+        //admin routes
+
+        Route::group(
+            ['prefix' => 'admin'],
+            function () {
+                Route::group(
+                    ['prefix' => 'category'],
+                    function () {
+                        Route::post('/', 'CategoryController@addCategory')->name('category.add');
+                        Route::post('/{id}', 'CategoryController@updateCategory')->name('category.update')->where('id', '[0-9]+');
+                        Route::post('/sub-category', 'CategoryController@addSubCategory')
+                            ->name('sub-category.add')->where('id', '[0-9]+');
+                        Route::put('/sub-category/{subId}', 'CategoryController@updateSubCategory')
+                            ->name('sub-category.update')->where('id', '[0-9]+')
+                            ->where('subId', '[0-9]+');
+                    }
+                );
             }
         );
     }

@@ -10,4 +10,6 @@ class AgeLevel extends Model
     use HasFactory;
 
     protected $table = 'age_level';
+
+    protected $fillable = ['name'];
 }

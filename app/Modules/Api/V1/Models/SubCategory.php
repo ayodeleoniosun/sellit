@@ -10,5 +10,11 @@ class SubCategory extends Model
     use HasFactory;
 
     protected $table = 'sub_category';
+
     protected $fillable = ['category_id', 'name'];
+
+    public function sortOptions()
+    {
+        return $this->hasMany(SubCategorySortOption::class);
+    }
 }

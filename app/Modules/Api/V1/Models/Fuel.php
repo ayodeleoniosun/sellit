@@ -10,4 +10,6 @@ class Fuel extends Model
     use HasFactory;
 
     protected $table = 'fuel';
+
+    protected $fillable = ['name'];
 }

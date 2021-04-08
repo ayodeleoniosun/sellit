@@ -5,11 +5,11 @@ namespace App\Modules\Api\V1\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StorageCapacity extends Model
+class SubCategorySortOption extends Model
 {
     use HasFactory;
 
-    protected $table = 'storage_capacity';
-
-    protected $fillable = ['name'];
+    protected $table = 'sub_category_sort_option';
+    
+    protected $fillable = ['sub_category_id', 'sort_option_id'];
 }

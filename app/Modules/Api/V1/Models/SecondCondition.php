@@ -10,4 +10,6 @@ class SecondCondition extends Model
     use HasFactory;
 
     protected $table = 'second_condition';
+
+    protected $fillable = ['name'];
 }

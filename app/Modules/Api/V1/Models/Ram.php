@@ -5,9 +5,11 @@ namespace App\Modules\Api\V1\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PropertyType extends Model
+class Ram extends Model
 {
     use HasFactory;
 
-    protected $table = 'property_type';
+    protected $table = 'ram';
+
+    protected $fillable = ['name'];
 }

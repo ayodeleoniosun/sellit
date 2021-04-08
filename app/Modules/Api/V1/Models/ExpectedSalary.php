@@ -10,4 +10,6 @@ class ExpectedSalary extends Model
     use HasFactory;
 
     protected $table = 'expected_salary';
+
+    protected $fillable = ['name'];
 }

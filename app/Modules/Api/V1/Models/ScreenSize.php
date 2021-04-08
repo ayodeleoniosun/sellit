@@ -10,4 +10,6 @@ class ScreenSize extends Model
     use HasFactory;
 
     protected $table = 'screen_size';
+
+    protected $fillable = ['name'];
 }

@@ -10,4 +10,6 @@ class Transmission extends Model
     use HasFactory;
 
     protected $table = 'transmission';
+
+    protected $fillable = ['name'];
 }

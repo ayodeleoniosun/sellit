@@ -10,4 +10,6 @@ class OperatingSystem extends Model
     use HasFactory;
 
     protected $table = 'operating_system';
+
+    protected $fillable = ['name'];
 }

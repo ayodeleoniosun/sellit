@@ -10,4 +10,6 @@ class Body extends Model
     use HasFactory;
 
     protected $table = 'body';
+
+    protected $fillable = ['name'];
 }

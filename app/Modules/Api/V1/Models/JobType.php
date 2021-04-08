@@ -10,4 +10,6 @@ class JobType extends Model
     use HasFactory;
 
     protected $table = 'job_type';
+
+    protected $fillable = ['name'];
 }
