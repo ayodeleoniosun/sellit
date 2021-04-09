@@ -61,6 +61,7 @@ Route::group(
                     function () {
                         Route::get('/', 'AdsController@myAds')->name('ads.mine');
                         Route::post('/', 'AdsController@post')->name('ads.post');
+                        Route::post('/{id}/reviews', 'AdsController@postReviews')->name('ads.post-reviews');
                         Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
                         Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
                         Route::post('/{id}/upload-pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
@@ -105,10 +106,3 @@ Route::group(
         );
     }
 );
-
-
-//TODO
-
-/*
-    Reviews
-*/

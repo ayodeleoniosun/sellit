@@ -64,6 +64,38 @@ class AdsController extends Controller
         ], 200);
     }
 
+    public function postReviews(int $id)
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        
+        $validator = Validator::make(
+            $body,
+            [
+                'rating' => 'required|numeric|min:1|max:5',
+                'comment' => 'required|string'
+            ],
+            [
+                'rating.required' => 'The rating field is required',
+                'rating.min' => 'Rating cannot be less than 1',
+                'rating.max' => 'Rating cannot be greater than 5',
+                'comment.required' => 'The comment field is required'
+            ]
+        );
+
+        if ($validator->fails()) {
+            throw new CustomApiErrorResponseHandler($validator->errors()->first());
+        }
+
+        $response = $this->adsRepository->postReviews($id, $body);
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['reviews'],
+            'message' => $response['message']
+        ], 200);
+    }
+
     public function addSortOptions(int $id)
     {
         ApiUtility::auth_user($this->request);
@@ -83,6 +115,7 @@ class AdsController extends Controller
         if ($validator->fails()) {
             throw new CustomApiErrorResponseHandler($validator->errors()->first());
         }
+
         $response = $this->adsRepository->addSortOptions($id, $body);
     
         return response()->json([

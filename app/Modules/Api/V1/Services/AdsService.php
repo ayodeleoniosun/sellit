@@ -10,6 +10,7 @@ use App\Modules\Api\V1\Models\AdsPicture;
 use App\Modules\Api\V1\Models\AdsSortOption;
 use App\Modules\Api\V1\Repositories\AdsRepository;
 use App\Modules\Api\V1\Models\File;
+use App\Modules\Api\V1\Models\Review;
 use App\Modules\Api\V1\Models\SortOption;
 use App\Modules\Api\V1\Models\SubCategorySortOption;
 use App\Modules\Api\V1\Resources\AdsResource;
@@ -65,6 +66,41 @@ class AdsService implements AdsRepository
         return [
             'ads' => $ads,
             'message' => 'Ads successfully added.'
+        ];
+    }
+
+    public function postReviews(int $id, array $data)
+    {
+        $ads = Ads::where(['id' => $id, 'active_status' => ActiveStatus::ACTIVE])->first();
+        
+        if (!$ads) {
+            throw new CustomApiErrorResponseHandler("Ads does not exist.");
+        }
+
+        if ($ads->seller_id == $data['auth_user']->id) {
+            throw new CustomApiErrorResponseHandler("Sorry, you are not allowed to review your ads.");
+        }
+
+        $review = Review::where([
+            'ads_id' => $id,
+            'buyer_id' => $data['auth_user']->id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->first();
+        
+        if ($review) {
+            throw new CustomApiErrorResponseHandler("Sorry, you cannot review this ads again.");
+        }
+
+        $reviews = new Review();
+        $reviews->buyer_id = $data['auth_user']->id;
+        $reviews->ads_id = $id;
+        $reviews->rating = $data['rating'];
+        $reviews->comment = $data['comment'];
+        $reviews->save();
+
+        return [
+            'reviews' => $reviews,
+            'message' => 'Reviews successfully posted.'
         ];
     }
 
@@ -158,20 +194,6 @@ class AdsService implements AdsRepository
         throw new CustomApiErrorResponseHandler("No sort option added to ads: ".$ads->name);
     }
     
-    public function updateAds(int $id, array $data)
-    {
-        $ads = Ads::where([
-            'id' => $id,
-            'active_status' => ActiveStatus::ACTIVE
-        ])->first();
-        
-        if (!$ads) {
-            throw new CustomApiErrorResponseHandler("Ads not found.");
-        }
-
-        return $ads;
-    }
-
     public function details(int $id)
     {
         $ads = Ads::where([
