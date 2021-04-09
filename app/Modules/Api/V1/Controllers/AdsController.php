@@ -152,9 +152,41 @@ class AdsController extends Controller
         );
     }
 
+    public function uploadPictures(int $id)
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        
+        $validator = Validator::make(
+            $body,
+            [
+                'pictures' => 'required|array'
+            ],
+            [
+                'pictures.required' => 'Select at least one picture',
+                'pictures.array' => 'Selected pictures must be an array'
+            ]
+        );
+
+        if ($validator->fails()) {
+            throw new CustomApiErrorResponseHandler($validator->errors()->first());
+        }
+        
+        $response = $this->adsRepository->uploadPictures($id, $body);
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $response
+            ],
+            200
+        );
+    }
+
     public function deleteSortOption(int $ads_id, int $sort_option_id)
     {
-        $response = $this->adsRepository->deleteSortOption($ads_id, $sort_option_id);
+        ApiUtility::auth_user($this->request);
+        $response = $this->adsRepository->deleteSortOption($ads_id, $sort_option_id, $this->request->all());
         
         return response()->json(
             [

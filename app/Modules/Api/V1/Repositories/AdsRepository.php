@@ -16,5 +16,7 @@ interface AdsRepository
 
     public function details(int $id);
 
-    public function deleteSortOption(int $ads_id, int $sort_option_id);
+    public function uploadPictures(int $id, array $data);
+
+    public function deleteSortOption(int $ads_id, int $sort_option_id, array $data);
 }

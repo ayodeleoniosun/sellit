@@ -12,7 +12,7 @@ class File extends Model
     protected $table = 'file';
     protected $fillable = ['filename'];
 
-    const USER_MAX_FILESIZE = 5000;
+    const MAX_FILESIZE = 5000;
     const USER_FILE_TYPE = 'user';
     const CATEGORY_FILE_TYPE = 'category';
     const ADS_FILE_TYPE = 'ads';

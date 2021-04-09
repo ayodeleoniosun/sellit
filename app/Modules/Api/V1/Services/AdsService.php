@@ -6,6 +6,7 @@ use App\Exceptions\CustomApiErrorResponseHandler;
 use App\Modules\Api\ApiUtility;
 use App\Modules\Api\V1\Models\ActiveStatus;
 use App\Modules\Api\V1\Models\Ads;
+use App\Modules\Api\V1\Models\AdsPicture;
 use App\Modules\Api\V1\Models\AdsSortOption;
 use App\Modules\Api\V1\Repositories\AdsRepository;
 use App\Modules\Api\V1\Models\File;
@@ -177,8 +178,65 @@ class AdsService implements AdsRepository
         return new AdsResource($ads);
     }
 
-    public function deleteSortOption(int $ads_id, int $sort_option_id)
+    public function uploadPictures(int $id, array $data)
     {
+        $user_id = $data['auth_user']->id;
+
+        $ads = Ads::where(
+            [
+                'id' => $id,
+                'active_status' => ActiveStatus::ACTIVE
+            ]
+        )->first();
+        
+        if (!$ads) {
+            throw new CustomApiErrorResponseHandler("Ads not found.");
+        }
+
+        if ($ads->seller_id != $user_id) {
+            throw new CustomApiErrorResponseHandler("You are not authorized to upload pictures to this ads.", 401);
+        }
+
+        $pictures = $data['pictures'];
+        $uploaded = 0;
+
+        foreach ($pictures as $picture) {
+            $size = ceil($picture->getSize()/1024);
+            
+            if ($size <= File::MAX_FILESIZE) {
+                $timestamp = ApiUtility::generateTimeStamp();
+                $filename = "{$timestamp}_{$ads->name}";
+                $filename = Str::slug($filename, "_");
+                $uploaded_picture = "{$filename}.{$picture->clientExtension()}";
+
+                Storage::disk('ads')->put($uploaded_picture, file_get_contents($picture->getRealPath()));
+
+                DB::beginTransaction();
+                $file = new File();
+                $file->filename = $uploaded_picture;
+                $file->type = File::ADS_FILE_TYPE;
+                $file->save();
+
+                $ads_picture = new AdsPicture();
+                $ads_picture->ads_id = $ads->id;
+                $ads_picture->file_id = $file->id;
+                $ads_picture->save();
+
+                DB::commit();
+                
+                $uploaded++;
+            }
+        }
+        
+        return [
+            'message' => $uploaded.' ads picture(s) successfully uploaded'
+        ];
+    }
+
+    public function deleteSortOption(int $ads_id, int $sort_option_id, array $data)
+    {
+        $user_id = $data['auth_user']->id;
+
         $ads = Ads::where(
             [
                 'id' => $ads_id,
@@ -188,6 +246,10 @@ class AdsService implements AdsRepository
         
         if (!$ads) {
             throw new CustomApiErrorResponseHandler("Ads not found.");
+        }
+
+        if ($ads->seller_id != $user_id) {
+            throw new CustomApiErrorResponseHandler("You are not authorized to delete this record.", 401);
         }
 
         $delete_sort_option = AdsSortOption::where(

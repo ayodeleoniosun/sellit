@@ -3,12 +3,14 @@
 namespace App\Modules\Api\V1\Resources;
 
 use App\Modules\Api\V1\Models\ActiveStatus;
+use App\Modules\Api\V1\Models\AdsPicture;
 use App\Modules\Api\V1\Models\Category;
 use App\Modules\Api\V1\Models\SubCategory;
 use App\Modules\Api\V1\Models\User;
 use App\Modules\Api\V1\Models\AdsSortOption;
 use Illuminate\Support\Carbon;
 use App\Modules\Api\V1\Resources\AdsSortOptionResource;
+use App\Modules\Api\V1\Resources\AdsPictureResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdsResource extends JsonResource
@@ -35,7 +37,22 @@ class AdsResource extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),
             'status' => ActiveStatus::find($this->active_status)->name,
-            'sort_options' => AdsSortOptionResource::collection(AdsSortOption::where('ads_id', $this->id)->get())
+            'pictures' => AdsPictureResource::collection(
+                AdsPicture::where(
+                    [
+                        'ads_id' => $this->id,
+                        'active_status' => ActiveStatus::ACTIVE
+                    ]
+                )->get()
+            ),
+            'sort_options' => AdsSortOptionResource::collection(
+                AdsSortOption::where(
+                    [
+                        'ads_id' => $this->id,
+                        'active_status' => ActiveStatus::ACTIVE
+                    ]
+                )->get()
+            )
         ];
     }
 }

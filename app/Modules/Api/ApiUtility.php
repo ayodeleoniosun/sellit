@@ -77,7 +77,7 @@ class ApiUtility
     {
         $currentTime = Carbon::now();
         $date = $currentTime->toArray();
-        $timeStamp = $date['year']."_".$date['month']."_".$date['day']."_".$date['micro'];
+        $timeStamp = $date['year']."_".date("m")."_".date("d")."_".$date['micro'];
         return $timeStamp;
     }
 }

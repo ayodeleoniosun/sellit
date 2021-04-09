@@ -34,7 +34,6 @@ class CreateAdsMigration extends Migration
             $table->increments('id');
             $table->unsignedInteger('ads_id');
             $table->unsignedInteger('file_id');
-            $table->string('random_id');
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 

@@ -46,7 +46,7 @@ class CategoryService implements CategoryRepository
             $icon = $data['icon'];
             $size = ceil($icon->getSize()/1024);
             
-            if ($size > File::USER_MAX_FILESIZE) {
+            if ($size > File::MAX_FILESIZE) {
                 throw new CustomApiErrorResponseHandler("Picture should not be more than 5MB.");
             }
 
@@ -94,7 +94,7 @@ class CategoryService implements CategoryRepository
         $icon = $data['icon'];
         $size = ceil($icon->getSize()/1024);
         
-        if ($size > File::USER_MAX_FILESIZE) {
+        if ($size > File::MAX_FILESIZE) {
             throw new CustomApiErrorResponseHandler("Picture should not be more than 5MB.");
         }
 
