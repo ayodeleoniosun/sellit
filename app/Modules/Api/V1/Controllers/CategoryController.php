@@ -23,13 +23,7 @@ class CategoryController extends Controller
     {
         $response = $this->categoryRepository->index();
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function addCategory()
@@ -39,14 +33,11 @@ class CategoryController extends Controller
         
         $response = $this->categoryRepository->addCategory($body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response['category'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['category'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function validateCategory($body)
@@ -73,27 +64,17 @@ class CategoryController extends Controller
         
         $response = $this->categoryRepository->updateCategory($id, $body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response['category'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['category'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function categoryDetails($id)
     {
         $response = $this->categoryRepository->categoryDetails($id);
-        
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function validateSubCategory($body)
@@ -124,15 +105,12 @@ class CategoryController extends Controller
         
         $response = $this->categoryRepository->addSubCategory($body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'sub_category' => $response['sub_category'],
-                'sort_options' => $response['sort_options'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'sub_category' => $response['sub_category'],
+            'sort_options' => $response['sort_options'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function updateSubCategory($sub_id)
@@ -142,39 +120,22 @@ class CategoryController extends Controller
         
         $response = $this->categoryRepository->updateSubCategory($sub_id, $body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'sub_category' => $response['sub_category'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'sub_category' => $response['sub_category'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function subCategories($id)
     {
         $response = $this->categoryRepository->subCategories($id);
-    
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function subCategoryDetails($id, $sub_id)
     {
         $response = $this->categoryRepository->subCategoryDetails($id, $sub_id);
-    
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 }

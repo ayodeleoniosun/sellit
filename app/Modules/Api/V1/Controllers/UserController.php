@@ -49,14 +49,11 @@ class UserController extends Controller
     
         $response = $this->userRepository->signUp($body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response['user'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['user'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function signIn()

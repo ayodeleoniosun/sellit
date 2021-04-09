@@ -18,13 +18,11 @@ class CreateReviewTable extends Migration
             $table->string('rating', 100);
             $table->longText('comment');
             $table->unsignedInteger('buyer_id');
-            $table->unsignedInteger('seller_id');
             $table->unsignedInteger('ads_id');
             $table->timestamps();
             $table->unsignedInteger('active_status')->default(1);
 
             $table->foreign('buyer_id')->references('id')->on('user');
-            $table->foreign('seller_id')->references('id')->on('user');
             $table->foreign('ads_id')->references('id')->on('ads');
             $table->foreign('active_status')->references('id')->on('active_status');
         });

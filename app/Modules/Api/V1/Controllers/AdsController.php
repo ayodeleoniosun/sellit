@@ -22,30 +22,16 @@ class AdsController extends Controller
     public function index()
     {
         $response = $this->adsRepository->index();
-    
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function myAds()
     {
         ApiUtility::auth_user($this->request);
         $body = $this->request->all();
-        
+                
         $response = $this->adsRepository->myAds($body);
-    
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function post()
@@ -56,14 +42,11 @@ class AdsController extends Controller
         
         $response = $this->adsRepository->post($body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response['ads'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['ads'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function addSortOptions(int $id)
@@ -87,14 +70,11 @@ class AdsController extends Controller
         }
         $response = $this->adsRepository->addSortOptions($id, $body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'added_sort_options' => $response['added_sort_options'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'added_sort_options' => $response['added_sort_options'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function validateAds($body)
@@ -129,27 +109,17 @@ class AdsController extends Controller
         
         $response = $this->adsRepository->updateAds($id, $body);
     
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response['ads'],
-                'message' => $response['message']
-            ],
-            200
-        );
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['ads'],
+            'message' => $response['message']
+        ], 200);
     }
 
     public function details(int $id)
     {
         $response = $this->adsRepository->details($id);
-        
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function uploadPictures(int $id)
@@ -173,14 +143,8 @@ class AdsController extends Controller
         }
         
         $response = $this->adsRepository->uploadPictures($id, $body);
-        
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function deletePicture(int $ads_id, int $picture_id)
@@ -189,13 +153,7 @@ class AdsController extends Controller
         $body = $this->request->all();
         $response = $this->adsRepository->deletePicture($ads_id, $picture_id, $body);
         
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function deleteSortOption(int $ads_id, int $sort_option_id)
@@ -203,12 +161,6 @@ class AdsController extends Controller
         ApiUtility::auth_user($this->request);
         $response = $this->adsRepository->deleteSortOption($ads_id, $sort_option_id, $this->request->all());
         
-        return response()->json(
-            [
-                'status' => 'success',
-                'data' => $response
-            ],
-            200
-        );
+        return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 }

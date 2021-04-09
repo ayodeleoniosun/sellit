@@ -33,7 +33,6 @@ class UserResource extends JsonResource
             'business_slug' => $this->business_slug,
             'business_description' => ucfirst($this->business_description),
             'business_address' => $this->business_address,
-            'profile_picture' => File::find($this->file_id)->filename,
             'status' => ActiveStatus::find($this->active_status)->name,
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),

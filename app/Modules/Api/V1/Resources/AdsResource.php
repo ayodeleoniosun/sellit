@@ -38,20 +38,16 @@ class AdsResource extends JsonResource
             'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),
             'status' => ActiveStatus::find($this->active_status)->name,
             'pictures' => AdsPictureResource::collection(
-                AdsPicture::where(
-                    [
-                        'ads_id' => $this->id,
-                        'active_status' => ActiveStatus::ACTIVE
-                    ]
-                )->get()
+                AdsPicture::where([
+                    'ads_id' => $this->id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->get()
             ),
             'sort_options' => AdsSortOptionResource::collection(
-                AdsSortOption::where(
-                    [
-                        'ads_id' => $this->id,
-                        'active_status' => ActiveStatus::ACTIVE
-                    ]
-                )->get()
+                AdsSortOption::where([
+                    'ads_id' => $this->id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->get()
             )
         ];
     }

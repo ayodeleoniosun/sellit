@@ -69,12 +69,10 @@ class UserService implements UserRepository
 
     public function profile(int $id)
     {
-        $user = User::where(
-            [
-                'id' => $id,
-                'active_status' => ActiveStatus::ACTIVE
-            ]
-        )->first();
+        $user = User::where([
+            'id' => $id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->first();
 
         if (!$user) {
             throw new CustomApiErrorResponseHandler("User does not exist.");
@@ -131,7 +129,7 @@ class UserService implements UserRepository
         $user->password = bcrypt($new_password);
         $user->save();
 
-        return ['message' => 'Your password was successfully updated.'];
+        return 'Your password was successfully updated.';
     }
 
     public function updateProfilePicture(array $data)
@@ -140,7 +138,7 @@ class UserService implements UserRepository
         $picture = $data['picture'];
         $size = ceil($picture->getSize()/1024);
         
-        if ($size > File::USER_MAX_FILESIZE) {
+        if ($size > File::MAX_FILESIZE) {
             throw new CustomApiErrorResponseHandler("Picture should not be more than 5MB.");
         }
 
@@ -163,6 +161,6 @@ class UserService implements UserRepository
         
         DB::commit();
 
-        return ['message' => 'Your profile picture was successfully updated.'];
+        return 'Your profile picture was successfully updated.';
     }
 }
