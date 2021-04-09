@@ -15,4 +15,9 @@ class Ads extends Model
     {
         return $this->hasMany(AdsSortOption::class);
     }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

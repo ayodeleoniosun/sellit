@@ -17,4 +17,9 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class);
     }
+
+    public function ads()
+    {
+        return $this->hasMany(Ads::class);
+    }
 }
