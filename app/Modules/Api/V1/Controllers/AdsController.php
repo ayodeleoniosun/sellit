@@ -183,6 +183,21 @@ class AdsController extends Controller
         );
     }
 
+    public function deletePicture(int $ads_id, int $picture_id)
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        $response = $this->adsRepository->deletePicture($ads_id, $picture_id, $body);
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $response
+            ],
+            200
+        );
+    }
+
     public function deleteSortOption(int $ads_id, int $sort_option_id)
     {
         ApiUtility::auth_user($this->request);

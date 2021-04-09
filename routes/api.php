@@ -63,6 +63,7 @@ Route::group(
                         Route::post('/', 'AdsController@post')->name('ads.post');
                         Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
                         Route::post('/{id}/upload-pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
+                        Route::delete('/{id}/picture/{pictureId}', 'AdsController@deletePicture')->name('ads.delete.picture');
                         Route::delete('/{id}/sort-option/{sortOptionId}', 'AdsController@deleteSortOption')->name('ads.delete.sort-options');
                         Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
                     }
@@ -109,6 +110,5 @@ Route::group(
 //TODO
 
 /*
-    Upload ads picture
     Reviews
 */
