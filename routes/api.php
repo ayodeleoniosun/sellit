@@ -34,6 +34,7 @@ Route::group(
             ['prefix' => 'ads'],
             function () {
                 Route::get('/', 'AdsController@index')->name('ads.index');
+                Route::get('/{id}', 'AdsController@details')->name('ads.details')->where('id', '[0-9]+');
             }
         );
 
@@ -61,7 +62,8 @@ Route::group(
                         Route::get('/', 'AdsController@myAds')->name('ads.mine');
                         Route::post('/', 'AdsController@post')->name('ads.post');
                         Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
-                        Route::get('/{id}', 'AdsController@details')->name('ads.details')->where('id', '[0-9]+');
+                        Route::post('/{id}/upload-pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
+                        Route::delete('/{id}/sort-option/{sortOptionId}', 'AdsController@deleteSortOption')->name('ads.delete.sort-options');
                         Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
                     }
                 );
@@ -102,3 +104,11 @@ Route::group(
         );
     }
 );
+
+
+//TODO
+
+/*
+    Upload ads picture
+    Reviews
+*/

@@ -161,7 +161,7 @@ class AdsService implements AdsRepository
         return $ads;
     }
 
-    public function adsDetails(int $id)
+    public function details(int $id)
     {
         $ads = Ads::where(
             [
@@ -174,6 +174,36 @@ class AdsService implements AdsRepository
             throw new CustomApiErrorResponseHandler("Ads not found.");
         }
 
-        return $ads;
+        return new AdsResource($ads);
+    }
+
+    public function deleteSortOption(int $ads_id, int $sort_option_id)
+    {
+        $ads = Ads::where(
+            [
+                'id' => $ads_id,
+                'active_status' => ActiveStatus::ACTIVE
+            ]
+        )->first();
+        
+        if (!$ads) {
+            throw new CustomApiErrorResponseHandler("Ads not found.");
+        }
+
+        $delete_sort_option = AdsSortOption::where(
+            [
+                'id' => $sort_option_id,
+                'ads_id' => $ads_id,
+                'active_status' => ActiveStatus::ACTIVE
+            ]
+        )->update(['active_status' => ActiveStatus::DELETED]);
+
+        if (!$delete_sort_option) {
+            throw new CustomApiErrorResponseHandler("Ads sort option not deleted. Try again later.");
+        }
+
+        return [
+            'message' => 'Ads sort option successfully deleted'
+        ];
     }
 }

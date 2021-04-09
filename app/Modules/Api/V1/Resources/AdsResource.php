@@ -8,6 +8,7 @@ use App\Modules\Api\V1\Models\SubCategory;
 use App\Modules\Api\V1\Models\User;
 use App\Modules\Api\V1\Models\AdsSortOption;
 use Illuminate\Support\Carbon;
+use App\Modules\Api\V1\Resources\AdsSortOptionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdsResource extends JsonResource
@@ -34,7 +35,7 @@ class AdsResource extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),
             'status' => ActiveStatus::find($this->active_status)->name,
-            'sort_options' => AdsSortOption::where('ads_id', $this->id)->get()
+            'sort_options' => AdsSortOptionResource::collection(AdsSortOption::where('ads_id', $this->id)->get())
         ];
     }
 }

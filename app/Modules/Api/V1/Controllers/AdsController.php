@@ -122,7 +122,7 @@ class AdsController extends Controller
         }
     }
 
-    public function updateAds($id)
+    public function updateAds(int $id)
     {
         $body = $this->request->all();
         $this->validateAds($body);
@@ -139,9 +139,22 @@ class AdsController extends Controller
         );
     }
 
-    public function adsDetails($id)
+    public function details(int $id)
     {
-        $response = $this->adsRepository->adsDetails($id);
+        $response = $this->adsRepository->details($id);
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $response
+            ],
+            200
+        );
+    }
+
+    public function deleteSortOption(int $ads_id, int $sort_option_id)
+    {
+        $response = $this->adsRepository->deleteSortOption($ads_id, $sort_option_id);
         
         return response()->json(
             [
