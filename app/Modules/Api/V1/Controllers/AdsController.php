@@ -49,6 +49,21 @@ class AdsController extends Controller
         ], 200);
     }
 
+    public function update(int $id)
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        $this->validateAds($body);
+        
+        $response = $this->adsRepository->update($id, $body);
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['ads'],
+            'message' => $response['message']
+        ], 200);
+    }
+
     public function addSortOptions(int $id)
     {
         ApiUtility::auth_user($this->request);

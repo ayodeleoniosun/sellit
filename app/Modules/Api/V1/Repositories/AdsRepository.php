@@ -10,6 +10,8 @@ interface AdsRepository
 
     public function post(array $data);
 
+    public function update(int $id, array $data);
+
     public function addSortOptions(int $id, array $data);
 
     public function updateAds(int $id, array $data);

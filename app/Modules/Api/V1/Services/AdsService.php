@@ -68,6 +68,34 @@ class AdsService implements AdsRepository
         ];
     }
 
+    public function update(int $id, array $data)
+    {
+        $ads = Ads::where(['id' => $id, 'active_status' => ActiveStatus::ACTIVE])->first();
+        
+        if (!$ads) {
+            throw new CustomApiErrorResponseHandler("Ads does not exist.");
+        }
+
+        $seller_id = $data['auth_user']->id;
+        
+        if ($ads->seller_id != $seller_id) {
+            throw new CustomApiErrorResponseHandler("You are not authorized to update this ads.", 401);
+        }
+
+        $ads = Ads::find($id);
+        $ads->category_id = $data['category_id'];
+        $ads->sub_category_id = $data['sub_category_id'];
+        $ads->name = $data['name'];
+        $ads->description = $data['description'];
+        $ads->price = $data['price'];
+        $ads->save();
+
+        return [
+            'ads' => $ads,
+            'message' => 'Ads successfully updated.'
+        ];
+    }
+
     public function addSortOptions(int $id, array $data)
     {
         $ads = Ads::where([
