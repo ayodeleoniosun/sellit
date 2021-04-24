@@ -79,10 +79,10 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => $this->userRepository->signIn($body)], 200);
     }
 
-    public function profile($id)
+    public function profile(string $token)
     {
         ApiUtility::auth_user($this->request);
-        return response()->json(['status' => 'success', 'data' => $this->userRepository->profile($id)], 200);
+        return response()->json(['status' => 'success', 'data' => $this->userRepository->profile($token)], 200);
     }
 
     public function updatePersonalInformation()
@@ -96,8 +96,8 @@ class UserController extends Controller
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
                 'phone_number' => 'required|string|min:10|max:15',
-                'state' => 'required|string',
-                'city' => 'required|string'
+                // 'state' => 'required|string',
+                // 'city' => 'required|string'
             ],
             [
                 'first_name.required' => 'Firstname is required',
@@ -105,8 +105,8 @@ class UserController extends Controller
                 'phone_number.required' => 'Phone number is required',
                 'phone_number.min' => 'Phone number should be a minium of 10 characters',
                 'phone_number.max' => 'phone number should be a maximum of 15 characters',
-                'state.required' => 'State is required',
-                'city.required' => 'City is required',
+                // 'state.required' => 'State is required',
+                // 'city.required' => 'City is required',
             ]
         );
 
@@ -160,7 +160,7 @@ class UserController extends Controller
             [
                 'current_password.required' => 'Current password is required',
                 'new_password.required' => 'New password is required',
-                'new_password_confirmation.required' => 'Retype the new password',
+                'new_password_confirmation.required' => 'New password does not match with confirmation password',
                 'new_password.min' => 'New password should be a minimum of 6 characters',
                 'phone_number.same' => 'New password must be the same with new password confirmation',
             ]

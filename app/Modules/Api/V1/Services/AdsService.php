@@ -23,7 +23,7 @@ class AdsService implements AdsRepository
 {
     public function index()
     {
-        return AdsResource::collection(Ads::where('active_status', ActiveStatus::ACTIVE)->get());
+        return AdsResource::collection(Ads::where('active_status', ActiveStatus::ACTIVE)->orderBy('id', 'DESC')->get());
     }
 
     public function myAds(array $data)
@@ -34,7 +34,7 @@ class AdsService implements AdsRepository
             Ads::where([
                 'seller_id' => $user_id,
                 'active_status' => ActiveStatus::ACTIVE
-            ])->get()
+            ])->orderBy('id', 'DESC')->get()
         );
     }
 

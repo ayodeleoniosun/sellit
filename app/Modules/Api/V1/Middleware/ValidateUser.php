@@ -22,7 +22,7 @@ class ValidateUser
     public function handle(Request $request, Closure $next)
     {
         $token = ApiUtility::decode_bearer_token($request);
-            
+        
         if ($token) {
             $now = Carbon::now()->toDateTimeString();
             $user = User::where(
@@ -35,7 +35,7 @@ class ValidateUser
             if (!$user) {
                 return $this->unAuthorizedReponse();
             }
-            
+
             $request->merge(['auth_user' => $user]);
         } else {
             return $this->unAuthorizedReponse();
@@ -52,7 +52,7 @@ class ValidateUser
             [
                 'Access-Control-Allow-Origin' => '*',
                 'Content-type' => 'application/json; charset=utf-8',
-                'X-Powered-By' => 'Larachat'
+                'X-Powered-By' => 'Sellit'
             ]
         );
     }

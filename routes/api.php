@@ -45,17 +45,6 @@ Route::group(
                 'middleware' => ['v1.validate.user']
             ],
             function () {
-                Route::get('/{id}', 'UserController@profile')->name('user.profile')
-                    ->where('id', '[0-9]+');
-                Route::put('/profile/update/personal-information', 'UserController@updatePersonalInformation')
-                    ->name('profile.update.personal-information');
-                Route::put('/profile/update/business-information', 'UserController@updateBusinessInformation')
-                    ->name('profile.update.business-information');
-                Route::post('/picture/upload', 'UserController@updateProfilePicture')
-                    ->name('user.profile-picture.upload');
-                Route::put('/password/change', 'UserController@changePassword')
-                    ->name('user.password.change');
-
                 Route::group(
                     ['prefix' => 'ads'],
                     function () {
@@ -69,6 +58,16 @@ Route::group(
                         Route::delete('/{id}/sort-option/{sortOptionId}', 'AdsController@deleteSortOption')->name('ads.delete.sort-options');
                     }
                 );
+
+                Route::get('/{token}', 'UserController@profile')->name('user.profile');
+                Route::put('/profile/update/personal-information', 'UserController@updatePersonalInformation')
+                    ->name('profile.update.personal-information');
+                Route::put('/profile/update/business-information', 'UserController@updateBusinessInformation')
+                    ->name('profile.update.business-information');
+                Route::post('/picture/upload', 'UserController@updateProfilePicture')
+                    ->name('user.profile-picture.upload');
+                Route::put('/password/change', 'UserController@changePassword')
+                    ->name('user.password.change');
             }
         );
 

@@ -42,11 +42,11 @@ class UserService implements UserRepository
         $user->password = bcrypt($data['password']);
         $user->save();
 
-        SendUserWelcomeMail::dispatch($user);
+        //SendUserWelcomeMail::dispatch($user);
 
         return [
             'user' => $user,
-            'message' => 'Registration successful. Kindly check your mail to activate your account'
+            'message' => 'Registration successful.'
         ];
     }
 
@@ -67,10 +67,10 @@ class UserService implements UserRepository
         ];
     }
 
-    public function profile(int $id)
+    public function profile(string $token)
     {
         $user = User::where([
-            'id' => $id,
+            'bearer_token' => $token,
             'active_status' => ActiveStatus::ACTIVE
         ])->first();
 
@@ -87,8 +87,8 @@ class UserService implements UserRepository
         $user->first_name = $data['first_name'];
         $user->last_name = $data['last_name'];
         $user->phone_number = $data['phone_number'];
-        $user->state_id = $data['state'];
-        $user->city_id = $data['city'];
+        // $user->state_id = $data['state'];
+        // $user->city_id = $data['city'];
         $user->save();
 
         return [
@@ -129,7 +129,10 @@ class UserService implements UserRepository
         $user->password = bcrypt($new_password);
         $user->save();
 
-        return 'Your password was successfully updated.';
+        return [
+            'user' => new UserResource($user),
+            'message' => 'Your password was successfully updated.'
+        ];
     }
 
     public function updateProfilePicture(array $data)
@@ -161,6 +164,9 @@ class UserService implements UserRepository
         
         DB::commit();
 
-        return 'Your profile picture was successfully updated.';
+        return [
+            'user' => new UserResource($user),
+            'message' => 'Your profile picture was successfully updated.'
+        ];
     }
 }

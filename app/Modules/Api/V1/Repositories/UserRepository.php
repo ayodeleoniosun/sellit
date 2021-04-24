@@ -8,7 +8,7 @@ interface UserRepository
 
     public function signIn(array $data);
 
-    public function profile(int $id);
+    public function profile(string $token);
 
     public function updatePersonalInformation(array $data);
 
