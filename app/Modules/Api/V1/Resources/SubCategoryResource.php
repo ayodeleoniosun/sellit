@@ -25,7 +25,7 @@ class SubCategoryResource extends JsonResource
             'id' => $this->id,
             'category_id' => $this->category_id,
             'name' => ucfirst($this->name),
-            'slug' => ucfirst($this->slug),
+            'slug' => $this->slug,
             'category' => Category::find($this->category_id)->name,
             'status' => ActiveStatus::find($this->active_status)->name,
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
