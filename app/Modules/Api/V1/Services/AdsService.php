@@ -8,10 +8,12 @@ use App\Modules\Api\V1\Models\ActiveStatus;
 use App\Modules\Api\V1\Models\Ads;
 use App\Modules\Api\V1\Models\AdsPicture;
 use App\Modules\Api\V1\Models\AdsSortOption;
+use App\Modules\Api\V1\Models\Category;
 use App\Modules\Api\V1\Repositories\AdsRepository;
 use App\Modules\Api\V1\Models\File;
 use App\Modules\Api\V1\Models\Review;
 use App\Modules\Api\V1\Models\SortOption;
+use App\Modules\Api\V1\Models\SubCategory;
 use App\Modules\Api\V1\Models\SubCategorySortOption;
 use App\Modules\Api\V1\Resources\AdsResource;
 use Illuminate\Support\Arr;
@@ -28,10 +30,16 @@ class AdsService implements AdsRepository
 
         if (Arr::exists($request, 'search')) {
             $search = $request['search'];
-            $category_id = $request['category_id'] ?? null;
+            $category = $request['category'] ?? null;
             
-            $ads = $ads->where(function ($query) use ($search, $category_id) {
-                if ($category_id) {
+            
+            $ads = $ads->where(function ($query) use ($search, $category) {
+                if ($category) {
+                    $category_id = Category::where([
+                        'slug' => $category,
+                        'active_status' => ActiveStatus::ACTIVE
+                    ])->value('id');
+
                     $query->where('category_id', $category_id)
                         ->where(function ($sub_query) use ($search) {
                             $sub_query->where('name', 'LIKE', '%' . $search . '%')
@@ -42,6 +50,32 @@ class AdsService implements AdsRepository
                         ->orWhere('description', 'LIKE', '%' . $search . '%');
                 }
             });
+        }
+
+        if (Arr::exists($request, 'filter')) {
+            $filter = $request['filter'];
+            
+            if ($filter === 'category') {
+                $category = $request['category'];
+                $category_id = Category::where([
+                    'slug' => $category,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->value('id');
+
+                $ads = $ads->where(function ($query) use ($category_id) {
+                    $query->where('category_id', $category_id);
+                });
+            } elseif ($filter === 'sub_category') {
+                $sub_category = $request['sub_category'];
+                $sub_category_id = SubCategory::where([
+                    'slug' => $sub_category,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->value('id');
+
+                $ads = $ads->where(function ($query) use ($sub_category_id) {
+                    $query->where('sub_category_id', $sub_category_id);
+                });
+            }
         }
 
         return AdsResource::collection($ads->get());
