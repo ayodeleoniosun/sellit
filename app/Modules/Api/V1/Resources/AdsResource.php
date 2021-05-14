@@ -30,7 +30,7 @@ class AdsResource extends JsonResource
             'seller_id' => $this->seller_id,
             'name' => ucfirst($this->name),
             'category' => ucfirst(Category::find($this->category_id)->name),
-            'sub_category' => ucfirst(SubCategory::find($this->category_id)->name),
+            'sub_category' => ucfirst(SubCategory::find($this->category_id)->name) ?? null,
             'user' => User::find($this->seller_id)->fullname(),
             'phone_number' => User::find($this->seller_id)->phone_number,
             'address' => User::find($this->seller_id)->business_address,
@@ -43,7 +43,7 @@ class AdsResource extends JsonResource
                 AdsPicture::where([
                     'ads_id' => $this->id,
                     'active_status' => ActiveStatus::ACTIVE
-                ])->get()
+                ])->orderBy('id', 'DESC')->get()
             ),
             'sort_options' => AdsSortOptionResource::collection(
                 AdsSortOption::where([

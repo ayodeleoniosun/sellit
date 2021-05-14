@@ -14,6 +14,7 @@ use App\Modules\Api\V1\Models\Review;
 use App\Modules\Api\V1\Models\SortOption;
 use App\Modules\Api\V1\Models\SubCategorySortOption;
 use App\Modules\Api\V1\Resources\AdsResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -21,21 +22,59 @@ use Illuminate\Support\Str;
 
 class AdsService implements AdsRepository
 {
-    public function index()
+    public function index(array $request)
     {
-        return AdsResource::collection(Ads::where('active_status', ActiveStatus::ACTIVE)->orderBy('id', 'DESC')->get());
+        $ads = Ads::where('active_status', ActiveStatus::ACTIVE)->orderBy('id', 'DESC');
+
+        if (Arr::exists($request, 'search')) {
+            $search = $request['search'];
+            $sub_category_id = $request['sub_category_id'];
+            
+            $ads = $ads->where(function ($query) use ($search, $sub_category_id) {
+                if ($sub_category_id) {
+                    $query->where('sub_category_id', $sub_category_id)
+                        ->where(function ($sub_query) use ($search) {
+                            $sub_query->where('name', 'LIKE', '%' . $search . '%')
+                            ->orWhere('description', 'LIKE', '%' . $search . '%');
+                        });
+                } else {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('description', 'LIKE', '%' . $search . '%');
+                }
+            });
+        }
+
+        return AdsResource::collection($ads->get());
     }
 
-    public function myAds(array $data)
+    public function myAds(object $request)
     {
-        $user_id = $data['auth_user']->id;
-
-        return AdsResource::collection(
-            Ads::where([
+        $user_id = $request['auth_user']->id;
+        
+        $ads = Ads::where([
                 'seller_id' => $user_id,
                 'active_status' => ActiveStatus::ACTIVE
-            ])->orderBy('id', 'DESC')->get()
-        );
+            ])->orderBy('id', 'DESC');
+
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $sub_category_id = $request->get('sub_category_id');
+            
+            $ads = $ads->where(function ($query) use ($search, $sub_category_id) {
+                if ($sub_category_id) {
+                    $query->where('sub_category_id', $sub_category_id)
+                        ->where(function ($sub_query) use ($search) {
+                            $sub_query->where('name', 'LIKE', '%' . $search . '%')
+                            ->orWhere('description', 'LIKE', '%' . $search . '%');
+                        });
+                } else {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('description', 'LIKE', '%' . $search . '%');
+                }
+            });
+        }
+
+        return AdsResource::collection($ads->get());
     }
 
     public function post(array $data)
@@ -208,12 +247,12 @@ class AdsService implements AdsRepository
         return new AdsResource($ads);
     }
 
-    public function uploadPictures(int $id, array $data)
+    public function uploadPictures(array $data)
     {
         $user_id = $data['auth_user']->id;
 
         $ads = Ads::where([
-            'id' => $id,
+            'id' => $data['ads_id'],
             'active_status' => ActiveStatus::ACTIVE
         ])->first();
         
@@ -259,6 +298,51 @@ class AdsService implements AdsRepository
         return $uploaded.' ads picture(s) successfully uploaded';
     }
 
+    public function delete(int $ads_id, array $data)
+    {
+        $user_id = $data['auth_user']->id;
+
+        $ads = Ads::where([
+            'id' => $ads_id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->first();
+        
+        if (!$ads) {
+            throw new CustomApiErrorResponseHandler("Ads not found.");
+        }
+
+        if ($ads->seller_id != $user_id) {
+            throw new CustomApiErrorResponseHandler("You are not authorized to delete picture from this ads.", 401);
+        }
+
+        $ads_picture = AdsPicture::where([
+            'ads_id' => $ads_id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->get();
+
+        DB::beginTransaction();
+        
+        if ($ads_picture->count() > 0) {
+            foreach ($ads_picture as $picture) {
+                File::where([
+                    'id' => $picture->file_id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->update(['active_status' => ActiveStatus::DELETED]);
+            }
+        }
+
+        AdsPicture::query()
+        ->where(['ads_id' => $ads_id, 'active_status' => ActiveStatus::ACTIVE])
+        ->update(['active_status' => ActiveStatus::DELETED]);
+
+        $ads->active_status = ActiveStatus::DELETED;
+        $ads->save();
+
+        DB::commit();
+
+        return 'Ads successfully deleted';
+    }
+
     public function deletePicture(int $ads_id, int $picture_id, array $data)
     {
         $user_id = $data['auth_user']->id;
@@ -282,26 +366,26 @@ class AdsService implements AdsRepository
             'active_status' => ActiveStatus::ACTIVE
         ])->first();
 
-        if ($ads_picture) {
-            DB::beginTransaction();
-            
-            File::where([
-                'id' => $ads_picture->file_id,
-                'active_status' => ActiveStatus::ACTIVE
-            ])->update(['active_status' => ActiveStatus::DELETED]);
-
-            AdsPicture::where([
-                'id' => $picture_id,
-                'ads_id' => $ads_id,
-                'active_status' => ActiveStatus::ACTIVE
-            ])->update(['active_status' => ActiveStatus::DELETED]);
-
-            DB::commit();
-
-            return 'Ads picture successfully deleted';
+        if (!$ads_picture) {
+            throw new CustomApiErrorResponseHandler("Ads picture does not exist");
         }
 
-        throw new CustomApiErrorResponseHandler("Ads picture does not exist");
+        DB::beginTransaction();
+        
+        File::where([
+            'id' => $ads_picture->file_id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->update(['active_status' => ActiveStatus::DELETED]);
+
+        AdsPicture::where([
+            'id' => $picture_id,
+            'ads_id' => $ads_id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->update(['active_status' => ActiveStatus::DELETED]);
+
+        DB::commit();
+
+        return 'Ads picture successfully deleted';
     }
 
     public function deleteSortOption(int $ads_id, int $sort_option_id, array $data)

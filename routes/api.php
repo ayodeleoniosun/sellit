@@ -53,8 +53,9 @@ Route::group(
                         Route::post('/{id}/reviews', 'AdsController@postReviews')->name('ads.post-reviews');
                         Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
                         Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
-                        Route::post('/{id}/upload-pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
+                        Route::post('/upload/pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
                         Route::delete('/{id}/picture/{pictureId}', 'AdsController@deletePicture')->name('ads.delete.picture');
+                        Route::delete('/{id}', 'AdsController@delete')->name('ads.delete');
                         Route::delete('/{id}/sort-option/{sortOptionId}', 'AdsController@deleteSortOption')->name('ads.delete.sort-options');
                     }
                 );

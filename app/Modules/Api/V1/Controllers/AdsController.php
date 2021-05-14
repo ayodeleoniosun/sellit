@@ -21,16 +21,14 @@ class AdsController extends Controller
 
     public function index()
     {
-        $response = $this->adsRepository->index();
+        $response = $this->adsRepository->index($this->request->only(['search', 'sub_category_id']));
         return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
     public function myAds()
     {
         ApiUtility::auth_user($this->request);
-        $body = $this->request->all();
-                
-        $response = $this->adsRepository->myAds($body);
+        $response = $this->adsRepository->myAds($this->request);
         return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
@@ -41,6 +39,35 @@ class AdsController extends Controller
         $this->validateAds($body);
         
         $response = $this->adsRepository->post($body);
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $response['ads'],
+            'message' => $response['message']
+        ], 200);
+    }
+
+    public function searchMyAds()
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        $validator = Validator::make(
+            $body,
+            [
+                'ads' => 'required|string',
+                'sub_category_id' => 'nullable|string'
+            ],
+            [
+                'ads.required' => 'Please enter the name of the ads you are searching for',
+                'sub_category_id.string' => 'Please select the category you want to search from'
+            ]
+        );
+
+        if ($validator->fails()) {
+            throw new CustomApiErrorResponseHandler($validator->errors()->first());
+        }
+
+        $response = $this->adsRepository->searchMyAds($body);
     
         return response()->json([
             'status' => 'success',
@@ -130,14 +157,14 @@ class AdsController extends Controller
         $validator = Validator::make(
             $body,
             [
-                'category_id' => 'required|string',
-                'sub_category_id' => 'required|string',
+                'category_id' => 'required',
+                'sub_category_id' => 'required',
                 'name' => 'required|string',
                 'description' => 'required|string',
                 'price' => 'required|string'
             ],
             [
-                'category.required' => 'Category is required',
+                'category_id.required' => 'Category is required',
                 'sub_category_id.required' => 'Sub category is required',
                 'name.required' => 'Ads name is required',
                 'description.required' => 'Ads description is required',
@@ -170,11 +197,11 @@ class AdsController extends Controller
         return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 
-    public function uploadPictures(int $id)
+    public function uploadPictures()
     {
         ApiUtility::auth_user($this->request);
         $body = $this->request->all();
-        
+
         $validator = Validator::make(
             $body,
             [
@@ -190,9 +217,18 @@ class AdsController extends Controller
             throw new CustomApiErrorResponseHandler($validator->errors()->first());
         }
         
-        $response = $this->adsRepository->uploadPictures($id, $body);
+        $response = $this->adsRepository->uploadPictures($body);
 
-        return response()->json(['status' => 'success', 'data' => $response], 200);
+        return response()->json(['status' => 'success', 'message' => $response], 200);
+    }
+
+    public function delete(int $ads_id)
+    {
+        ApiUtility::auth_user($this->request);
+        $body = $this->request->all();
+        $response = $this->adsRepository->delete($ads_id, $body);
+        
+        return response()->json(['status' => 'success', 'message' => $response], 200);
     }
 
     public function deletePicture(int $ads_id, int $picture_id)
@@ -201,7 +237,7 @@ class AdsController extends Controller
         $body = $this->request->all();
         $response = $this->adsRepository->deletePicture($ads_id, $picture_id, $body);
         
-        return response()->json(['status' => 'success', 'data' => $response], 200);
+        return response()->json(['status' => 'success', 'message' => $response], 200);
     }
 
     public function deleteSortOption(int $ads_id, int $sort_option_id)
@@ -209,6 +245,6 @@ class AdsController extends Controller
         ApiUtility::auth_user($this->request);
         $response = $this->adsRepository->deleteSortOption($ads_id, $sort_option_id, $this->request->all());
         
-        return response()->json(['status' => 'success', 'data' => $response], 200);
+        return response()->json(['status' => 'success', 'message' => $response], 200);
     }
 }
