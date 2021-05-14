@@ -118,6 +118,7 @@ class CategoryService implements CategoryRepository
         }
 
         $category->name = $data['name'];
+        $category->slug = strtolower(str_replace(" ", "-", $data['name']));
         $category->save();
 
         DB::commit();
@@ -224,6 +225,7 @@ class CategoryService implements CategoryRepository
         
         $sub_category = SubCategory::find($sub_id);
         $sub_category->name = $data['name'];
+        $sub_category->slug = strtolower(str_replace(" ", "-", $data['name']));
         $sub_category->category_id = $data['category_id'];
         $sub_category->save();
 

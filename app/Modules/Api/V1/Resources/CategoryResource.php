@@ -9,6 +9,7 @@ use App\Modules\Api\V1\Models\SubCategory;
 use Illuminate\Support\Carbon;
 use App\Modules\Api\V1\Resources\AdsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryResource extends JsonResource
 {
@@ -24,7 +25,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => ucfirst($this->name),
             'slug' => $this->slug,
-            'icon' => File::find($this->file_id)->filename,
+            'icon' => Storage::disk('categories')->url(File::find($this->file_id)->filename),
             'status' => ActiveStatus::find($this->active_status)->name,
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),
