@@ -23,6 +23,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => ucfirst($this->name),
+            'slug' => $this->slug,
             'icon' => File::find($this->file_id)->filename,
             'status' => ActiveStatus::find($this->active_status)->name,
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),

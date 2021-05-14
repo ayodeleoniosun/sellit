@@ -28,11 +28,11 @@ class AdsService implements AdsRepository
 
         if (Arr::exists($request, 'search')) {
             $search = $request['search'];
-            $sub_category_id = $request['sub_category_id'];
+            $category_id = $request['category_id'] ?? null;
             
-            $ads = $ads->where(function ($query) use ($search, $sub_category_id) {
-                if ($sub_category_id) {
-                    $query->where('sub_category_id', $sub_category_id)
+            $ads = $ads->where(function ($query) use ($search, $category_id) {
+                if ($category_id) {
+                    $query->where('category_id', $category_id)
                         ->where(function ($sub_query) use ($search) {
                             $sub_query->where('name', 'LIKE', '%' . $search . '%')
                             ->orWhere('description', 'LIKE', '%' . $search . '%');
@@ -58,11 +58,11 @@ class AdsService implements AdsRepository
 
         if ($request->filled('search')) {
             $search = $request->get('search');
-            $sub_category_id = $request->get('sub_category_id');
+            $category_id = $request->get('category_id');
             
-            $ads = $ads->where(function ($query) use ($search, $sub_category_id) {
-                if ($sub_category_id) {
-                    $query->where('sub_category_id', $sub_category_id)
+            $ads = $ads->where(function ($query) use ($search, $category_id) {
+                if ($category_id) {
+                    $query->where('category_id', $category_id)
                         ->where(function ($sub_query) use ($search) {
                             $sub_query->where('name', 'LIKE', '%' . $search . '%')
                             ->orWhere('description', 'LIKE', '%' . $search . '%');
