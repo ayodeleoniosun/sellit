@@ -21,7 +21,14 @@ class AdsController extends Controller
 
     public function index()
     {
-        $response = $this->adsRepository->index($this->request->only(['search', 'category', 'sub_category', 'filter']));
+        $response = $this->adsRepository->index($this->request->only([
+            'search',
+            'category',
+            'sub_category',
+            'filter',
+            'minimum_price',
+            'maximum_price'
+        ]));
         return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 

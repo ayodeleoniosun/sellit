@@ -75,6 +75,13 @@ class AdsService implements AdsRepository
                 $ads = $ads->where(function ($query) use ($sub_category_id) {
                     $query->where('sub_category_id', $sub_category_id);
                 });
+            } elseif ($filter === 'price') {
+                $minimum_price = (int) $request['minimum_price'];
+                $maximum_price = (int) $request['maximum_price'];
+                
+                $ads = $ads->where(function ($query) use ($minimum_price, $maximum_price) {
+                    $query->whereBetween('price', [$minimum_price, $maximum_price]);
+                });
             }
         }
 
