@@ -26,12 +26,11 @@ class AdsService implements AdsRepository
 {
     public function index(array $request)
     {
-        $ads = Ads::where('active_status', ActiveStatus::ACTIVE)->orderBy('id', 'DESC');
+        $ads = Ads::where('active_status', ActiveStatus::ACTIVE);
 
         if (Arr::exists($request, 'search')) {
             $search = $request['search'];
             $category = $request['category'] ?? null;
-            
             
             $ads = $ads->where(function ($query) use ($search, $category) {
                 if ($category) {
@@ -49,10 +48,8 @@ class AdsService implements AdsRepository
                     $query->where('name', 'LIKE', '%' . $search . '%')
                         ->orWhere('description', 'LIKE', '%' . $search . '%');
                 }
-            });
-        }
-
-        if (Arr::exists($request, 'filter')) {
+            })->latest();
+        } elseif (Arr::exists($request, 'filter')) {
             $filter = $request['filter'];
             
             if ($filter === 'category') {
@@ -64,7 +61,7 @@ class AdsService implements AdsRepository
 
                 $ads = $ads->where(function ($query) use ($category_id) {
                     $query->where('category_id', $category_id);
-                });
+                })->latest();
             } elseif ($filter === 'sub_category') {
                 $sub_category = $request['sub_category'];
                 $sub_category_id = SubCategory::where([
@@ -74,15 +71,20 @@ class AdsService implements AdsRepository
 
                 $ads = $ads->where(function ($query) use ($sub_category_id) {
                     $query->where('sub_category_id', $sub_category_id);
-                });
+                })->latest();
             } elseif ($filter === 'price') {
                 $minimum_price = (int) $request['minimum_price'];
                 $maximum_price = (int) $request['maximum_price'];
                 
                 $ads = $ads->where(function ($query) use ($minimum_price, $maximum_price) {
                     $query->whereBetween('price', [$minimum_price, $maximum_price]);
-                });
+                })->orderBy('price');
+            } elseif ($filter === 'order') {
+                $order = $request['order'];
+                $ads = ($order === 'latest') ? $ads->latest() :  $ads->oldest();
             }
+        } else {
+            $ads = $ads->latest();
         }
 
         return AdsResource::collection($ads->get());
@@ -95,7 +97,7 @@ class AdsService implements AdsRepository
         $ads = Ads::where([
                 'seller_id' => $user_id,
                 'active_status' => ActiveStatus::ACTIVE
-            ])->orderBy('id', 'DESC');
+            ]);
 
         if ($request->filled('search')) {
             $search = $request->get('search');
@@ -112,7 +114,16 @@ class AdsService implements AdsRepository
                     $query->where('name', 'LIKE', '%' . $search . '%')
                         ->orWhere('description', 'LIKE', '%' . $search . '%');
                 }
-            });
+            })->latest();
+        } elseif ($request->filled('filter')) {
+            $filter = $request->get('filter');
+
+            if ($filter === 'order') {
+                $order = $request->get('order');
+                $ads = ($order === 'latest') ? $ads->latest() :  $ads->oldest();
+            }
+        } else {
+            $ads = $ads->latest();
         }
 
         return AdsResource::collection($ads->get());

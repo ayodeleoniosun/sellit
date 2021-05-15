@@ -26,6 +26,7 @@ class AdsController extends Controller
             'category',
             'sub_category',
             'filter',
+            'order',
             'minimum_price',
             'maximum_price'
         ]));
