@@ -199,9 +199,9 @@ class AdsController extends Controller
         ], 200);
     }
 
-    public function details(int $id)
+    public function view(string $slug)
     {
-        $response = $this->adsRepository->details($id);
+        $response = $this->adsRepository->view($slug);
         return response()->json(['status' => 'success', 'data' => $response], 200);
     }
 

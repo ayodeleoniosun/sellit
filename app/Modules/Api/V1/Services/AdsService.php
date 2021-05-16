@@ -150,6 +150,7 @@ class AdsService implements AdsRepository
         $ads->sub_category_id = $data['sub_category_id'];
         $ads->seller_id = $seller_id;
         $ads->name = $data['name'];
+        $ads->slug = strtolower(Str::snake($data['name']."_".$seller_id));
         $ads->description = $data['description'];
         $ads->price = $data['price'];
         $ads->save();
@@ -213,6 +214,7 @@ class AdsService implements AdsRepository
         $ads->category_id = $data['category_id'];
         $ads->sub_category_id = $data['sub_category_id'];
         $ads->name = $data['name'];
+        $ads->slug = strtolower(Str::snake($data['name']."_".$ads->seller_id));
         $ads->description = $data['description'];
         $ads->price = $data['price'];
         $ads->save();
@@ -285,10 +287,10 @@ class AdsService implements AdsRepository
         throw new CustomApiErrorResponseHandler("No sort option added to ads: ".$ads->name);
     }
     
-    public function details(int $id)
+    public function view(string $slug)
     {
         $ads = Ads::where([
-            'id' => $id,
+            'slug' => $slug,
             'active_status' => ActiveStatus::ACTIVE
         ])->first();
         

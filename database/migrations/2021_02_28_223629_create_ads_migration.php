@@ -19,6 +19,8 @@ class CreateAdsMigration extends Migration
             $table->unsignedBigInteger('sub_category_id');
             $table->unsignedInteger('seller_id');
             $table->string('name');
+            $table->string('slug');
+            $table->unsignedBigInteger('location_id');
             $table->longText('description');
             $table->string('price');
             $table->timestamps();
@@ -26,6 +28,7 @@ class CreateAdsMigration extends Migration
 
             $table->foreign('category_id')->references('id')->on('category');
             $table->foreign('sub_category_id')->references('id')->on('sub_category');
+            $table->foreign('location_id')->references('id')->on('city');
             $table->foreign('seller_id')->references('id')->on('user');
             $table->foreign('active_status')->references('id')->on('active_status');
         });

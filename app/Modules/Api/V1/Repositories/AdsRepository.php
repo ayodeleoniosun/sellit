@@ -16,7 +16,7 @@ interface AdsRepository
 
     public function addSortOptions(int $id, array $data);
 
-    public function details(int $id);
+    public function view(string $slug);
 
     public function uploadPictures(array $data);
 

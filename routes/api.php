@@ -34,7 +34,7 @@ Route::group(
             ['prefix' => 'ads'],
             function () {
                 Route::get('/', 'AdsController@index')->name('ads.index');
-                Route::get('/{id}', 'AdsController@details')->name('ads.details')->where('id', '[0-9]+');
+                Route::get('/{slug}', 'AdsController@view')->name('ads.view');
             }
         );
 
