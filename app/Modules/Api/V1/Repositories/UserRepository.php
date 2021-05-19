@@ -10,6 +10,8 @@ interface UserRepository
 
     public function profile(string $token);
 
+    public function userProfile(string $user);
+
     public function updatePersonalInformation(array $data);
 
     public function updateBusinessInformation(array $data);

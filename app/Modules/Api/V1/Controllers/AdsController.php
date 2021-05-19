@@ -25,6 +25,7 @@ class AdsController extends Controller
             'search',
             'category',
             'sub_category',
+            'seller',
             'filter',
             'order',
             'minimum_price',

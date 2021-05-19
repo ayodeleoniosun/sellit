@@ -81,6 +81,20 @@ class UserService implements UserRepository
         return new UserResource($user);
     }
 
+    public function userProfile(string $user)
+    {
+        $user = User::where([
+            'id' => $user,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->orWhere('business_slug_url', $user)->first();
+
+        if (!$user) {
+            throw new CustomApiErrorResponseHandler("User does not exist.");
+        }
+
+        return new UserResource($user);
+    }
+
     public function updatePersonalInformation(array $data)
     {
         $user = $data['auth_user'];
@@ -99,9 +113,20 @@ class UserService implements UserRepository
 
     public function updateBusinessInformation(array $data)
     {
+        $user_exists = User::where([
+            'business_slug' => $data['business_slug'],
+            'active_status' => ActiveStatus::ACTIVE
+        ])->where('id', '<>', $data['auth_user']->id)
+        ->exists();
+
+        if ($user_exists) {
+            throw new CustomApiErrorResponseHandler("User with this business slug exists.");
+        }
+
         $user = $data['auth_user'];
         $user->business_name = $data['business_name'];
         $user->business_slug = $data['business_slug'];
+        $user->business_slug_url = strtolower(Str::snake($data['business_slug']));
         $user->business_description = $data['business_description'];
         $user->business_address = $data['business_address'];
         $user->save();

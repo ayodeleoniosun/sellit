@@ -85,6 +85,11 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => $this->userRepository->profile($token)], 200);
     }
 
+    public function userProfile(string $user)
+    {
+        return response()->json(['status' => 'success', 'data' => $this->userRepository->userProfile($user)], 200);
+    }
+
     public function updatePersonalInformation()
     {
         ApiUtility::auth_user($this->request);

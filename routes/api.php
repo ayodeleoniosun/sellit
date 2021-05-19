@@ -29,6 +29,8 @@ Route::group(
             }
         );
 
+        Route::get('/users/{user}', 'UserController@userProfile')->name('user.user-profile');
+
         //ads routes
         Route::group(
             ['prefix' => 'ads'],

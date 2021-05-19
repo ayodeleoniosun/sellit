@@ -20,4 +20,14 @@ class Ads extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function subCategories()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -82,6 +82,14 @@ class AdsService implements AdsRepository
             } elseif ($filter === 'order') {
                 $order = $request['order'];
                 $ads = ($order === 'latest') ? $ads->latest() :  $ads->oldest();
+            } elseif ($filter === 'seller') {
+                $seller = $request['seller'];
+                
+                $ads = $ads->where(function ($query) use ($seller) {
+                    $query->whereHas('seller', function ($query) use ($seller) {
+                        return $query->where('user.business_slug_url', $seller);
+                    });
+                })->latest();
             }
         } else {
             $ads = $ads->latest();
@@ -169,8 +177,12 @@ class AdsService implements AdsRepository
             throw new CustomApiErrorResponseHandler("Ads does not exist.");
         }
 
+        if (!$data['auth_user']->id) {
+            throw new CustomApiErrorResponseHandler("Kindly login to review this ads.");
+        }
+
         if ($ads->seller_id == $data['auth_user']->id) {
-            throw new CustomApiErrorResponseHandler("Sorry, you are not allowed to review your ads.");
+            throw new CustomApiErrorResponseHandler("Oops, you are not allowed to review your ads.");
         }
 
         $review = Review::where([
@@ -180,7 +192,7 @@ class AdsService implements AdsRepository
         ])->first();
         
         if ($review) {
-            throw new CustomApiErrorResponseHandler("Sorry, you cannot review this ads again.");
+            throw new CustomApiErrorResponseHandler("Oops, you cannot review this ads again.");
         }
 
         $reviews = new Review();
@@ -207,8 +219,21 @@ class AdsService implements AdsRepository
         $seller_id = $data['auth_user']->id;
         
         if ($ads->seller_id != $seller_id) {
-            throw new CustomApiErrorResponseHandler("You are not authorized to update this ads.", 401);
+            throw new CustomApiErrorResponseHandler("You are not authorized to update this ads.");
         }
+
+        $ads_exists = Ads::where([
+            'name' => $data['name'],
+            'seller_id' => $seller_id,
+            'category_id' => $data['category_id'],
+            'sub_category_id' => $data['sub_category_id'],
+            'active_status' => ActiveStatus::ACTIVE
+        ])->where('id', '<>', $id)->exists();
+        
+        if ($ads_exists) {
+            throw new CustomApiErrorResponseHandler("You have posted this ads before. Try using a different name");
+        }
+
 
         $ads = Ads::find($id);
         $ads->category_id = $data['category_id'];
@@ -315,7 +340,7 @@ class AdsService implements AdsRepository
         }
 
         if ($ads->seller_id != $user_id) {
-            throw new CustomApiErrorResponseHandler("You are not authorized to upload pictures to this ads.", 401);
+            throw new CustomApiErrorResponseHandler("You are not authorized to upload pictures to this ads.");
         }
 
         $pictures = $data['pictures'];
@@ -349,7 +374,11 @@ class AdsService implements AdsRepository
             }
         }
         
-        return $uploaded.' ads picture(s) successfully uploaded';
+        if ($uploaded > 0) {
+            return $uploaded.' ads picture(s) successfully uploaded';
+        } else {
+            throw new CustomApiErrorResponseHandler("No picture was uploaded.");
+        }
     }
 
     public function delete(int $ads_id, array $data)
@@ -366,7 +395,7 @@ class AdsService implements AdsRepository
         }
 
         if ($ads->seller_id != $user_id) {
-            throw new CustomApiErrorResponseHandler("You are not authorized to delete picture from this ads.", 401);
+            throw new CustomApiErrorResponseHandler("You are not authorized to delete picture from this ads.");
         }
 
         $ads_picture = AdsPicture::where([
@@ -411,7 +440,7 @@ class AdsService implements AdsRepository
         }
 
         if ($ads->seller_id != $user_id) {
-            throw new CustomApiErrorResponseHandler("You are not authorized to delete picture from this ads.", 401);
+            throw new CustomApiErrorResponseHandler("You are not authorized to delete picture from this ads.");
         }
 
         $ads_picture = AdsPicture::where([
@@ -456,7 +485,7 @@ class AdsService implements AdsRepository
         }
 
         if ($ads->seller_id != $user_id) {
-            throw new CustomApiErrorResponseHandler("You are not authorized to delete this record.", 401);
+            throw new CustomApiErrorResponseHandler("You are not authorized to delete this record.");
         }
 
         $delete_sort_option = AdsSortOption::where([

@@ -10,6 +10,7 @@ use App\Modules\Api\V1\Models\User;
 use App\Modules\Api\V1\Models\Review;
 use App\Modules\Api\V1\Models\AdsSortOption;
 use Illuminate\Support\Carbon;
+use App\Modules\Api\V1\Resources\UserResource;
 use App\Modules\Api\V1\Resources\AdsSortOptionResource;
 use App\Modules\Api\V1\Resources\AdsPictureResource;
 use App\Modules\Api\V1\Resources\AdsReviewResource;
@@ -35,7 +36,7 @@ class AdsResource extends JsonResource
             'active_status' => ActiveStatus::ACTIVE
         ])->sum('rating');
 
-        $total_rating = round(($sum_rating / $count_reviews) * 5, 1);
+        $total_rating = ($sum_rating > 0) ? round(($sum_rating / $count_reviews) * 5, 1) : 5.0;
 
         return [
             'id' => $this->id,
@@ -47,9 +48,12 @@ class AdsResource extends JsonResource
             'category_slug' => Category::find($this->category_id)->slug,
             'category' => ucfirst(Category::find($this->category_id)->name),
             'sub_category' => ucfirst(SubCategory::find($this->category_id)->name) ?? null,
-            'seller' => User::find($this->seller_id)->fullname(),
-            'seller_phone_number' => User::find($this->seller_id)->phone_number,
-            'seller_address' => User::find($this->seller_id)->business_address,
+            'seller' => UserResource::collection(
+                User::where([
+                    'id' => $this->seller_id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->get()
+            ),
             'description' => ucfirst($this->description),
             'price' => $this->price,
             'created_at' => Carbon::parse($this->created_at)->format('F jS, Y'),
@@ -61,7 +65,7 @@ class AdsResource extends JsonResource
                     'active_status' => ActiveStatus::ACTIVE
                 ])->latest()->get()
             ),
-            'total_ratings' => $total_rating,
+            'total_rating' => $total_rating,
             'pictures' => AdsPictureResource::collection(
                 AdsPicture::where([
                     'ads_id' => $this->id,

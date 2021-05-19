@@ -24,6 +24,7 @@ class CreateUserTable extends Migration
             $table->dateTime('token_expires_at');
             $table->string('business_name')->nullable();
             $table->string('business_slug')->nullable();
+            $table->string('business_slug_url')->nullable();
             $table->longText('business_description')->nullable();
             $table->unsignedInteger('state_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();

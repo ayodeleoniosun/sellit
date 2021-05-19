@@ -3,7 +3,7 @@
 namespace App\Modules\Api\V1\Resources;
 
 use App\Modules\Api\V1\Models\ActiveStatus;
-use App\Modules\Api\V1\Models\File;
+use App\Modules\Api\V1\Models\User;
 use App\Modules\Api\V1\Models\State;
 use App\Modules\Api\V1\Models\City;
 use Illuminate\Support\Carbon;
@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'first_name' => ucfirst($this->first_name),
             'last_name' => ucfirst($this->last_name),
+            'fullname' => User::find($this->id)->fullname(),
             'email_address' => $this->email_address,
             'phone_number' => $this->phone_number,
             'state_id' => $this->state_id,
@@ -31,11 +32,12 @@ class UserResource extends JsonResource
             'city' => City::find($this->city_id)->name ?? null,
             'business_name' => ucfirst($this->business_name),
             'business_slug' => $this->business_slug,
+            'business_slug_url' => $this->business_slug_url,
             'business_description' => ucfirst($this->business_description),
             'business_address' => $this->business_address,
             'status' => ActiveStatus::find($this->active_status)->name,
-            'created_at' => Carbon::parse($this->created_at)->format('F jS, Y h:i A'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y, h:i A'),
+            'created_at' => Carbon::parse($this->created_at)->format('F jS, Y'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('F jS, Y'),
         ];
     }
 }
