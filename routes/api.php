@@ -99,9 +99,10 @@ Route::group(
                         Route::post('/{id}', 'CategoryController@updateCategory')->name('category.update')->where('id', '[0-9]+');
                         Route::post('/sub-category', 'CategoryController@addSubCategory')
                             ->name('sub-category.add')->where('id', '[0-9]+');
+                        Route::post('/sub-category/add-sort-options/{subId}', 'CategoryController@addSubCategorySortOptions')
+                            ->name('sub-category.add-sort-options')->where('subId', '[0-9]+');
                         Route::put('/sub-category/{subId}', 'CategoryController@updateSubCategory')
-                            ->name('sub-category.update')->where('id', '[0-9]+')
-                            ->where('subId', '[0-9]+');
+                            ->name('sub-category.update')->where('subId', '[0-9]+');
                     }
                 );
             }

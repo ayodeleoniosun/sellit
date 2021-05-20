@@ -24,7 +24,7 @@ class CreateSortOptionTable extends Migration
         });
 
         $sort_options = [
-            'age_level', 'body', 'brand', 'colour', 'condition', 'expected_salary', 'facility', 'fuel', 'furnishing', 'gender', 'job_type', 'material', 'operating_system', 'price', 'processor', 'ram', 'screen_size', 'second_condition', 'storage_capacity', 'storage_type', 'transmission', 'type'
+            'age_level', 'body', 'brand', 'colour', 'condition', 'expected_salary', 'facility', 'fuel', 'furnishing', 'gender', 'job_type', 'material', 'operating_system', 'price', 'processor', 'ram', 'screen_size', 'second_condition', 'storage_capacity', 'storage_type', 'transmission', 'type', 'bathroom', 'bedroom'
         ];
 
         foreach ($sort_options as $option) {

@@ -14,6 +14,8 @@ interface CategoryRepository
 
     public function addSubCategory(array $data);
 
+    public function addSubCategorySortOptions(int $id, array $data);
+
     public function updateSubCategory(int $sub_id, array $data);
 
     public function subCategories(int $id);

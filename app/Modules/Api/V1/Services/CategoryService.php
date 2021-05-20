@@ -13,7 +13,6 @@ use App\Modules\Api\V1\Models\SubCategorySortOption;
 use App\Modules\Api\V1\Repositories\CategoryRepository;
 use App\Modules\Api\V1\Resources\CategoryResource;
 use App\Modules\Api\V1\Resources\SubCategoryResource;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -63,6 +62,7 @@ class CategoryService implements CategoryRepository
 
         $category = new Category();
         $category->name = $data['name'];
+        $category->slug = Str::slug($data['name'], "_");
         $category->file_id = $file->id ?? File::DEFAULT_ID;
         $category->save();
 
@@ -118,7 +118,7 @@ class CategoryService implements CategoryRepository
         }
 
         $category->name = $data['name'];
-        $category->slug = strtolower(str_replace(" ", "-", $data['name']));
+        $category->slug = Str::slug($data['name'], "_");
         $category->save();
 
         DB::commit();
@@ -167,6 +167,7 @@ class CategoryService implements CategoryRepository
         
         $sub_category = new SubCategory();
         $sub_category->name = $data['name'];
+        $sub_category->slug = Str::slug($data['name'], "_");
         $sub_category->category_id = $data['category_id'];
         $sub_category->save();
 
@@ -221,68 +222,69 @@ class CategoryService implements CategoryRepository
             throw new CustomApiErrorResponseHandler("Sub category exist. Use a different name");
         }
 
-        DB::beginTransaction();
-        
         $sub_category = SubCategory::find($sub_id);
         $sub_category->name = $data['name'];
-        $sub_category->slug = strtolower(str_replace(" ", "-", $data['name']));
+        $sub_category->slug = Str::slug($data['name'], "_");
         $sub_category->category_id = $data['category_id'];
         $sub_category->save();
-
-        $current_sort_options = $sub_category->sortOptions->pluck('sort_option_id')->toArray();
-        $req_sort_options = $data['sort_options'];
-        
-        $sort_options = SortOption::whereIn('name', $req_sort_options)
-            ->where('active_status', ActiveStatus::ACTIVE)
-            ->pluck('id')->toArray();
-
-        $diff_sort_options = ($current_sort_options > $sort_options) ?
-            array_diff($current_sort_options, $sort_options) :
-            array_diff($sort_options, $current_sort_options);
-
-        $diff_sort_options = array_values($diff_sort_options);
-
-        $added_sort_options = [];
-        $removed_sort_options = [];
-
-        if (count($diff_sort_options) > 0) {
-            foreach ($diff_sort_options as $sort_option_id) {
-                $sort_option = SortOption::where([
-                    'id' => $sort_option_id,
-                    'active_status' => ActiveStatus::ACTIVE
-                ])->value('name');
-                
-                $sub_category_sort_option = SubCategorySortOption::where([
-                    'sub_category_id' => $sub_category->id,
-                    'sort_option_id' => $sort_option_id,
-                    'active_status' => ActiveStatus::ACTIVE
-                ])->first();
-
-                if ($sub_category_sort_option) {
-                    SubCategorySortOption::where([
-                        'sub_category_id' => $sub_category->id,
-                        'sort_option_id' => $sort_option_id,
-                        'active_status' => ActiveStatus::ACTIVE
-                    ])->update(['active_status' => ActiveStatus::DELETED]);
-
-                    $removed_sort_options[] = str_replace("_", " ", $sort_option);
-                } else {
-                    SubCategorySortOption::create([
-                        'sub_category_id' => $sub_category->id,
-                        'sort_option_id' => $sort_option_id
-                    ]);
-
-                    $added_sort_options[] = str_replace("_", " ", $sort_option);
-                }
-            }
-        }
-
-        DB::commit();
 
         return [
             'sub_category' => $sub_category,
             'message' => 'Sub category successfully updated'
         ];
+    }
+
+    public function addSubCategorySortOptions(int $sub_id, array $data)
+    {
+        $sub_category = SubCategory::where([
+            'id' => $sub_id,
+            'active_status' => ActiveStatus::ACTIVE
+        ])->first();
+        
+        if (!$sub_category) {
+            throw new CustomApiErrorResponseHandler("Sub category does not exist.");
+        }
+
+        $sort_options = $data['sort_options'];
+        
+        $added_sort_options = [];
+
+        if (count($sort_options) > 0) {
+            foreach ($sort_options as $sort_option_name) {
+                $sort_option = SortOption::where([
+                    'name' => $sort_option_name,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->first();
+
+                if (!$sort_option) {
+                    $sort_option = SortOption::create(['name' => $sort_option_name]);
+                }
+                
+                $sub_category_sort_option = SubCategorySortOption::where([
+                    'sub_category_id' => $sub_id,
+                    'sort_option_id' => $sort_option->id,
+                    'active_status' => ActiveStatus::ACTIVE
+                ])->first();
+
+                if (!$sub_category_sort_option) {
+                    SubCategorySortOption::create([
+                        'sub_category_id' => $sub_id,
+                        'sort_option_id' => $sort_option->id
+                    ]);
+
+                    $added_sort_options[] = str_replace("_", " ", $sort_option_name);
+                }
+            }
+
+            if (count($added_sort_options) > 0) {
+                return [
+                    'message' => count($added_sort_options)." Sort options added to category",
+                    'sort_options' => implode(", ", $added_sort_options)
+                ];
+            } else {
+                throw new CustomApiErrorResponseHandler("No sort options added");
+            }
+        }
     }
     
     public function subCategories(int $id)

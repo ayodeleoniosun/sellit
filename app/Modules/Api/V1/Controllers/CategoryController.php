@@ -71,6 +71,18 @@ class CategoryController extends Controller
         ], 200);
     }
 
+    public function addSubCategorySortOptions($id)
+    {
+        $body = $this->request->all();
+        $response = $this->categoryRepository->addSubCategorySortOptions($id, $body);
+        
+        return response()->json([
+            'status' => 'success',
+            'sort_options' => $response['sort_options'],
+            'message' => $response['message']
+        ], 200);
+    }
+
     public function categoryDetails($id)
     {
         $response = $this->categoryRepository->categoryDetails($id);

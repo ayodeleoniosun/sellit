@@ -47,7 +47,7 @@ class AdsResource extends JsonResource
             'slug' => $this->slug,
             'category_slug' => Category::find($this->category_id)->slug,
             'category' => ucfirst(Category::find($this->category_id)->name),
-            'sub_category' => ucfirst(SubCategory::find($this->category_id)->name) ?? null,
+            'sub_category' => ucfirst(SubCategory::find($this->sub_category_id)->name) ?? null,
             'seller' => UserResource::collection(
                 User::where([
                     'id' => $this->seller_id,

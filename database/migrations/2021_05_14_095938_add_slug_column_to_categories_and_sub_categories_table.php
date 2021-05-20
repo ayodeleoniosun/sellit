@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Modules\Api\V1\Models\Category;
 use App\Modules\Api\V1\Models\SubCategory;
+use Illuminate\Support\Str;
 
 class AddSlugColumnToCategoriesAndSubCategoriesTable extends Migration
 {
@@ -27,7 +28,7 @@ class AddSlugColumnToCategoriesAndSubCategoriesTable extends Migration
 
         foreach ($categories as $category) {
             $category = Category::find($category->id);
-            $category->slug = strtolower(str_replace(" ", "-", $category->name));
+            $category->slug = Str::slug($category->name, "_");
             $category->save();
         }
 
@@ -35,7 +36,7 @@ class AddSlugColumnToCategoriesAndSubCategoriesTable extends Migration
 
         foreach ($sub_categories as $sub_category) {
             $sub_category = SubCategory::find($sub_category->id);
-            $sub_category->slug = strtolower(str_replace(" ", "-", $sub_category->name));
+            $sub_category->slug = Str::slug($sub_category->name, "_");
             $sub_category->save();
         }
     }
