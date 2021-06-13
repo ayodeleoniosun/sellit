@@ -11,6 +11,7 @@ use App\Modules\Api\V1\Models\User;
 use App\Modules\Api\V1\Repositories\UserRepository;
 use App\Modules\Api\V1\Resources\UserResource;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,11 @@ use Illuminate\Support\Str;
 
 class UserService implements UserRepository
 {
+    public function users()
+    {
+        return UserResource::collection(User::all());
+    }
+    
     public function signUp(array $data)
     {
         $is_valid_email = ApiUtility::validate_email($data['email_address']);
@@ -50,9 +56,11 @@ class UserService implements UserRepository
         ];
     }
 
-    public function signIn(array $data)
+    public function signIn(array $data, $user_type)
     {
-        if (!auth()->attempt($data)) {
+        $data = array_merge($data, ['type' => $user_type, 'active_status' => ActiveStatus::ACTIVE]);
+        
+        if (!Auth::attempt($data)) {
             throw new CustomApiErrorResponseHandler("Incorrect login credentials. Try again.");
         }
 

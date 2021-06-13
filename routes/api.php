@@ -25,7 +25,7 @@ Route::group(
             ['prefix' => 'account'],
             function () {
                 Route::post('/signup', 'UserController@signUp')->name('user.signup');
-                Route::post('/signin', 'UserController@signIn')->name('user.signin');
+                Route::post('/signin/{userType}', 'UserController@signIn')->name('user.signin');
             }
         );
 
@@ -92,6 +92,9 @@ Route::group(
         Route::group(
             ['prefix' => 'admin'],
             function () {
+                Route::get('/overview', 'AdminController@overview')->name('admin.overview');
+                Route::get('/users', 'UserController@users')->name('admin.users');
+
                 Route::group(
                     ['prefix' => 'category'],
                     function () {

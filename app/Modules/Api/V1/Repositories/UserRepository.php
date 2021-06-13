@@ -6,7 +6,9 @@ interface UserRepository
 {
     public function signUp(array $data);
 
-    public function signIn(array $data);
+    public function signIn(array $data, $user_type);
+
+    public function users();
 
     public function profile(string $token);
 

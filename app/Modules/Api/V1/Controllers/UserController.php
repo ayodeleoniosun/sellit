@@ -56,7 +56,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function signIn()
+    public function signIn($user_type)
     {
         $body = $this->request->all();
         
@@ -76,7 +76,12 @@ class UserController extends Controller
             throw new CustomApiErrorResponseHandler($validator->errors()->first());
         }
         
-        return response()->json(['status' => 'success', 'data' => $this->userRepository->signIn($body)], 200);
+        return response()->json(['status' => 'success', 'data' => $this->userRepository->signIn($body, $user_type)], 200);
+    }
+
+    public function users()
+    {
+        return response()->json(['status' => 'success', 'data' => $this->userRepository->users()], 200);
     }
 
     public function profile(string $token)
