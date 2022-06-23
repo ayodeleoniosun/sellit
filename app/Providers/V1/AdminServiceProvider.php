@@ -2,8 +2,8 @@
 
 namespace App\Providers\V1;
 
-use App\Modules\Api\V1\Repositories\AdminRepository;
-use App\Modules\Api\V1\Services\AdminService;
+use App\Repositories\AdminRepository;
+use App\Services\AdminService;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider

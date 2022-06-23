@@ -2,8 +2,8 @@
 
 namespace App\Providers\V1;
 
-use App\Modules\Api\V1\Repositories\UserRepository;
-use App\Modules\Api\V1\Services\UserService;
+use App\Repositories\UserRepository;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider

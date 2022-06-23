@@ -3,9 +3,8 @@
 namespace App\Jobs;
 
 use App\Mail\UserWelcomeMail;
-use App\Modules\Api\V1\Models\User;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;

@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Modules\Api\ApiUtility;
+use App\ApiUtility;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

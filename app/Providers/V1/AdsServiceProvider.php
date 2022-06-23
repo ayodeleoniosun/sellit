@@ -2,8 +2,8 @@
 
 namespace App\Providers\V1;
 
-use App\Modules\Api\V1\Repositories\AdsRepository;
-use App\Modules\Api\V1\Services\AdsService;
+use App\Repositories\AdsRepository;
+use App\Services\AdsService;
 use Illuminate\Support\ServiceProvider;
 
 class AdsServiceProvider extends ServiceProvider

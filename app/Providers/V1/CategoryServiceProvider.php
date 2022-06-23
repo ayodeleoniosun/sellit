@@ -2,8 +2,8 @@
 
 namespace App\Providers\V1;
 
-use App\Modules\Api\V1\Repositories\CategoryRepository;
-use App\Modules\Api\V1\Services\CategoryService;
+use App\Repositories\CategoryRepository;
+use App\Services\CategoryService;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider
