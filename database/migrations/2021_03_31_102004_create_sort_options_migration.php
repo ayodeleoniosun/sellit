@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSortOptionsMigration extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,224 +12,191 @@ class CreateSortOptionsMigration extends Migration
      */
     public function up()
     {
-        Schema::create('brand', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('brands', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->enum('type', ['vehicle', 'phone', 'computer']);
+            $table->string('type'); //['vehicle', 'phone', 'computer'];
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('condition', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('conditions', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->enum('type', ['vehicle', 'property', 'general', 'electronics'])->default('general');
+            $table->string('type')->default('general'); //['vehicle', 'property', 'general', 'electronics];
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('furnishing', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('furnishings', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('price', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('prices', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->enum('type', ['general', 'vehicle', 'property'])->default('general');
+            $table->string('type')->default('general'); //['general', 'vehicle', 'property'];
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('second_condition', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('second_conditions', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
-        });
-        
-        Schema::create('body', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('fuel', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('bodies', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('transmission', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('fuels', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('colour', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('transmissions', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('facility', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('colours', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('type', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('facilities', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->enum('type', ['property', 'computer', 'equipment', 'furniture', 'body', 'hair'])->default('property');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('gender', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('types', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
+            $table->string('type')->default('property');
+            // ['property', 'computer', 'equipment', 'furniture', 'body', 'hair';
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('ram', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('genders', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('storage_capacity', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('rams', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('storage_type', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('storage_capacities', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('processor', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('storage_types', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('operating_system', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('processors', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
-        });
-        
-        Schema::create('screen_size', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('material', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('operating_systems', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('main_material', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('screen_sizes', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('main_stone', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('materials', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('age_level', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('main_materials', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('job_type', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('main_stones', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('expected_salary', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('age_levels', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
+            $table->softDeletes();
+        });
 
-            $table->foreign('active_status')->references('id')->on('active_status');
+        Schema::create('job_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('expected_salaries', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('bathrooms', function (Blueprint $table) {
+            $table->id();
+            $table->string('value');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('bedrooms', function (Blueprint $table) {
+            $table->id();
+            $table->string('value');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -241,27 +207,31 @@ class CreateSortOptionsMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gender');
-        Schema::dropIfExists('brand');
-        Schema::dropIfExists('condition');
-        Schema::dropIfExists('second_condition');
-        Schema::dropIfExists('body');
-        Schema::dropIfExists('fuel');
-        Schema::dropIfExists('transmission');
-        Schema::dropIfExists('color');
-        Schema::dropIfExists('ram');
-        Schema::dropIfExists('type');
-        Schema::dropIfExists('facility');
-        Schema::dropIfExists('storage_capacity');
-        Schema::dropIfExists('storage_type');
-        Schema::dropIfExists('processor');
-        Schema::dropIfExists('operating_system');
-        Schema::dropIfExists('screen_size');
-        Schema::dropIfExists('material');
-        Schema::dropIfExists('main_material');
-        Schema::dropIfExists('main_stone');
-        Schema::dropIfExists('age_level');
-        Schema::dropIfExists('job_type');
-        Schema::dropIfExists('expected_salary');
+        Schema::dropIfExists('genders');
+        Schema::dropIfExists('brands');
+        Schema::dropIfExists('conditions');
+        Schema::dropIfExists('second_conditions');
+        Schema::dropIfExists('bodies');
+        Schema::dropIfExists('fuels');
+        Schema::dropIfExists('transmissions');
+        Schema::dropIfExists('colours');
+        Schema::dropIfExists('furnishings');
+        Schema::dropIfExists('prices');
+        Schema::dropIfExists('rams');
+        Schema::dropIfExists('types');
+        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('storage_capacities');
+        Schema::dropIfExists('storage_types');
+        Schema::dropIfExists('processors');
+        Schema::dropIfExists('operating_systems');
+        Schema::dropIfExists('screen_sizes');
+        Schema::dropIfExists('materials');
+        Schema::dropIfExists('main_materials');
+        Schema::dropIfExists('main_stones');
+        Schema::dropIfExists('age_levels');
+        Schema::dropIfExists('job_types');
+        Schema::dropIfExists('expected_salaries');
+        Schema::dropIfExists('bathrooms');
+        Schema::dropIfExists('bedrooms');
     }
-}
+};

@@ -12,10 +12,12 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('sub_category_sort_options', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sub_category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('sort_option_id')->constrained()->cascadeOnDelete();
+            $table->string('rating', 100);
+            $table->longText('comment');
+            $table->foreignId('buyer_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +30,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('sub_category_sort_options');
+        Schema::dropIfExists('reviews');
     }
 };

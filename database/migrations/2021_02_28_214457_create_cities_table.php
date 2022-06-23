@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\City;
+use App\Models\State;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,15 +14,12 @@ class CreatePermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('permission', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('cities', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->string('label');
-            $table->string('description');
+            $table->foreignId('state_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +30,6 @@ class CreatePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission');
+        Schema::dropIfExists('cities');
     }
-}
+};

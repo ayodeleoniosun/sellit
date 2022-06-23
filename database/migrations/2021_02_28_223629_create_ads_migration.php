@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdsMigration extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,48 +13,34 @@ class CreateAdsMigration extends Migration
     public function up()
     {
         Schema::create('ads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('sub_category_id');
-            $table->unsignedInteger('seller_id');
+            $table->id();
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('sub_category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('location_id')->nullable()->constrained('cities')->nullOnDelete();
+            $table->foreignId('seller_id')->constrained('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('slug');
-            $table->unsignedBigInteger('location_id');
             $table->longText('description');
             $table->string('price');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('category_id')->references('id')->on('category');
-            $table->foreign('sub_category_id')->references('id')->on('sub_category');
-            $table->foreign('location_id')->references('id')->on('city');
-            $table->foreign('seller_id')->references('id')->on('user');
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('ads_picture', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('ads_id');
-            $table->unsignedInteger('file_id');
+        Schema::create('ads_pictures', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('file_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('ads_id')->references('id')->on('ads');
-            $table->foreign('file_id')->references('id')->on('file');
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
-        Schema::create('ads_sort_option', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('ads_id');
-            $table->unsignedInteger('sort_option_id');
+        Schema::create('ads_sort_options', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('sort_option_id')->nullable()->constrained()->nullOnDelete();
             $table->string('value');
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('ads_id')->references('id')->on('ads');
-            $table->foreign('sort_option_id')->references('id')->on('sort_option');
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
     }
 
@@ -66,7 +51,8 @@ class CreateAdsMigration extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('ads_pictures');
+        Schema::dropIfExists('ads_sort_options');
         Schema::dropIfExists('ads');
-        Schema::dropIfExists('ads_picture');
     }
-}
+};

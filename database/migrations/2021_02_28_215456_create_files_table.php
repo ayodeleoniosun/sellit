@@ -1,12 +1,11 @@
 <?php
 
+use App\Models\File;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Modules\Api\V1\Models\File;
 
-class CreateFileTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,14 +13,12 @@ class CreateFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('file', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('files', function (Blueprint $table) {
+            $table->id();
             $table->string('filename');
-            $table->enum('type', ['general', 'user', 'ads', 'category'])->default('general');
+            $table->string('type')->default('general'); // ['general', 'user', 'ads', 'category']
             $table->timestamps();
-            $table->unsignedInteger('active_status')->default(1);
-
-            $table->foreign('active_status')->references('id')->on('active_status');
+            $table->softDeletes();
         });
 
         File::create(['filename' => 'default.jpg']);
@@ -34,6 +31,6 @@ class CreateFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file');
+        Schema::dropIfExists('files');
     }
-}
+};
