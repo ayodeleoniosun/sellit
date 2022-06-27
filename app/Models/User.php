@@ -35,6 +35,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'remember_token',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return $this->slug;
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(

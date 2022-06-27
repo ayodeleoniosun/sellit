@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CategoryController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::prefix('accounts')->group(function () {
-        Route::controller(UserController::class)->group(function () {
+        Route::controller(AccountController::class)->group(function () {
             Route::post('/register', 'register')->name('accounts.register');
             Route::post('/login', 'login')->name('accounts.login');
         });
@@ -36,8 +37,8 @@ Route::prefix('v1')->group(function () {
         Route::controller(CategoryController::class)->group(function () {
             Route::get('/', 'index')->name('category.index');
             Route::get('/{id}', 'view')->name('category.view');
-            Route::get('/{id}/sub-categories', 'subCategories')->name('sub-categories.index');
-            Route::get('/{id}/sub-category/{subId}', 'viewSubCategory')->name('sub-category.view');
+            Route::get('/{id}/sub-categories', 'subCategories')->name('sub_categories.index');
+            Route::get('/{id}/sub-category/{subId}', 'viewSubCategory')->name('sub_category.view');
         });
     });
 
@@ -47,11 +48,11 @@ Route::prefix('v1')->group(function () {
             Route::post('/', 'store')->name('ads.store');
             Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
             Route::put('/{id}', 'update')->name('ads.update');
-            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort-options.store');
+            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
             Route::post('/upload/pictures', 'uploadPictures')->name('ads.pictures.upload');
             Route::delete('/{id}/picture/{pictureId}', 'deletePicture')->name('ads.picture.delete');
             Route::delete('/{id}', 'delete')->name('ads.delete');
-            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort-options.delete');
+            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
         });
 
         Route::controller(UserController::class)->group(function () {
@@ -67,9 +68,9 @@ Route::prefix('v1')->group(function () {
             Route::controller(CategoryController::class)->group(function () {
                 Route::post('/', 'store')->name('category.store');
                 Route::post('/{id}', 'update')->name('category.update');
-                Route::post('/sub-category/store', 'storeSubCategory')->name('sub-category.store');
-                Route::put('/sub-category/{subId}', 'updateSubCategory')->name('sub-category.update');
-                Route::post('/sub-category/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub-category.sort-options.store');
+                Route::post('/sub-category/store', 'storeSubCategory')->name('sub_category.store');
+                Route::put('/sub-category/{subId}', 'updateSubCategory')->name('sub_category.update');
+                Route::post('/sub-category/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub_category.sort_options.store');
             });
         });
     });

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('email_address')->unique();
             $table->string('phone_number');
             $table->string('password');
-            $table->string('remember_token');
+            $table->string('remember_token')->nullable();
             $table->string('role')->default('user'); //['user', 'admin']
             $table->dateTime('token_expires_at')->nullable();
             $table->string('activation_code')->nullable();

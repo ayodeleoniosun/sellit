@@ -14,17 +14,22 @@ class Ads extends Model
 
     protected $guarded = ['id'];
 
+    public function getRouteKeyName(): string
+    {
+        return $this->slug;
+    }
+
     public function sortOptions(): HasMany
     {
         return $this->hasMany(AdsSortOption::class);
     }
 
-    public function categories(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function subCategories(): BelongsTo
+    public function subCategory(): BelongsTo
     {
         return $this->belongsTo(SubCategory::class);
     }
