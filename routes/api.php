@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdsController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,101 +17,60 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(
-    [
-        'prefix' => 'v1',
-        'namespace' => 'App\Modules\Api\V1\Controllers'
-    ],
-    function () {
-        //account routes
-        Route::group(
-            ['prefix' => 'account'],
-            function () {
-                Route::post('/signup', 'UserController@signUp')->name('user.signup');
-                Route::post('/signin/{userType}', 'UserController@signIn')->name('user.signin');
-            }
-        );
+Route::prefix('v1')->group(function () {
+    Route::prefix('accounts')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::post('/register', 'register')->name('accounts.register');
+            Route::post('/login', 'login')->name('accounts.login');
+        });
+    });
 
-        Route::get('/users/{user}', 'UserController@userProfile')->name('user.user-profile');
+    Route::prefix('ads')->group(function () {
+        Route::controller(AdsController::class)->group(function () {
+            Route::get('/', 'index')->name('ads.index');
+            Route::get('/{slug}', 'view')->name('ads.view');
+        });
+    });
 
-        //ads routes
-        Route::group(
-            ['prefix' => 'ads'],
-            function () {
-                Route::get('/', 'AdsController@index')->name('ads.index');
-                Route::get('/{slug}', 'AdsController@view')->name('ads.view');
-            }
-        );
+    Route::prefix('category')->group(function () {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/', 'index')->name('category.index');
+            Route::get('/{id}', 'view')->name('category.view');
+            Route::get('/{id}/sub-categories', 'subCategories')->name('sub-categories.index');
+            Route::get('/{id}/sub-category/{subId}', 'viewSubCategory')->name('sub-category.view');
+        });
+    });
 
-        //user routes
-        Route::group(
-            [
-                'prefix' => 'user',
-                'middleware' => ['v1.validate.user']
-            ],
-            function () {
-                Route::group(
-                    ['prefix' => 'ads'],
-                    function () {
-                        Route::get('/', 'AdsController@myAds')->name('ads.mine');
-                        Route::post('/', 'AdsController@post')->name('ads.post');
-                        Route::post('/{id}/reviews', 'AdsController@postReviews')->name('ads.post-reviews');
-                        Route::put('/{id}', 'AdsController@update')->name('ads.update')->where('id', '[0-9]+');
-                        Route::post('/{id}/sort-options', 'AdsController@addSortOptions')->name('ads.add.sort-options');
-                        Route::post('/upload/pictures', 'AdsController@uploadPictures')->name('ads.upload.pictures');
-                        Route::delete('/{id}/picture/{pictureId}', 'AdsController@deletePicture')->name('ads.delete.picture');
-                        Route::delete('/{id}', 'AdsController@delete')->name('ads.delete');
-                        Route::delete('/{id}/sort-option/{sortOptionId}', 'AdsController@deleteSortOption')->name('ads.delete.sort-options');
-                    }
-                );
+    Route::middleware('validate.user')->prefix('users/ads')->group(function () {
+        Route::controller(AdsController::class)->group(function () {
+            Route::get('/', 'myAds')->name('ads.mine');
+            Route::post('/', 'store')->name('ads.store');
+            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
+            Route::put('/{id}', 'update')->name('ads.update');
+            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort-options.store');
+            Route::post('/upload/pictures', 'uploadPictures')->name('ads.pictures.upload');
+            Route::delete('/{id}/picture/{pictureId}', 'deletePicture')->name('ads.picture.delete');
+            Route::delete('/{id}', 'delete')->name('ads.delete');
+            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort-options.delete');
+        });
 
-                Route::get('/{token}', 'UserController@profile')->name('user.profile');
-                Route::put('/profile/update/personal-information', 'UserController@updatePersonalInformation')
-                    ->name('profile.update.personal-information');
-                Route::put('/profile/update/business-information', 'UserController@updateBusinessInformation')
-                    ->name('profile.update.business-information');
-                Route::post('/picture/upload', 'UserController@updateProfilePicture')
-                    ->name('user.profile-picture.upload');
-                Route::put('/password/change', 'UserController@changePassword')
-                    ->name('user.password.change');
-            }
-        );
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/{slug}', 'profile')->name('user.profile');
+            Route::put('/profile/update/{type}', 'update')->name('user.update');
+            // [personal information, business information, profile picture, password]
+        });
 
-        //categories routes
-        Route::group(
-            ['prefix' => 'category'],
-            function () {
-                Route::get('/', 'CategoryController@index')->name('category.index');
-                Route::get('/{id}', 'CategoryController@categoryDetails')->name('category.details')->where('id', '[0-9]+');
-                Route::get('/{id}/sub-categories', 'CategoryController@subCategories')
-                    ->name('sub-categories.index')->where('id', '[0-9]+');
-                Route::get('/{id}/sub-category/{subId}', 'CategoryController@subCategoryDetails')
-                    ->name('sub-category.details')->where('id', '[0-9]+')
-                    ->where('subId', '[0-9]+');
-            }
-        );
+        Route::middleware('user.admin')->prefix('admin')->group(function () {
+            Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
+            Route::get('/users', [UserController::class, 'users'])->name('admin.users');
 
-        //admin routes
-        Route::group(
-            ['prefix' => 'admin'],
-            function () {
-                Route::get('/overview', 'AdminController@overview')->name('admin.overview');
-                Route::get('/users', 'UserController@users')->name('admin.users');
-
-                Route::group(
-                    ['prefix' => 'category'],
-                    function () {
-                        Route::post('/', 'CategoryController@addCategory')->name('category.add');
-                        Route::post('/{id}', 'CategoryController@updateCategory')->name('category.update')->where('id', '[0-9]+');
-                        Route::post('/sub-category', 'CategoryController@addSubCategory')
-                            ->name('sub-category.add')->where('id', '[0-9]+');
-                        Route::post('/sub-category/add-sort-options/{subId}', 'CategoryController@addSubCategorySortOptions')
-                            ->name('sub-category.add-sort-options')->where('subId', '[0-9]+');
-                        Route::put('/sub-category/{subId}', 'CategoryController@updateSubCategory')
-                            ->name('sub-category.update')->where('subId', '[0-9]+');
-                    }
-                );
-            }
-        );
-    }
-);
+            Route::controller(CategoryController::class)->group(function () {
+                Route::post('/', 'store')->name('category.store');
+                Route::post('/{id}', 'update')->name('category.update');
+                Route::post('/sub-category/store', 'storeSubCategory')->name('sub-category.store');
+                Route::put('/sub-category/{subId}', 'updateSubCategory')->name('sub-category.update');
+                Route::post('/sub-category/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub-category.sort-options.store');
+            });
+        });
+    });
+});

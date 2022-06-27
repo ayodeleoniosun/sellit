@@ -1,7 +1,7 @@
 <?php
 
-use App\Modules\Api\ApiUtility;
-use App\Modules\Api\V1\Models\User;
+use App\ApiUtility;
+use App\Models\User;
 
 $factory->define(
     User::class,
