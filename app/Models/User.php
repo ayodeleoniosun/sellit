@@ -9,8 +9,11 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
@@ -25,50 +28,45 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         SoftDeletes,
         MustVerifyEmailTrait;
 
-    protected array $guarded = ['id'];
+    protected $guarded = ['id'];
 
-    protected array $hidden = [
+    protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    public function fullname()
+    public function fullName(): Attribute
     {
-        return ucwords(sprintf('%s %s', $this->first_name, $this->last_name));
+        return Attribute::make(
+            get: fn($value, $attributes) => ucwords(
+                $attributes['first_name'],
+                $attributes['last_name'],
+            ),
+        );
     }
 
-    public function state()
+    public function profile(): HasOne
     {
-        return $this->belongsTo(State::class);
+        return $this->hasOne(UserProfile::class);
     }
 
-    public function city()
+    public function pictures(): HasMany
     {
-        return $this->belongsTo(City::class);
+        return $this->hasMany(UserProfilePicture::class);
     }
 
-    public function picture()
-    {
-        return $this->belongsTo(File::class, 'file_id');
-    }
-
-    public function ads()
+    public function ads(): HasMany
     {
         return $this->hasMany(Ads::class, 'seller_id');
     }
 
-    public function reviews()
-    {
-        return $this->hasMany(Review::class, 'seller_id');
-    }
-
-    public function reviewed()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'buyer_id');
     }
 
-    public static function getUserByEmail($email)
+    public function businessProfile(): HasOne
     {
-        return self::where('email_address', $email)->first();
+        return $this->hasOne(BusinessProfile::class);
     }
 }

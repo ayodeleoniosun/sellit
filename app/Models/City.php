@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
@@ -12,8 +14,13 @@ class City extends Model
 
     protected $guarded = ['id'];
 
-    public function users()
+    public function userProfiles(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(UserProfile::class);
+    }
+
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
     }
 }
