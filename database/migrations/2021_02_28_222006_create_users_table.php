@@ -22,9 +22,6 @@ return new class extends Migration {
             $table->string('password');
             $table->string('remember_token');
             $table->string('role')->default('user'); //['user', 'admin']
-            $table->foreignId('file_id')->default(1)->constrained();
-            $table->foreignId('state_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
             $table->dateTime('token_expires_at')->nullable();
             $table->string('activation_code')->nullable();
             $table->dateTime('email_verified_at')->nullable();
