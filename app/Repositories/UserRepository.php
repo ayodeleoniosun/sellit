@@ -2,23 +2,56 @@
 
 namespace App\Repositories;
 
-interface UserRepository
+use App\Models\User;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Support\Collection;
+
+class UserRepository implements UserRepositoryInterface
 {
-    public function signUp(array $data);
+    private User $user;
 
-    public function signIn(array $data, $user_type);
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
-    public function users();
+    public function getUsers(): Collection
+    {
+        return User::all();
+    }
 
-    public function profile(string $token);
+    public function getUser(int $id): ?User
+    {
+        return $this->user->find($id);
+    }
 
-    public function userProfile(string $user);
+    public function getUserByEmailAddress(string $emailAddress): ?User
+    {
+        return $this->user->where('email_address', $emailAddress)->first();
+    }
 
-    public function updatePersonalInformation(array $data);
+    public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User
+    {
+        return $this->user->where('phone_number', $phoneNumber)->where('id', '<>', $id)->first();
+    }
 
-    public function updateBusinessInformation(array $data);
+    public function updateProfile(array $data, int $id): User
+    {
+        $user = $this->getUser($id);
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
+        $user->phone_number = $data['phone_number'];
+        $user->update();
 
-    public function changePassword(array $data);
+        return $user;
+    }
 
-    public function updateProfilePicture(array $data);
+    public function updatePassword(array $data, int $id): User
+    {
+        $user = $this->getUser($id);
+        $user->password = bcrypt($data['new_password']);
+        $user->update();
+
+        return $user;
+    }
 }

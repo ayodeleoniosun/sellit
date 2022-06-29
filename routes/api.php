@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/register', 'register')->name('accounts.register');
             Route::post('/login', 'login')->name('accounts.login');
             Route::post('/forgot-password', 'forgotPassword')->name('accounts.forgot_password');
+            Route::post('/reset-password', 'resetPassword')->name('accounts.reset_password');
         });
     });
 

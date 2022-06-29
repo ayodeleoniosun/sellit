@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\ResetPasswordRequest;
 use App\Http\Requests\Users\UserRegistrationRequest;
 use App\Services\Interfaces\AccountServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -47,6 +48,16 @@ class AccountController extends Controller
         );
     }
 
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        return $this->request(
+            'reset-password',
+            $request,
+            'Password successfully reset',
+            Response::HTTP_OK
+        );
+    }
+
     public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
     {
         try {
@@ -58,6 +69,8 @@ class AccountController extends Controller
                 $response = $this->account->login($request->all());
             } elseif ($type === 'forgot-password') {
                 $response = $this->account->forgotPassword($request->all());
+            } elseif ($type === 'reset-password') {
+                $response = $this->account->resetPassword($request->validated());
             }
 
             return response()->json([
@@ -66,7 +79,6 @@ class AccountController extends Controller
                 'data'    => $response,
             ], $httpCode);
         } catch (\Exception $e) {
-            dd($e);
             return response()->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),

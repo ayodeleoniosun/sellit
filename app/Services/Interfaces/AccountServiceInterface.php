@@ -13,4 +13,6 @@ interface AccountServiceInterface
     public function login(array $data): array;
 
     public function forgotPassword(array $data): ?PasswordReset;
+
+    public function resetPassword(array $data): User;
 }

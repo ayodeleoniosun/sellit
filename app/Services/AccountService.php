@@ -10,6 +10,7 @@ use App\Repositories\Interfaces\AccountRepositoryInterface;
 use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
 use App\Services\Interfaces\AccountServiceInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -71,5 +72,32 @@ class AccountService implements AccountServiceInterface
             'token'      => $token,
             'expires_at' => $expiration,
         ]);
+    }
+
+    public function resetPassword(array $data): User
+    {
+        $token = $this->passwordResetRepo->getToken($data);
+
+        if (!$token) {
+            abort(403, 'Invalid token');
+        }
+
+        $user = $this->accountRepo->getUserByEmailAddress($token->email);
+
+        $tokenExpiryMinutes = $token->created_at->diffInMinutes(now());
+        $configExpiryMinutes = config('auth.passwords.users.expire');
+
+        if ($tokenExpiryMinutes > $configExpiryMinutes) {
+            abort(403, 'Token has expired. Kindly request for a forgot password link again.');
+        }
+
+        DB::transaction(function () use ($data, $user, $token) {
+            $this->accountRepo->updatePassword($data, $user->id);
+            $this->passwordResetRepo->deleteToken($token);
+        });
+
+        $user->refresh();
+
+        return $user;
     }
 }

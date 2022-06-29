@@ -21,11 +21,17 @@ class AccountRepository implements AccountRepositoryInterface
 
     public function getUserByEmailAddress(string $email): User
     {
-        return $this->user->where('email_address', $email)->first();
+        return app(UserRepository::class)->getUserByEmailAddress($email);
     }
 
     public function createToken(User $user): string
     {
         return $user->createToken('auth_token')->plainTextToken;
     }
+
+    public function updatePassword(array $data, int $id): User
+    {
+        return app(UserRepository::class)->updatePassword($data, $id);
+    }
+
 }

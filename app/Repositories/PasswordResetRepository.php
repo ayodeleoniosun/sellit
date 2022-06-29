@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\PasswordReset;
-use App\Models\User;
 use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
 
 class PasswordResetRepository implements PasswordResetRepositoryInterface
@@ -20,17 +19,16 @@ class PasswordResetRepository implements PasswordResetRepositoryInterface
         return $this->token->create($data);
     }
 
-    public function getToken(string $token): ?PasswordReset
+    public function getToken(array $data): ?PasswordReset
     {
         return $this->token->where([
-            'token' => $token,
-            'used'  => false,
+            'email' => $data['email_address'],
+            'token' => $data['token'],
         ])->first();
     }
 
-    public function invalidateToken(PasswordReset $token): void
+    public function deleteToken(PasswordReset $token): void
     {
-        $token->used = true;
-        $token->save();
+        $token->delete();
     }
 }

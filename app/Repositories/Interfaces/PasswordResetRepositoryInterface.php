@@ -8,8 +8,8 @@ interface PasswordResetRepositoryInterface
 {
     public function create(array $data): PasswordReset;
 
-    public function getToken(string $token): ?PasswordReset;
+    public function getToken(array $data): ?PasswordReset;
 
-    public function invalidateToken(PasswordReset $token): void;
+    public function deleteToken(PasswordReset $token): void;
 
 }
