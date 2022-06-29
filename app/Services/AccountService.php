@@ -3,19 +3,27 @@
 namespace App\Services;
 
 use App\Http\Resources\UserResource;
+use App\Jobs\SendForgotPasswordMail;
+use App\Models\PasswordReset;
 use App\Models\User;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
+use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
 use App\Services\Interfaces\AccountServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AccountService implements AccountServiceInterface
 {
     protected AccountRepositoryInterface $accountRepo;
+    protected PasswordResetRepositoryInterface $passwordResetRepo;
 
-    public function __construct(AccountRepositoryInterface $accountRepo)
+    public function __construct(
+        AccountRepositoryInterface       $accountRepo,
+        PasswordResetRepositoryInterface $passwordResetRepo)
     {
         $this->accountRepo = $accountRepo;
+        $this->passwordResetRepo = $passwordResetRepo;
     }
 
     public function register(array $data): User
@@ -42,5 +50,26 @@ class AccountService implements AccountServiceInterface
             'user'  => new UserResource($user),
             'token' => $token,
         ];
+    }
+
+    public function forgotPassword(array $data): ?PasswordReset
+    {
+        $user = $this->accountRepo->getUserByEmailAddress($data['email_address']);
+
+        if (!$user) {
+            abort(404, 'Email address does not exist');
+        }
+
+        $token = Str::random(60);
+        $forgotPasswordLink = config('app.url') . '/reset-password?token=' . $token;
+        $expiration = Carbon::now()->addMinutes(10)->toDateTimeString();
+
+        SendForgotPasswordMail::dispatch($user, $forgotPasswordLink);
+
+        return $this->passwordResetRepo->create([
+            'email'      => $user->email_address,
+            'token'      => $token,
+            'expires_at' => $expiration,
+        ]);
     }
 }

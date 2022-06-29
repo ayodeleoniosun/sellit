@@ -37,6 +37,16 @@ class AccountController extends Controller
         );
     }
 
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        return $this->request(
+            'forgot-password',
+            $request,
+            'Reset password link successfully sent to ' . $request->email_address,
+            Response::HTTP_OK
+        );
+    }
+
     public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
     {
         try {
@@ -46,6 +56,8 @@ class AccountController extends Controller
                 $response = $this->account->register($request->validated());
             } elseif ($type === 'login') {
                 $response = $this->account->login($request->all());
+            } elseif ($type === 'forgot-password') {
+                $response = $this->account->forgotPassword($request->all());
             }
 
             return response()->json([
@@ -54,6 +66,7 @@ class AccountController extends Controller
                 'data'    => $response,
             ], $httpCode);
         } catch (\Exception $e) {
+            dd($e);
             return response()->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),

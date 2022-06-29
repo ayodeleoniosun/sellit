@@ -177,6 +177,7 @@ return [
 
         //Repository Providers
         \App\Providers\Repositories\AccountRepositoryProvider::class,
+        \App\Providers\Repositories\PasswordResetRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AccountServiceProvider::class,

@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'slug'            => $this->slug,
             'email_address'   => $this->email_address,
             'phone_number'    => $this->phone_number,
-            'verified'        => !is_null($this->email_verified_at),
+            'verified'        => $this->hasVerifiedEmail(),
             'state'           => $this->whenLoaded('profile', function () {
                 return $this->profile->state;
             }),
