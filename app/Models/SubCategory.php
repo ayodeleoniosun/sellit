@@ -14,13 +14,18 @@ class SubCategory extends Model
 
     protected $guarded = ['id'];
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function sortOptions(): HasMany
     {
         return $this->hasMany(SubCategorySortOption::class);
     }
 
-    public function category(): BelongsTo
+    public function ads(): HasMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Ads::class);
     }
 }

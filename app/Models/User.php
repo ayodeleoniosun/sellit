@@ -17,10 +17,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, MustVerifyEmail
 {
     use HasFactory,
+        HasApiTokens,
         Authenticatable,
         Authorizable,
         CanResetPassword,
@@ -43,10 +45,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => ucwords(
-                $attributes['first_name'],
-                $attributes['last_name'],
-            ),
+            get: fn($value, $attributes) => ucwords($attributes['first_name'] . " " . $attributes['last_name'])
         );
     }
 

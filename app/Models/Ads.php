@@ -38,4 +38,15 @@ class Ads extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function pictures(): HasMany
+    {
+        return $this->hasMany(AdsPicture::class);
+    }
 }
+
