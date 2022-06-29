@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class UserRegistrationRequest extends FormRequest
+class UpdateUserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,9 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'    => 'required|string',
-            'last_name'     => 'required|string',
-            'email_address' => 'required|email|unique:users',
-            'password'      => ['required', Password::min(8)->uncompromised()],
-            'phone_number'  => 'required|string|min:10|max:15|unique:users',
+            'first_name'   => 'required|string',
+            'last_name'    => 'required|string',
+            'phone_number' => 'required|string|min:10|max:15',
         ];
     }
 }

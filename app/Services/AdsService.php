@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\ApiUtility;
 use App\Exceptions\CustomApiErrorResponseHandler;
+use App\Http\Resources\AdsResource;
 use App\Models\ActiveStatus;
 use App\Models\Ads;
 use App\Models\AdsPicture;
@@ -15,7 +16,6 @@ use App\Models\SortOption;
 use App\Models\SubCategory;
 use App\Models\SubCategorySortOption;
 use App\Repositories\AdsRepository;
-use App\Resources\AdsResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;

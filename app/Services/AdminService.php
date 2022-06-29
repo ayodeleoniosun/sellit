@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Http\Resources\AdsResource;
+use App\Http\Resources\UserResource;
 use App\Models\ActiveStatus;
 use App\Models\Ads;
 use App\Models\User;
 use App\Repositories\AdminRepository;
-use App\Resources\AdsResource;
-use App\Resources\UserResource;
 
 class AdminService implements AdminRepository
 {

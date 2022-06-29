@@ -4,11 +4,11 @@ namespace App\Services;
 
 use App\ApiUtility;
 use App\Exceptions\CustomApiErrorResponseHandler;
+use App\Http\Resources\UserResource;
 use App\Models\ActiveStatus;
 use App\Models\File;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\ApiUtility;
 use App\Exceptions\CustomApiErrorResponseHandler;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\SubCategoryResource;
 use App\Models\ActiveStatus;
 use App\Models\Category;
 use App\Models\File;
@@ -11,8 +13,6 @@ use App\Models\SortOption;
 use App\Models\SubCategory;
 use App\Models\SubCategorySortOption;
 use App\Repositories\CategoryRepository;
-use App\Resources\CategoryResource;
-use App\Resources\SubCategoryResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
