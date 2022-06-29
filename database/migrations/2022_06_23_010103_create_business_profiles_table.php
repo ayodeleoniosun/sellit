@@ -15,11 +15,11 @@ return new class extends Migration {
         Schema::create('business_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('business_name')->nullable();
-            $table->string('business_slug')->nullable();
-            $table->string('business_slug_url')->nullable();
-            $table->longText('business_description')->nullable();
-            $table->string('business_address')->nullable();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('slug_url')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('address')->nullable();
             $table->softDeletes();
 
             $table->timestamps();

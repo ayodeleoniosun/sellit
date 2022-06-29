@@ -18,4 +18,14 @@ class AccountRepository implements AccountRepositoryInterface
     {
         return $this->user->create($data);
     }
+
+    public function getUserByEmailAddress(string $email): User
+    {
+        return $this->user->where('email_address', $email)->first();
+    }
+
+    public function createToken(User $user): string
+    {
+        return $user->createToken('auth_token')->plainTextToken;
+    }
 }
