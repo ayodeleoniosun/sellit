@@ -19,7 +19,7 @@ class AccountRepository implements AccountRepositoryInterface
         return $this->user->create($data);
     }
 
-    public function getUserByEmailAddress(string $email): User
+    public function getUserByEmailAddress(string $email): ?User
     {
         return app(UserRepository::class)->getUserByEmailAddress($email);
     }

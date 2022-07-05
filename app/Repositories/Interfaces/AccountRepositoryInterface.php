@@ -8,5 +8,5 @@ interface AccountRepositoryInterface
 {
     public function store(array $data): User;
 
-    public function getUserByEmailAddress(string $email): User;
+    public function getUserByEmailAddress(string $email): ?User;
 }

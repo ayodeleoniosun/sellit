@@ -27,7 +27,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserByEmailAddress(string $emailAddress): ?User
     {
-        return $this->user->where('email_address', $emailAddress)->first();
+        return $this->user->where('email_address', $emailAddress)?->first();
     }
 
     public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User
