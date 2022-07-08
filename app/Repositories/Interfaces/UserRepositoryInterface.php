@@ -9,7 +9,7 @@ interface UserRepositoryInterface
 {
     public function getUsers(): Collection;
 
-    public function getUser(int $id): ?User;
+    public function getUser(string $slug): ?User;
 
     public function getUserByEmailAddress(string $email): ?User;
 

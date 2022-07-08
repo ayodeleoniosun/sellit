@@ -182,6 +182,7 @@ return [
 
         //Service Providers
         \App\Providers\Services\AccountServiceProvider::class,
+        \App\Providers\Services\UserServiceProvider::class,
     ],
 
     /*

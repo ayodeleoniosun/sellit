@@ -20,9 +20,9 @@ class UserRepository implements UserRepositoryInterface
         return User::all();
     }
 
-    public function getUser(int $id): ?User
+    public function getUser(string $slug): ?User
     {
-        return $this->user->find($id);
+        return $this->user->where('slug', $slug)->first();
     }
 
     public function getUserByEmailAddress(string $emailAddress): ?User

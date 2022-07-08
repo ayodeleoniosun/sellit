@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function getRouteKeyName(): string
     {
-        return $this->slug;
+        return 'slug';
     }
 
     public function fullName(): Attribute

@@ -1,8 +1,8 @@
 <?php
-
-namespace App\Repositories;
-
-interface AdminRepository
-{
-    public function overview();
-}
+//
+//namespace App\Repositories;
+//
+//interface AdminRepository
+//{
+//    public function overview();
+//}
