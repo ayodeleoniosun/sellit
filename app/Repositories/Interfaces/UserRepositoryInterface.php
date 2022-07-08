@@ -15,7 +15,11 @@ interface UserRepositoryInterface
 
     public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User;
 
-    public function updateProfile(array $data, int $id): User;
+    public function updateProfile(array $data, User $user): User;
+
+    public function updateUserProfile(array $data, User $user): User;
+
+    public function updateBusinessProfile(array $data, User $user): User;
 
     public function updatePassword(array $data, int $id): User;
 }

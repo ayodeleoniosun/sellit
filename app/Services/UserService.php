@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
 
@@ -24,5 +25,21 @@ class UserService implements UserServiceInterface
         }
 
         return new UserResource($user);
+    }
+
+    public function updateProfile(User $user, array $data): UserResource
+    {
+        $type = $data['type'];
+
+        if ($type === 'personal-information') {
+            $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
+
+            if ($phoneNumberExist) {
+                abort(403, 'Phone number belongs to another user');
+            }
+            return new UserResource($this->userRepo->updateProfile($data, $user));
+        } else if ($type === 'business-information') {
+            return new UserResource($this->userRepo->updateBusinessProfile($data, $user));
+        }
     }
 }

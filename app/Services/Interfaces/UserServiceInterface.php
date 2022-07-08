@@ -9,5 +9,5 @@ interface UserServiceInterface
 {
     public function profile(array $data): UserResource;
 
-//    public function update(array $data, string $type): User;
+    public function updateProfile(User $user, array $data): UserResource;
 }

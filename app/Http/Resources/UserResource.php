@@ -2,12 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\ActiveStatus;
-use App\Models\City;
-use App\Models\State;
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class UserResource extends JsonResource
 {
@@ -28,21 +23,8 @@ class UserResource extends JsonResource
             'email_address'   => $this->email_address,
             'phone_number'    => $this->phone_number,
             'verified'        => $this->hasVerifiedEmail(),
-            'state'           => $this->whenLoaded('profile', function () {
-                return $this->profile->state;
-            }),
-            'city'            => $this->whenLoaded('profile', function () {
-                return $this->profile->city;
-            }),
-            'business'        => $this->whenLoaded('businessProfile', function () {
-                return [
-                    'name'        => ucfirst($this->businessProfile->name),
-                    'slug'        => $this->businessProfile->slug,
-                    'slug_url'    => $this->businessProfile->slug_url,
-                    'description' => ucfirst($this->businessProfile->description),
-                    'address'     => ucfirst($this->businessProfile->address),
-                ];
-            }),
+            'business'        => new UserBusinessInformationResource($this->whenLoaded('businessProfile')),
+            'profile'         => new UserProfileResource($this->whenLoaded('profile')),
             'profile_picture' => $this->whenLoaded('pictures', function () {
                 return $this->pictures->last();
             }),

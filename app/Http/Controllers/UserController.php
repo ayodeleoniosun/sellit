@@ -47,6 +47,8 @@ class UserController extends Controller
 
             if ($type === 'profile') {
                 $response = $this->user->profile($request->all());
+            } else if ($type === 'update') {
+                $response = $this->user->updateProfile($request->user(), $request->all());
             }
 
             return response()->json([
@@ -55,6 +57,7 @@ class UserController extends Controller
                 'data'    => $response,
             ], $httpCode);
         } catch (\Exception $e) {
+            dd($e);
             return response()->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),

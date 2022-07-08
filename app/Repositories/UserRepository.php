@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\BusinessProfile;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Collection;
 
@@ -35,13 +37,48 @@ class UserRepository implements UserRepositoryInterface
         return $this->user->where('phone_number', $phoneNumber)->where('id', '<>', $id)->first();
     }
 
-    public function updateProfile(array $data, int $id): User
+    public function updateProfile(array $data, User $user): User
     {
-        $user = $this->getUser($id);
         $user->first_name = $data['first_name'];
         $user->last_name = $data['last_name'];
         $user->phone_number = $data['phone_number'];
         $user->update();
+
+        if ($data['state'] || $data['city']) {
+            $this->updateUserProfile($data, $user);
+        }
+
+        return $user;
+    }
+
+    public function updateUserProfile(array $data, User $user): User
+    {
+        if (!$user->profile) {
+            $user->profile = new UserProfile();
+            $user->profile->user_id = $user->id;
+        }
+
+        $user->profile->state_id = $data['state'];
+        $user->profile->city_id = $data['city'];
+        $user->profile->id ? $user->profile->update() : $user->profile->save();
+
+        $user->refresh();
+
+        return $user;
+    }
+
+    public function updateBusinessProfile(array $data, User $user): User
+    {
+        if (!$user->businessProfile) {
+            $user->businessProfile = new BusinessProfile();
+            $user->businessProfile->user_id = $user->id;
+        }
+
+        $user->businessProfile->name = $data['name'];
+        $user->businessProfile->slug = $data['slug'];
+        $user->businessProfile->description = $data['description'];
+        $user->businessProfile->address = $data['address'];
+        $user->businessProfile->id ? $user->businessProfile->update() : $user->businessProfile->save();
 
         return $user;
     }
