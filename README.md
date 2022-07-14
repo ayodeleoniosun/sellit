@@ -1,62 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Sellit
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sellit is a REST API clone of a popular listing website in Nigeria called [jiji.ng](https://jiji.ng)
 
-## About Laravel
+# Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* Development Requirements
+* Installation
+* Starting Devevelopment Server
+* Testing
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Development Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This application currently runs on <b>Laravel 9.20</b> and the development requirements to get this application up and
+running are as follow:
 
-## Learning Laravel
+* PHP 8.1+
+* Sqlite
+* NPM
+* MySQL
+* git
+* Composer
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Step 1: Clone the repository
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/ayodeleoniosun/sellit.git
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### Step 2: Switch to the repo folder
 
-### Premium Partners
+```bash
+cd sellit
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+#### Step 3: Install all composer dependencies
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Step 4: Install all npm dependencies
 
-## Code of Conduct
+```bash
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Step 5: Setup environment variable
 
-## Security Vulnerabilities
+- Copy `.env.example` to `.env` i.e `cp .env.example .env`
+- Update all the variables as needed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Step 6: Generate a new application key
 
-## License
+```bash
+php artisan key:generate
+``` 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Step 7: Run database migration alongside the seeders
+
+```bash
+php artisan migrate:fresh --seed
+``` 
+
+Ensure that your mysql server is up before running the above command
+
+## Starting Development Server
+
+After the installation of the packages and running migrations, then, it's time to start the development server.
+
+Development server can be started in three ways:
+
+* Using ```php artisan serve```
+* Using [Valet](https://laravel.com/docs/8.x/valet)
+* Docker via [Laravel sail](https://laravel.com/docs/8.x/sail)
+
+I recommend using valet or Laravel sail to start the development server to ensure that the application works perfectly
+across all developers' machines regardless of their operating systems.
+
+#### Note:
+
+* If you are using Laravel sail to start your development server, your default database configuration in the .env should
+  be as follow:
+
+```bash
+  DB_CONNECTION=mysql
+  DB_HOST=mysql
+  DB_PORT=3306
+  DB_DATABASE=your_database_name
+  DB_USERNAME=sail
+  DB_PASSWORD=password
+```
+
+However, if you want to change the DB username and password after springing forth a docker container using the laravel
+sail, update the DB_USERNAME and DB_PASSWORD in the .env with the new details and then run this:
+
+```bash
+./vendor/bin/sail down -v
+./vendor/bin/sail build --no-cache
+./vendor/bin/sail up -d
+```
+
+### Testing
+
+You must have installed Pest in the project before running the test suites. If you haven't, kindly follow the
+documentation [Here](https://pestphp.com/docs/installation). <br/>
+The application is currently made up of feature tests and only the RESTful endpoints were tested. <br/><br/>The tests
+can be run using:
+
+```bash
+./vendor/bin/pest
+```
