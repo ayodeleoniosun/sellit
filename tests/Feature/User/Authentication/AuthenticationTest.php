@@ -14,10 +14,11 @@ test('cannot login with invalid credentials', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
-
     $response->assertUnauthorized();
-    $this->assertEquals('error', $response->getData()->status);
-    $this->assertEquals('Incorrect login credentials', $response->getData()->message);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('error', $responseJson->status);
+    $this->assertEquals('Incorrect login credentials', $responseJson->message);
 });
 
 test('can login with valid credentials', function () {
@@ -26,6 +27,7 @@ test('can login with valid credentials', function () {
     $data = ['email_address' => $user->email_address, 'password' => 'password'];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
+    $responseJson = json_decode($response->content());
 
     $response->assertOk()
         ->assertJsonStructure([
@@ -39,6 +41,6 @@ test('can login with valid credentials', function () {
             ],
         ]);
 
-    $this->assertEquals('success', $response->getData()->status);
-    $this->assertEquals('Login successful', $response->getData()->message);
+    $this->assertEquals('success', $responseJson->status);
+    $this->assertEquals('Login successful', $responseJson->message);
 });

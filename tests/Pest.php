@@ -39,7 +39,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function actingAs(Illuminate\Contracts\Auth\Authenticatable $user)
 {
-    // ..
+    return \Laravel\Sanctum\Sanctum::actingAs($user);
 }

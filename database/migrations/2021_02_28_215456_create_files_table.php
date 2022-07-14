@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->softDeletes();
         });
 
-        File::create(['filename' => 'default.jpg']);
+        File::create(['path' => 'default.jpg']);
     }
 
     /**

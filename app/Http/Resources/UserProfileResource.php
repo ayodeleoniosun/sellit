@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\City;
-use App\Models\State;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserProfileResource extends JsonResource

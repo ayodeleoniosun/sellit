@@ -48,7 +48,7 @@ class UserService implements UserServiceInterface
     public function updatePassword(User $user, array $data): UserResource
     {
         if (!$user || !Hash::check($data['current_password'], $user->password)) {
-            abort(401, 'Incorrect current password');
+            abort(403, 'Incorrect current password');
         }
 
         return new UserResource($this->userRepo->updatePassword($data, $user));

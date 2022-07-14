@@ -28,22 +28,6 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    Route::prefix('ads')->group(function () {
-        Route::controller(AdsController::class)->group(function () {
-            Route::get('/', 'index')->name('ads.index');
-            Route::get('/{slug}', 'view')->name('ads.view');
-        });
-    });
-
-    Route::prefix('category')->group(function () {
-        Route::controller(CategoryController::class)->group(function () {
-            Route::get('/', 'index')->name('category.index');
-            Route::get('/{id}', 'view')->name('category.view');
-            Route::get('/{id}/sub-categories', 'subCategories')->name('sub_categories.index');
-            Route::get('/{id}/sub-category/{subId}', 'viewSubCategory')->name('sub_category.view');
-        });
-    });
-
     Route::middleware(['auth:sanctum'])->prefix('users')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/{slug}', 'profile')->name('user.profile');
@@ -76,6 +60,22 @@ Route::prefix('v1')->group(function () {
             Route::post('/sub-category/store', 'storeSubCategory')->name('sub_category.store');
             Route::put('/sub-category/{subId}', 'updateSubCategory')->name('sub_category.update');
             Route::post('/sub-category/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub_category.sort_options.store');
+        });
+    });
+
+    Route::prefix('ads')->group(function () {
+        Route::controller(AdsController::class)->group(function () {
+            Route::get('/', 'index')->name('ads.index');
+            Route::get('/{slug}', 'view')->name('ads.view');
+        });
+    });
+
+    Route::prefix('category')->group(function () {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/', 'index')->name('category.index');
+            Route::get('/{id}', 'view')->name('category.view');
+            Route::get('/{id}/sub-categories', 'subCategories')->name('sub_categories.index');
+            Route::get('/{id}/sub-category/{subId}', 'viewSubCategory')->name('sub_category.view');
         });
     });
 });

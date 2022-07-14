@@ -3,7 +3,6 @@
 namespace Tests\Feature\User;
 
 use App\Mail\ForgotPasswordMail;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -14,12 +13,13 @@ uses(RefreshDatabase::class, CreateUsers::class, CreatePasswordResets::class);
 
 test('cannot send forgot password link to non existent email', function () {
     $data = ['email_address' => 'invalid@email.com'];
+
     $response = $this->postJson($this->apiBaseUrl . '/accounts/forgot-password', $data);
-
     $response->assertNotFound();
+    $responseJson = json_decode($response->content());
 
-    $this->assertEquals('error', $response->getData()->status);
-    $this->assertEquals('Email address does not exist', $response->getData()->message);
+    $this->assertEquals('error', $responseJson->status);
+    $this->assertEquals('Email address does not exist', $responseJson->message);
 });
 
 test('send forgot password link to existing email', function () {
@@ -27,11 +27,13 @@ test('send forgot password link to existing email', function () {
 
     $user = $this->createUser();
     $data = ['email_address' => $user->email_address];
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/forgot-password', $data);
 
+    $response = $this->postJson($this->apiBaseUrl . '/accounts/forgot-password', $data);
     $response->assertOk();
-    $this->assertEquals('success', $response->getData()->status);
-    $this->assertEquals($response->getData()->message, 'Reset password link successfully sent to ' . $user->email_address);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('success', $responseJson->status);
+    $this->assertEquals($responseJson->message, 'Reset password link successfully sent to ' . $user->email_address);
 
     Mail::assertQueued(ForgotPasswordMail::class);
 });
@@ -40,9 +42,10 @@ test('cannot reset password with empty token', function () {
     $data = ['token' => ''];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertUnprocessable();
-    $this->assertEquals('The token field is required.', $response->getData()->errors->token[0]);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('The token field is required.', $responseJson->errors->token[0]);
 });
 
 test('cannot reset password with short passwords', function () {
@@ -52,9 +55,10 @@ test('cannot reset password with short passwords', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertUnprocessable();
-    $this->assertEquals('The new password must be at least 8 characters.', $response->getData()->errors->new_password[0]);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('The new password must be at least 8 characters.', $responseJson->errors->new_password[0]);
 });
 
 test('cannot reset password with non matching passwords', function () {
@@ -64,18 +68,20 @@ test('cannot reset password with non matching passwords', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertUnprocessable();
-    $this->assertEquals('The new password confirmation does not match.', $response->getData()->errors->new_password[0]);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('The new password confirmation does not match.', $responseJson->errors->new_password[0]);
 });
 
 test('cannot reset password with non existent token', function () {
     $data = ['token' => Str::random(60)];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertUnprocessable();
-    $this->assertEquals('The selected token is invalid.', $response->getData()->errors->token[0]);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('The selected token is invalid.', $responseJson->errors->token[0]);
 });
 
 test('cannot reset password with invalid token', function () {
@@ -85,9 +91,10 @@ test('cannot reset password with invalid token', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertUnprocessable();
-    $this->assertEquals('The selected token is invalid.', $response->getData()->errors->token[0]);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('The selected token is invalid.', $responseJson->errors->token[0]);
 });
 
 test('cannot reset password with expired token', function () {
@@ -106,10 +113,11 @@ test('cannot reset password with expired token', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertForbidden();
-    $this->assertEquals('error', $response->getData()->status);
-    $this->assertEquals('Token has expired. Kindly request for a forgot password link again.', $response->getData()->message);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('error', $responseJson->status);
+    $this->assertEquals('Token has expired. Kindly request for a forgot password link again.', $responseJson->message);
 });
 
 test('can reset password', function () {
@@ -128,8 +136,9 @@ test('can reset password', function () {
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
-
     $response->assertOk();
-    $this->assertEquals('success', $response->getData()->status);
-    $this->assertEquals('Password successfully reset', $response->getData()->message);
+    $responseJson = json_decode($response->content());
+
+    $this->assertEquals('success', $responseJson->status);
+    $this->assertEquals('Password successfully reset', $responseJson->message);
 });
