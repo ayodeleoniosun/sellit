@@ -18,7 +18,6 @@ class UserBusinessInformationResource extends JsonResource
             'id'          => $this->id,
             'name'        => ucfirst($this->name),
             'slug'        => $this->slug,
-            'slug_url'    => $this->slug_url,
             'description' => ucfirst($this->description),
             'address'     => ucfirst($this->address),
             'created_at'  => $this->created_at,

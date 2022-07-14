@@ -61,16 +61,25 @@ class AccountController extends Controller
     public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
     {
         try {
-            $response = null;
+            switch ($type) {
+                case 'register':
+                    $response = $this->account->register($request->validated());
+                    break;
 
-            if ($type === 'register') {
-                $response = $this->account->register($request->validated());
-            } elseif ($type === 'login') {
-                $response = $this->account->login($request->all());
-            } elseif ($type === 'forgot-password') {
-                $response = $this->account->forgotPassword($request->all());
-            } elseif ($type === 'reset-password') {
-                $response = $this->account->resetPassword($request->validated());
+                case 'login':
+                    $response = $this->account->login($request->all());
+                    break;
+
+                case 'forgot-password':
+                    $response = $this->account->forgotPassword($request->all());
+                    break;
+
+                case 'reset-password':
+                    $response = $this->account->resetPassword($request->validated());
+                    break;
+
+                default:
+                    $response = null;
             }
 
             return response()->json([

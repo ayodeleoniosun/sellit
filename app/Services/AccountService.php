@@ -92,7 +92,7 @@ class AccountService implements AccountServiceInterface
         }
 
         DB::transaction(function () use ($data, $user, $token) {
-            $this->accountRepo->updatePassword($data, $user->id);
+            $this->accountRepo->updatePassword($data, $user);
             $this->passwordResetRepo->deleteToken($token);
         });
 

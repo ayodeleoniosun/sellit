@@ -21,5 +21,5 @@ interface UserRepositoryInterface
 
     public function updateBusinessProfile(array $data, User $user): User;
 
-    public function updatePassword(array $data, int $id): User;
+    public function updatePassword(array $data, User $user): User;
 }

@@ -24,7 +24,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUser(string $slug): ?User
     {
-        return $this->user->where('slug', $slug)->first();
+        $user = $this->user->where('slug', $slug);
+
+        if ($user->first()) {
+            return $user->with('profile', 'businessProfile', 'pictures')->first();
+        }
+
+        return null;
     }
 
     public function getUserByEmailAddress(string $emailAddress): ?User
@@ -44,11 +50,9 @@ class UserRepository implements UserRepositoryInterface
         $user->phone_number = $data['phone_number'];
         $user->update();
 
-        if ($data['state'] || $data['city']) {
-            $this->updateUserProfile($data, $user);
-        }
+        $user->refresh();
 
-        return $user;
+        return $this->getUser($user->slug);
     }
 
     public function updateUserProfile(array $data, User $user): User
@@ -61,8 +65,6 @@ class UserRepository implements UserRepositoryInterface
         $user->profile->state_id = $data['state'];
         $user->profile->city_id = $data['city'];
         $user->profile->id ? $user->profile->update() : $user->profile->save();
-
-        $user->refresh();
 
         return $user;
     }
@@ -80,12 +82,13 @@ class UserRepository implements UserRepositoryInterface
         $user->businessProfile->address = $data['address'];
         $user->businessProfile->id ? $user->businessProfile->update() : $user->businessProfile->save();
 
-        return $user;
+        $user->refresh();
+
+        return $this->getUser($user->slug);
     }
 
-    public function updatePassword(array $data, int $id): User
+    public function updatePassword(array $data, User $user): User
     {
-        $user = $this->getUser($id);
         $user->password = bcrypt($data['new_password']);
         $user->update();
 

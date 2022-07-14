@@ -6,6 +6,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
+use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
 {
@@ -29,17 +30,26 @@ class UserService implements UserServiceInterface
 
     public function updateProfile(User $user, array $data): UserResource
     {
-        $type = $data['type'];
+        $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
 
-        if ($type === 'personal-information') {
-            $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
-
-            if ($phoneNumberExist) {
-                abort(403, 'Phone number belongs to another user');
-            }
-            return new UserResource($this->userRepo->updateProfile($data, $user));
-        } else if ($type === 'business-information') {
-            return new UserResource($this->userRepo->updateBusinessProfile($data, $user));
+        if ($phoneNumberExist) {
+            abort(403, 'Phone number belongs to another user');
         }
+
+        return new UserResource($this->userRepo->updateProfile($data, $user));
+    }
+
+    public function updateBusinessProfile(User $user, array $data): UserResource
+    {
+        return new UserResource($this->userRepo->updateBusinessProfile($data, $user));
+    }
+
+    public function updatePassword(User $user, array $data): UserResource
+    {
+        if (!$user || !Hash::check($data['current_password'], $user->password)) {
+            abort(401, 'Incorrect current password');
+        }
+
+        return new UserResource($this->userRepo->updatePassword($data, $user));
     }
 }

@@ -47,8 +47,9 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->prefix('users')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/{slug}', 'profile')->name('user.profile');
-            Route::put('/profile/update/{type}', 'update')->name('user.update');
-            // [personal information, business information, profile picture, password]
+            Route::put('/profile/update/personal-information', 'updateProfile')->name('user.update.profile');
+            Route::put('/profile/update/business-information', 'updateBusinessProfile')->name('user.update.business-profile');
+            Route::put('/profile/update/password', 'updatePassword')->name('user.update.password');
         });
 
         Route::controller(AdsController::class)->prefix('/ads')->group(function () {
