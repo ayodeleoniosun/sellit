@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "5b10742a-a4a3-4614-a284-a20c284b96e5",
+		"name": "Sellit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18037473"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{accounts}}/forgot-password",
+							"host": [
+								"{{accounts}}"
+							],
+							"path": [
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"new_password\": \"ayodeleoniosun63\",\n    \"new_password_confirmation\": \"ayodeleoniosun63\",\n    \"token\" : \"ADRi00PsdVFzV4ZDJ2p36JEWCTnTLabMcm79rLDcxwKD2kacEOYGEpuo40sv\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{accounts}}/reset-password",
+							"host": [
+								"{{accounts}}"
+							],
+							"path": [
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{users}}/ayodele-oniosun-caqb1m0d",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"ayodele-oniosun-caqb1m0d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Personal Information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"ayodele\",\n    \"last_name\" :\"oniosun\",\n    \"phone_number\" : \"08123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/personal-information",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"personal-information"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Business Information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"business name\",\n    \"slug\" :\"business-name\",\n    \"description\" : \"This is what my business does\",\n    \"address\": \"Lagos, Nigeria\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/business-information",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"business-information"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"1234567\",\n    \"new_password_confirmation\" : \"1234567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/password",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile Picture",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "3TYWB3t0x/Screenshot 2022-02-04 at 10.15.17 AM.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/picture",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{users}}/profile/logout",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://sellit.test/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "auth",
+			"value": "Bearer {{your-token-here}}",
+			"type": "string"
+		},
+		{
+			"key": "accounts",
+			"value": "{{baseUrl}}/accounts",
+			"type": "string"
+		},
+		{
+			"key": "users",
+			"value": "{{baseUrl}}/users",
+			"type": "string"
+		}
+	]
+}

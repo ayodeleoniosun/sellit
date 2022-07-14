@@ -7,6 +7,7 @@ Sellit is a REST API clone of a popular listing website in Nigeria called [jiji.
 * Development Requirements
 * Installation
 * Starting Devevelopment Server
+* Documentation
 * Testing
 
 ## Development Requirements
@@ -101,6 +102,10 @@ sail, update the DB_USERNAME and DB_PASSWORD in the .env with the new details an
 ./vendor/bin/sail build --no-cache
 ./vendor/bin/sail up -d
 ```
+
+### Documentation
+
+The Postman API collection is available [Here](/public/postman_collection.json). <br/>
 
 ### Testing
 
