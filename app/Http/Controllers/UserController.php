@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\UpdatePasswordRequest;
+use App\Http\Requests\Users\UpdateProfilePictureRequest;
 use App\Http\Requests\Users\UpdateUserBusinessInformationRequest;
 use App\Http\Requests\Users\UpdateUserProfileRequest;
 use App\Services\Interfaces\UserServiceInterface;
@@ -61,6 +62,16 @@ class UserController extends Controller
         );
     }
 
+    public function updateProfilePicture(UpdateProfilePictureRequest $request): JsonResponse
+    {
+        return $this->request(
+            'update-profile-picture',
+            $request,
+            'Profile picture successfully updated',
+            Response::HTTP_OK
+        );
+    }
+
     public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
     {
         try {
@@ -79,6 +90,10 @@ class UserController extends Controller
 
                 case 'update-password':
                     $response = $this->user->updatePassword($request->user(), $request->validated());
+                    break;
+
+                case 'update-profile-picture':
+                    $response = $this->user->updateProfilePicture($request->user(), $request->validated());
                     break;
 
                 default:

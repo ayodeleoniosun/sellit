@@ -22,4 +22,6 @@ interface UserRepositoryInterface
     public function updateBusinessProfile(array $data, User $user): User;
 
     public function updatePassword(array $data, User $user): User;
+
+    public function updateProfilePicture(string $path, User $user): User;
 }

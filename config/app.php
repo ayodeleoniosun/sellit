@@ -179,6 +179,7 @@ return [
         \App\Providers\Repositories\AccountRepositoryProvider::class,
         \App\Providers\Repositories\UserRepositoryProvider::class,
         \App\Providers\Repositories\PasswordResetRepositoryProvider::class,
+        \App\Providers\Repositories\FileRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AccountServiceProvider::class,

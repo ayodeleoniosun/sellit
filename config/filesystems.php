@@ -32,74 +32,35 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root'   => storage_path('app'),
         ],
 
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'driver'     => 'local',
+            'root'       => storage_path('app/public'),
+            'url'        => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
         's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'driver'   => 's3',
+            'key'      => env('AWS_ACCESS_KEY_ID'),
+            'secret'   => env('AWS_SECRET_ACCESS_KEY'),
+            'region'   => env('AWS_DEFAULT_REGION'),
+            'bucket'   => env('AWS_BUCKET'),
+            'url'      => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
-        'users' => (
-            env('APP_ENV') == 'production' ?
-            [
-                'driver' => 's3',
-                'key' => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                'region' => env('AWS_DEFAULT_REGION'),
-                'bucket' => env('AWS_BUCKET'),
-            ]: [
-                'driver' => 'local',
-                'root' => storage_path('app/public/users'),
-                'url' => env('APP_URL').'/storage/users',
-                'visibility' => 'public'
-            ]
-        ),
-
-        'categories' => (
-            env('APP_ENV') == 'production' ?
-            [
-                'driver' => 's3',
-                'key' => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                'region' => env('AWS_DEFAULT_REGION'),
-                'bucket' => env('AWS_BUCKET'),
-            ]: [
-                'driver' => 'local',
-                'root' => storage_path('app/public/categories'),
-                'url' => env('APP_URL').'/storage/categories',
-                'visibility' => 'public'
-            ]
-        ),
-
-        'ads' => (
-            env('APP_ENV') == 'production' ?
-            [
-                'driver' => 's3',
-                'key' => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                'region' => env('AWS_DEFAULT_REGION'),
-                'bucket' => env('AWS_BUCKET'),
-            ]: [
-                'driver' => 'local',
-                'root' => storage_path('app/public/ads'),
-                'url' => env('APP_URL').'/storage/ads',
-                'visibility' => 'public'
-            ]
-        ),
-
+        'profile_pictures' => [
+            'driver'   => 's3',
+            'key'      => env('AWS_ACCESS_KEY_ID'),
+            'secret'   => env('AWS_SECRET_ACCESS_KEY'),
+            'region'   => env('AWS_DEFAULT_REGION'),
+            'bucket'   => env('AWS_PROFILE_PICTURES_BUCKET'),
+            'url'      => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+        ],
     ],
 
     /*

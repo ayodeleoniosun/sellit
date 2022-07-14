@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserService implements UserServiceInterface
 {
@@ -51,5 +52,19 @@ class UserService implements UserServiceInterface
         }
 
         return new UserResource($this->userRepo->updatePassword($data, $user));
+    }
+
+    public function updateProfilePicture(User $user, array $data): UserResource
+    {
+        $image = (object)$data['image'];
+
+        $extension = $image->extension();
+        $filename = $user->id . '' . time() . '.' . $extension;
+
+        Storage::disk('profile_pictures')->put($filename, file_get_contents($image->getRealPath()));
+
+        $path = Storage::disk('profile_pictures')->url($filename);
+
+        return new UserResource($this->userRepo->updateProfilePicture($path, $user));
     }
 }

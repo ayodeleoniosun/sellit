@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             'business'        => new UserBusinessInformationResource($this->whenLoaded('businessProfile')),
             'profile'         => new UserProfileResource($this->whenLoaded('profile')),
             'profile_picture' => $this->whenLoaded('pictures', function () {
-                return $this->pictures->last();
+                return new UserProfilePictureResource($this->pictures->last());
             }),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,

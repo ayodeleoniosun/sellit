@@ -20,6 +20,6 @@ class UserProfilePicture extends Model
 
     public function file(): BelongsTo
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'profile_picture_id');
     }
 }

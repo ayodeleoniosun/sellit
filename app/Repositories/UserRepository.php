@@ -3,8 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\BusinessProfile;
+use App\Models\File;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\UserProfilePicture;
+use App\Repositories\Interfaces\FileRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Collection;
 
@@ -12,9 +15,12 @@ class UserRepository implements UserRepositoryInterface
 {
     private User $user;
 
-    public function __construct(User $user)
+    protected FileRepositoryInterface $fileRepo;
+
+    public function __construct(User $user, FileRepositoryInterface $fileRepo)
     {
         $this->user = $user;
+        $this->fileRepo = $fileRepo;
     }
 
     public function getUsers(): Collection
@@ -93,5 +99,22 @@ class UserRepository implements UserRepositoryInterface
         $user->update();
 
         return $user;
+    }
+
+    public function updateProfilePicture(string $path, User $user): User
+    {
+        $file = $this->fileRepo->create([
+            'path' => $path,
+            'type' => File::USER_FILE_TYPE,
+        ]);
+
+        $user->pictures = new UserProfilePicture();
+        $user->pictures->user_id = $user->id;
+        $user->pictures->profile_picture_id = $file->id;
+        $user->pictures->save();
+
+        $user->fresh();
+
+        return $this->getUser($user->slug);
     }
 }
