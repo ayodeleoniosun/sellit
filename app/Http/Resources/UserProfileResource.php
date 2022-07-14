@@ -18,8 +18,8 @@ class UserProfileResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'state'      => State::where('id', $this->state_id)->select('id', 'name')->first(),
-            'city'       => City::where('id', $this->city_id)->select('id', 'name')->first(),
+            'state'      => $this->state,
+            'city'       => $this->city,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

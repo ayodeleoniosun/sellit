@@ -20,11 +20,11 @@ class UserProfile extends Model
 
     public function state(): BelongsTo
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(State::class)->select('id', 'name');
     }
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->select('id', 'name');
     }
 }
