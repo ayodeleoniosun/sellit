@@ -20,7 +20,7 @@ class UserWelcomeMail extends Mailable
 
     public function __construct($data)
     {
-        $this->data = (object) $data;
+        $this->data = (object)$data;
     }
 
     /**
@@ -35,8 +35,8 @@ class UserWelcomeMail extends Mailable
                 ->addTextHeader('X-SES-CONFIGURATION-SET', 'suetco');
         });
 
-        return $this->from('hello@larachat.test', 'LaraChat')
-            ->subject(ApiUtility::mail_subject_by_environment().'Welcome to Larachat')
+        return $this->from('hello@sellit.test', 'Sellit')
+            ->subject('Welcome to Sellit')
             ->bcc('mails@ses.mailintel.io', 'Mailintel SES')
             ->view('email.user.welcome', ['data' => $this->data]);
     }
