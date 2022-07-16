@@ -17,9 +17,9 @@
         "laravel/helpers": "^1.5",
         "laravel/legacy-factories": "^1.1",
         "laravel/sanctum": "^2.15",
+        "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "nunomaduro/larastan": "^2.1",
         "phpunit/phpunit": "^9.5",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^7.0",
@@ -28,9 +28,12 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "^1.15",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.1",
+        "nunomaduro/phpinsights": "^2.4",
+        "overtrue/phplint": "^5.3",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.2",
         "pestphp/pest-plugin-parallel": "^1.0",
@@ -41,7 +44,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
