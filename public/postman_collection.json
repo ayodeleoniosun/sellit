@@ -1,61 +1,22 @@
 {
 	"info": {
-		"_postman_id": "5b10742a-a4a3-4614-a284-a20c284b96e5",
+		"_postman_id": "3f1fe67e-e476-4942-8a13-440965801de7",
 		"name": "Sellit",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18037473"
 	},
 	"item": [
 		{
-			"name": "Accounts",
+			"name": "Account",
 			"item": [
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/accounts/register",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"accounts",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Login",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"    \n}",
+							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -63,12 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/accounts/login",
+							"raw": "{{accounts}}/login",
 							"host": [
-								"{{baseUrl}}"
+								"{{accounts}}"
 							],
 							"path": [
-								"accounts",
 								"login"
 							]
 						}
@@ -79,13 +39,7 @@
 					"name": "Forgot Password",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\"\n}",
@@ -120,7 +74,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"new_password\": \"ayodeleoniosun63\",\n    \"new_password_confirmation\": \"ayodeleoniosun63\",\n    \"token\" : \"ADRi00PsdVFzV4ZDJ2p36JEWCTnTLabMcm79rLDcxwKD2kacEOYGEpuo40sv\"\n}",
+							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"new_password\": \"ayodeleoniosun\",\n    \"new_password_confirmation\": \"ayodeleoniosun\",\n    \"token\" : \"ajJ3j1KCHah7BEdJKFWU0iSbJrjfZrK5w3leZ4Mtf9QjSduCJBMn1HeVWIum\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -138,160 +92,21 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Profile",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{users}}/ayodele-oniosun-caqb1m0d",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"ayodele-oniosun-caqb1m0d"
-							]
-						}
-					},
-					"response": []
 				},
 				{
-					"name": "Update Personal Information",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"ayodele\",\n    \"last_name\" :\"oniosun\",\n    \"phone_number\" : \"08123456789\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/personal-information",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"personal-information"
-							]
+					"name": "Register",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"accept": true
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "Update Business Information",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"business name\",\n    \"slug\" :\"business-name\",\n    \"description\" : \"This is what my business does\",\n    \"address\": \"Lagos, Nigeria\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/business-information",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"business-information"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Password",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"1234567\",\n    \"new_password_confirmation\" : \"1234567\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/password",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"password"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Profile Picture",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "{{auth}}",
+								"key": "Content-Type",
+								"value": "application/json",
 								"type": "text"
 							},
 							{
@@ -301,68 +116,207 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "image",
-									"type": "file",
-									"src": "3TYWB3t0x/Screenshot 2022-02-04 at 10.15.17 AM.png"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
 						},
 						"url": {
-							"raw": "{{users}}/profile/update/picture",
+							"raw": "{{accounts}}/register",
 							"host": [
-								"{{users}}"
+								"{{accounts}}"
 							],
 							"path": [
-								"profile",
-								"update",
-								"picture"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{users}}/profile/logout",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"logout"
+								"register"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "Profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{users}}/ayodele-oniosun-9pzcxfhx",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"ayodele-oniosun-9pzcxfhx"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Personal Information",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/personal-information",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"personal-information"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Business Information",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Business-101\",\n    \"slug\" : \"business-101\",\n    \"description\" : \"Lagos, Nigeria\",\n    \"address\": \"Lagos, Nigeria\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/business-information",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"business-information"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun\",\n    \"new_password_confirmation\" : \"ayodeleoniosun\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/password",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Profile Picture",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/picture",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"picture"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
+	"auth": {
+		"type": "bearer"
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -386,23 +340,19 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://sellit.test/api/v1",
-			"type": "string"
+			"value": "http://sellit.test/api/v1"
 		},
 		{
 			"key": "auth",
-			"value": "Bearer {{your-token-here}}",
-			"type": "string"
+			"value": "Bearer 34|mLCqyIanfV53RRKq12J16AIoNJiVTAfnvHpC9tX5"
 		},
 		{
 			"key": "accounts",
-			"value": "{{baseUrl}}/accounts",
-			"type": "string"
+			"value": "{{baseUrl}}/accounts"
 		},
 		{
 			"key": "users",
-			"value": "{{baseUrl}}/users",
-			"type": "string"
+			"value": "{{baseUrl}}/users"
 		}
 	]
 }
