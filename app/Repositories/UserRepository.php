@@ -83,7 +83,7 @@ class UserRepository implements UserRepositoryInterface
         }
 
         $user->businessProfile->name = $data['name'];
-        $user->businessProfile->slug = $data['slug'];
+        $user->businessProfile->slug = strtolower($data['slug']);
         $user->businessProfile->description = $data['description'];
         $user->businessProfile->address = $data['address'];
         $user->businessProfile->id ? $user->businessProfile->update() : $user->businessProfile->save();
