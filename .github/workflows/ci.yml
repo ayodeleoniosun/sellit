@@ -1,0 +1,61 @@
+name: Sellit CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  phplint:
+    name: Check syntax errors
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: overtrue/phplint@8.0
+        with:
+          args: --configuration=.phplint.yml
+
+  phpfixer:
+    name: Run php fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: OskarStark/php-cs-fixer-ga@3.7.0
+        with:
+          args: --config=.php-cs-fixer.php
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: '8.1'
+
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          php -r "file_exists('.env') || copy('.env.pipelines', '.env');"
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          npm install
+          php artisan key:generate
+          chmod -R 777 storage bootstrap/cache
+          php artisan storage:link
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Run tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/pest --parallel
+
+      - name: Run static analysis
+        run: vendor/bin/phpstan analyze --memory-limit=1G
