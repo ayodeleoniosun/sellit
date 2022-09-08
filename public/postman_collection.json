@@ -2,12 +2,11 @@
 	"info": {
 		"_postman_id": "3f1fe67e-e476-4942-8a13-440965801de7",
 		"name": "Sellit",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18037473"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Account",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Login",
@@ -16,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,9 +23,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/login",
+							"raw": "{{auth}}/login",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"login"
@@ -39,10 +38,21 @@
 					"name": "Forgot Password",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\"\n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -50,9 +60,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/forgot-password",
+							"raw": "{{auth}}/forgot-password",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"forgot-password"
@@ -74,7 +84,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"new_password\": \"ayodeleoniosun\",\n    \"new_password_confirmation\": \"ayodeleoniosun\",\n    \"token\" : \"ajJ3j1KCHah7BEdJKFWU0iSbJrjfZrK5w3leZ4Mtf9QjSduCJBMn1HeVWIum\"\n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\",\n    \"password_confirmation\": \"ayodeleoniosun\",\n    \"token\" : \"0645f3fc167cba5fbaa41542b8b92a145d1a603d4abfb60717f742c5d7c21b98\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -82,9 +92,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/reset-password",
+							"raw": "{{auth}}/reset-password",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"reset-password"
@@ -117,12 +127,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
 						},
 						"url": {
-							"raw": "{{accounts}}/register",
+							"raw": "{{auth}}/register",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"register"
@@ -130,6 +140,26 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -146,17 +176,22 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{auth}}",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "{{users}}/ayodele-oniosun-9pzcxfhx",
+									"raw": "{{users}}/ayodele-oniosun-5ycjyunj",
 									"host": [
 										"{{users}}"
 									],
 									"path": [
-										"ayodele-oniosun-9pzcxfhx"
+										"ayodele-oniosun-5ycjyunj"
 									]
 								}
 							},
@@ -169,13 +204,18 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{auth}}",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\"\n}",
+									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone\" : \"08132016744\",\n    \"state\": \"1\",\n    \"city\": \"2\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -203,7 +243,12 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{auth}}",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
 										"type": "text"
 									}
 								],
@@ -237,7 +282,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{auth}}",
+										"value": "{{authorization}}",
 										"type": "text"
 									},
 									{
@@ -276,7 +321,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{auth}}",
+										"value": "{{authorization}}",
 										"type": "text"
 									},
 									{
@@ -291,7 +336,7 @@
 										{
 											"key": "image",
 											"type": "file",
-											"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
+											"src": "/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
 										}
 									]
 								},
@@ -304,6 +349,35 @@
 										"profile",
 										"update",
 										"picture"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{authorization}}"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{users}}/profile/logout",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"logout"
 									]
 								}
 							},
@@ -343,12 +417,12 @@
 			"value": "http://sellit.test/api/v1"
 		},
 		{
-			"key": "auth",
-			"value": "Bearer 34|mLCqyIanfV53RRKq12J16AIoNJiVTAfnvHpC9tX5"
+			"key": "authorization",
+			"value": "Bearer 2|RrJXGMf99cWNB9yikcxcJKWSjwmpIsV9uIfTyAmS"
 		},
 		{
-			"key": "accounts",
-			"value": "{{baseUrl}}/accounts"
+			"key": "auth",
+			"value": "{{baseUrl}}/auth"
 		},
 		{
 			"key": "users",

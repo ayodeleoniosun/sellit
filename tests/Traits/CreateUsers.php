@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Traits;
 
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;

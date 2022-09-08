@@ -11,8 +11,10 @@
 |
 */
 
-uses(Tests\TestCase::class)->in('Feature');
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\CreateUsers;
 
+uses(Tests\TestCase::class, RefreshDatabase::class, CreateUsers::class)->in('Feature', 'Unit');
 /*
 |--------------------------------------------------------------------------
 | Expectations

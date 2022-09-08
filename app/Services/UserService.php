@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomException;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +25,7 @@ class UserService implements UserServiceInterface
         $user = $this->userRepo->getUser($data['slug']);
 
         if (!$user) {
-            abort(404, 'User not found');
+            throw new CustomException('User not found', 404);
         }
 
         return new UserResource($user);
@@ -31,10 +33,10 @@ class UserService implements UserServiceInterface
 
     public function updateProfile(User $user, array $data): UserResource
     {
-        $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
+        $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone'], $user->id);
 
         if ($phoneNumberExist) {
-            abort(403, 'Phone number belongs to another user');
+            throw new CustomException('Phone number belongs to another user', 403);
         }
 
         return new UserResource($this->userRepo->updateProfile($data, $user));
@@ -45,13 +47,15 @@ class UserService implements UserServiceInterface
         return new UserResource($this->userRepo->updateBusinessProfile($data, $user));
     }
 
-    public function updatePassword(User $user, array $data): UserResource
+    public function updatePassword(User $user, array $data): string
     {
         if (!$user || !Hash::check($data['current_password'], $user->password)) {
-            abort(403, 'Incorrect current password');
+            throw new CustomException('Incorrect current password', 403);
         }
 
-        return new UserResource($this->userRepo->updatePassword($data, $user));
+        $this->userRepo->updatePassword($data, $user);
+
+        return 'Password successfully updated';
     }
 
     public function updateProfilePicture(User $user, array $data): UserResource
@@ -66,5 +70,10 @@ class UserService implements UserServiceInterface
         $path = Storage::disk('profile_pictures')->url($filename);
 
         return new UserResource($this->userRepo->updateProfilePicture($path, $user));
+    }
+
+    public function logout(User $user): int
+    {
+        return $this->userRepo->logout($user);
     }
 }

@@ -9,7 +9,6 @@ use App\Http\Requests\Users\UpdateUserProfileRequest;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -23,93 +22,38 @@ class UserController extends Controller
     public function profile(Request $request, string $slug): JsonResponse
     {
         $request->merge(['slug' => $slug]);
+        $response = $this->user->profile($request->all());
 
-        return $this->request(
-            'profile',
-            $request,
-            '',
-            Response::HTTP_OK
-        );
+        return response()->success($response);
     }
 
     public function updateProfile(UpdateUserProfileRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-profile',
-            $request,
-            'Profile successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updateProfile($request->user(), $request->validated());
+        return response()->success($response, 'Profile successfully updated');
     }
 
     public function updateBusinessProfile(UpdateUserBusinessInformationRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-business-profile',
-            $request,
-            'Business profile successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updateBusinessProfile($request->user(), $request->validated());
+        return response()->success($response, 'Business profile successfully updated');
     }
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-password',
-            $request,
-            'Password successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updatePassword($request->user(), $request->validated());
+        return response()->success([], 'Password successfully updated');
     }
 
     public function updateProfilePicture(UpdateProfilePictureRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-profile-picture',
-            $request,
-            'Profile picture successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updateProfilePicture($request->user(), $request->validated());
+        return response()->success($response, 'Profile picture successfully updated');
     }
 
-    public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        try {
-            switch ($type) {
-                case 'profile':
-                    $response = $this->user->profile($request->all());
-                    break;
-
-                case 'update-profile':
-                    $response = $this->user->updateProfile($request->user(), $request->validated());
-                    break;
-
-                case 'update-business-profile':
-                    $response = $this->user->updateBusinessProfile($request->user(), $request->validated());
-                    break;
-
-                case 'update-password':
-                    $response = $this->user->updatePassword($request->user(), $request->validated());
-                    break;
-
-                case 'update-profile-picture':
-                    $response = $this->user->updateProfilePicture($request->user(), $request->validated());
-                    break;
-
-                default:
-                    $response = null;
-            }
-
-            return response()->json([
-                'status'  => 'success',
-                'message' => $successMessage,
-                'data'    => $response,
-            ], $httpCode);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ], $e->getStatusCode());
-        }
+        $this->user->logout($request->user());
+        return response()->success([], 'User logged out');
     }
 }

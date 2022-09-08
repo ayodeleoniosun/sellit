@@ -2,18 +2,13 @@
 
 namespace Tests\Feature\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\CreateUsers;
-
-uses(RefreshDatabase::class, CreateUsers::class);
-
 test('cannot login with invalid credentials', function () {
     $data = [
-        'email_address' => 'email@sellit.test',
+        'email' => 'email@sellit.test',
         'password'      => 'email@sellit.test',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
+    $response = $this->postJson($this->baseUrl . '/auth/login', $data);
     $response->assertUnauthorized();
     $responseJson = json_decode($response->content());
 
@@ -24,9 +19,9 @@ test('cannot login with invalid credentials', function () {
 test('can login with valid credentials', function () {
     $user = $this->createUser();
 
-    $data = ['email_address' => $user->email_address, 'password' => 'password'];
+    $data = ['email' => $user->email, 'password' => 'password'];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
+    $response = $this->postJson($this->baseUrl . '/auth/login', $data);
     $responseJson = json_decode($response->content());
 
     $response->assertOk()
@@ -34,7 +29,7 @@ test('can login with valid credentials', function () {
             'status',
             'message',
             'data' => [
-                'user' => ['id', 'first_name', 'last_name', 'email_address', 'slug', 'phone_number',
+                'user' => ['id', 'first_name', 'last_name', 'email', 'slug', 'phone',
                     'verified', 'created_at', 'updated_at',
                 ],
                 'token',
@@ -42,5 +37,5 @@ test('can login with valid credentials', function () {
         ]);
 
     $this->assertEquals('success', $responseJson->status);
-    $this->assertEquals('Login successful', $responseJson->message);
+    $this->assertEquals('Login successful.', $responseJson->message);
 });

@@ -39,40 +39,35 @@ class UserRepository implements UserRepositoryInterface
         return null;
     }
 
-    public function getUserByEmailAddress(string $emailAddress): ?User
+    public function getUserByEmailAddress(string $email): ?User
     {
-        return $this->user->where('email_address', $emailAddress)?->first();
+        return $this->user->where('email', $email)?->first();
     }
 
-    public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User
+    public function getDuplicateUserByPhoneNumber(string $phone, int $id): ?User
     {
-        return $this->user->where('phone_number', $phoneNumber)->where('id', '<>', $id)->first();
+        return $this->user->where('phone', $phone)->where('id', '<>', $id)->first();
     }
 
     public function updateProfile(array $data, User $user): User
     {
-        $user->first_name = $data['first_name'];
-        $user->last_name = $data['last_name'];
-        $user->phone_number = $data['phone_number'];
-        $user->update();
+        $user->update($data);
+
+        if (isset($data['state']) && isset($data['city'])) {
+            $this->updateUserProfile($data, $user);
+        }
 
         $user->refresh();
 
         return $this->getUser($user->slug);
     }
 
-    public function updateUserProfile(array $data, User $user): User
+    public function updateUserProfile(array $data, User $user): void
     {
-        if (!$user->profile) {
-            $user->profile = new UserProfile();
-            $user->profile->user_id = $user->id;
-        }
-
-        $user->profile->state_id = $data['state'];
-        $user->profile->city_id = $data['city'];
-        $user->profile->id ? $user->profile->update() : $user->profile->save();
-
-        return $user;
+         UserProfile::updateOrCreate(
+            ['user_id' => $user->id],
+            ['state_id' => $data['state'], 'city_id' => $data['city'] ]
+        );
     }
 
     public function updateBusinessProfile(array $data, User $user): User
@@ -116,5 +111,10 @@ class UserRepository implements UserRepositoryInterface
         $user->fresh();
 
         return $this->getUser($user->slug);
+    }
+
+    public function logout(User $user): int
+    {
+        return $user->tokens()->delete();
     }
 }

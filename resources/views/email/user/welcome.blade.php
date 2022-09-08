@@ -549,7 +549,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td valign="top" class="mcnTextContent" style="color: #111;font-family: 'Avenir LT Std';font-size: 14px;font-weight: normal;">
-                                                              Click the button below to login to your account.
+                                                              Click the button below to login to your auth.
                                                             </td>
                                                         </tr>
                                                         <tr>

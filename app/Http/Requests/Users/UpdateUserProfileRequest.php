@@ -26,7 +26,9 @@ class UpdateUserProfileRequest extends FormRequest
         return [
             'first_name'   => 'required|string',
             'last_name'    => 'required|string',
-            'phone_number' => 'required|string|min:10|max:15',
+            'phone' => 'required|string|min:10|max:15',
+            'state'      => 'sometimes|exists:states,id',
+            'city'       => 'sometimes|exists:cities,id',
         ];
     }
 }

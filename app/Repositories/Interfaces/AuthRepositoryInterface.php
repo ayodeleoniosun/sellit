@@ -4,7 +4,7 @@ namespace App\Repositories\Interfaces;
 
 use App\Models\User;
 
-interface AccountRepositoryInterface
+interface AuthRepositoryInterface
 {
     public function store(array $data): User;
 

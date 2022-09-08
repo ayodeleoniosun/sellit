@@ -54,6 +54,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(UserProfile::class);
     }
 
+    public function picture(): HasOne
+    {
+        return $this->hasOne(UserProfilePicture::class)->latest();
+    }
+
     public function pictures(): HasMany
     {
         return $this->hasMany(UserProfilePicture::class);

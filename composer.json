@@ -19,6 +19,7 @@
         "laravel/sanctum": "^2.15",
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "*",
         "league/flysystem-aws-s3-v3": "^3.0",
         "phpunit/phpunit": "^9.5",
         "predis/predis": "^1.1",

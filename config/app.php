@@ -176,14 +176,14 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //Repository Providers
-        \App\Providers\Repositories\AccountRepositoryProvider::class,
+        \App\Providers\Repositories\AuthRepositoryProvider::class,
         \App\Providers\Repositories\UserRepositoryProvider::class,
-        \App\Providers\Repositories\PasswordResetRepositoryProvider::class,
         \App\Providers\Repositories\FileRepositoryProvider::class,
 
         //Service Providers
-        \App\Providers\Services\AccountServiceProvider::class,
+        \App\Providers\Services\AuthServiceProvider::class,
         \App\Providers\Services\UserServiceProvider::class,
+        App\Providers\ResponseMacroServiceProvider::class,
     ],
 
     /*

@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('first_name');
             $table->string('last_name');
             $table->string('slug')->unique();
-            $table->string('email_address')->unique();
-            $table->string('phone_number');
+            $table->string('email')->unique();
+            $table->string('phone');
             $table->string('password');
             $table->string('remember_token')->nullable();
             $table->string('role')->default('user'); //['user', 'admin']

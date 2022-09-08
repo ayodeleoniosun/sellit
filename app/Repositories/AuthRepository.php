@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Repositories\Interfaces\AccountRepositoryInterface;
+use App\Repositories\Interfaces\AuthRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 
-class AccountRepository implements AccountRepositoryInterface
+class AuthRepository implements AuthRepositoryInterface
 {
     private User $user;
 

@@ -2,7 +2,7 @@
 
 @section('content')
     <p> Hi {{ $first_name }}, </p>
-    <p> We received a request to reset the password for your account. </p>
+    <p> We received a request to reset the password for your auth. </p>
     <p> Click the button below to reset your password </p>
 
     <p><a href="{{ $url }}">

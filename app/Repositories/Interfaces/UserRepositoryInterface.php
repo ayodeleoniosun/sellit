@@ -13,15 +13,17 @@ interface UserRepositoryInterface
 
     public function getUserByEmailAddress(string $email): ?User;
 
-    public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User;
+    public function getDuplicateUserByPhoneNumber(string $phone, int $id): ?User;
 
     public function updateProfile(array $data, User $user): User;
 
-    public function updateUserProfile(array $data, User $user): User;
+    public function updateUserProfile(array $data, User $user): void;
 
     public function updateBusinessProfile(array $data, User $user): User;
 
     public function updatePassword(array $data, User $user): User;
 
     public function updateProfilePicture(string $path, User $user): User;
+
+    public function logout(User $user): int;
 }
