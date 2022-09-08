@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\File>
  */
-class CityFactory extends Factory
+class FileFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +18,7 @@ class CityFactory extends Factory
     public function definition()
     {
         return [
-            'state_id' => 1,
-            'name' => $this->faker->city(),
+            'path' => Str::random(11) . '.jpg',
         ];
     }
 }
