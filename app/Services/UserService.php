@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Exceptions\CustomException;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,6 +19,12 @@ class UserService implements UserServiceInterface
     public function __construct(UserRepositoryInterface $userRepo)
     {
         $this->userRepo = $userRepo;
+    }
+
+    public function index(Request $request): UserCollection
+    {
+        $users = $this->userRepo->getUsers($request);
+        return new UserCollection($users);
     }
 
     public function profile(array $data): UserResource

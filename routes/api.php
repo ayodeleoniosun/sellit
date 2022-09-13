@@ -56,9 +56,9 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
         Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
-        Route::get('/users', [UserController::class, 'users'])->name('admin.users');
+        Route::get('/users', [UserController::class, 'index'])->name('admin.users');
 
-        Route::controller(CategoryController::class)->group(function () {
+        Route::controller(CategoryController::class)->prefix('category')->group(function () {
             Route::post('/', 'store')->name('category.store');
             Route::post('/{id}', 'update')->name('category.update');
             Route::post('/sub-category/store', 'storeSubCategory')->name('sub_category.store');

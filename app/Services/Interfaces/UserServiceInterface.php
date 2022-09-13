@@ -2,11 +2,15 @@
 
 namespace App\Services\Interfaces;
 
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 interface UserServiceInterface
 {
+    public function index(Request $request): UserCollection;
+
     public function profile(array $data): UserResource;
 
     public function updateProfile(User $user, array $data): UserResource;

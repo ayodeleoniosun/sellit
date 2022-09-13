@@ -9,6 +9,7 @@ use App\Models\UserProfile;
 use App\Models\UserProfilePicture;
 use App\Repositories\Interfaces\FileRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
@@ -23,9 +24,9 @@ class UserRepository implements UserRepositoryInterface
         $this->fileRepo = $fileRepo;
     }
 
-    public function getUsers(): Collection
+    public function getUsers(Request $request): Collection
     {
-        return User::all();
+        return User::with('profile', 'businessProfile', 'pictures')->latest()->get();
     }
 
     public function getUser(string $slug): ?User

@@ -3,11 +3,12 @@
 namespace App\Repositories\Interfaces;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
-    public function getUsers(): Collection;
+    public function getUsers(Request $request): Collection;
 
     public function getUser(string $slug): ?User;
 

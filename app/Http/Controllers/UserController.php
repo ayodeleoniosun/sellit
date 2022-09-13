@@ -19,6 +19,12 @@ class UserController extends Controller
         $this->user = $user;
     }
 
+    public function index(Request $request): JsonResponse
+    {
+        $response = $this->user->index($request);
+        return response()->success($response);
+    }
+
     public function profile(Request $request, string $slug): JsonResponse
     {
         $request->merge(['slug' => $slug]);
