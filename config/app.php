@@ -179,10 +179,12 @@ return [
         \App\Providers\Repositories\AuthRepositoryProvider::class,
         \App\Providers\Repositories\UserRepositoryProvider::class,
         \App\Providers\Repositories\FileRepositoryProvider::class,
+        \App\Providers\Repositories\CategoryRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AuthServiceProvider::class,
         \App\Providers\Services\UserServiceProvider::class,
+        \App\Providers\Services\CategoryServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
     ],
 

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\BusinessProfile;
-use App\Models\File;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserProfilePicture;
@@ -97,12 +96,9 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function updateProfilePicture(string $path, User $user): User
+    public function updateProfilePicture(string $filename, User $user): User
     {
-        $file = $this->fileRepo->create([
-            'path' => $path,
-            'type' => File::USER_FILE_TYPE,
-        ]);
+        $file = $this->fileRepo->create(['path' => $filename]);
 
         $user->pictures = new UserProfilePicture();
         $user->pictures->user_id = $user->id;

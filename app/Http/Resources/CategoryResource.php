@@ -24,9 +24,8 @@ class CategoryResource extends JsonResource
             'id'             => $this->id,
             'name'           => ucfirst($this->name),
             'slug'           => $this->slug,
-            'icon'           => Storage::disk('categories')->url($this->file->filename),
+            'icon'           => Storage::disk('s3')->url($this->file->path),
             'sub_categories' => $this->whenLoaded('subCategories'),
-            'ads'            => $this->whenLoaded('ads'),
             'created_at'     => $this->created_at,
             'updated_at'     => $this->updated_at,
         ];

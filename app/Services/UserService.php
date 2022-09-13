@@ -72,11 +72,9 @@ class UserService implements UserServiceInterface
         $extension = $image->extension();
         $filename = $user->id . '' . time() . '.' . $extension;
 
-        Storage::disk('profile_pictures')->put($filename, file_get_contents($image->getRealPath()));
+        Storage::disk('s3')->put($filename, file_get_contents($image->getRealPath()));
 
-        $path = Storage::disk('profile_pictures')->url($filename);
-
-        return new UserResource($this->userRepo->updateProfilePicture($path, $user));
+        return new UserResource($this->userRepo->updateProfilePicture($filename, $user));
     }
 
     public function logout(User $user): int
