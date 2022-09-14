@@ -115,7 +115,6 @@ test('can update user password', function () {
 });
 
 test('can update profile picture', function () {
-    $file = $this->createFile();
     $user = $this->createUser();
 
     $filePath = Str::random(11) . '.jpg';
@@ -125,14 +124,14 @@ test('can update profile picture', function () {
 
     $this->fileRepo->shouldReceive('create')
         ->once()
-        ->with(['path' => $this->mockFile->path, 'type' => 'user'])
+        ->with(['path' => $this->mockFile->path])
         ->andReturn($this->mockFile);
 
     $response = $this->userRepo->updateProfilePicture($filePath, $user);
 
     $this->assertInstanceOf(User::class, $response);
-    $this->assertEquals($response->pictures[0]->profile_picture_id, $file->id);
-})->group('test');
+    $this->assertEquals($response->picture->profile_picture_id, $this->mockFile->id);
+});
 
 test('can logout user', function () {
     $user = $this->createUser();
