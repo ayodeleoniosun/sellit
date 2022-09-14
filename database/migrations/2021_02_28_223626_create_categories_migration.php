@@ -17,8 +17,8 @@ return new class extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->foreignId('file_id')->default(1)->constrained();
             $table->timestamps();
             $table->softDeletes();
@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

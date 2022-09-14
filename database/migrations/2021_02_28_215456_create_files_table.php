@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->id();
             $table->string('path');
             $table->timestamps();
-            $table->softDeletes();
         });
 
         File::create(['path' => 'default.jpg']);

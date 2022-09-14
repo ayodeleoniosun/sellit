@@ -18,4 +18,9 @@ class FileRepository implements FileRepositoryInterface
     {
         return $this->file->create($data);
     }
+
+    public function delete(int $fileId): void
+    {
+        $this->file->find($fileId)->delete();
+    }
 }
