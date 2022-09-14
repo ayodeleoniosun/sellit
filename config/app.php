@@ -180,6 +180,7 @@ return [
         \App\Providers\Repositories\UserRepositoryProvider::class,
         \App\Providers\Repositories\FileRepositoryProvider::class,
         \App\Providers\Repositories\CategoryRepositoryProvider::class,
+        \App\Providers\Repositories\SubCategoryRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AuthServiceProvider::class,

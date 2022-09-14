@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
 use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -13,12 +15,16 @@ class CategoryService implements CategoryServiceInterface
 {
     protected CategoryRepositoryInterface $categoryRepo;
 
+    protected SubCategoryRepositoryInterface $subCategoryRepo;
+
     /**
      * @param CategoryRepositoryInterface $categoryRepo
+     * @param SubCategoryRepositoryInterface $subCategoryRepo
      */
-    public function __construct(CategoryRepositoryInterface $categoryRepo)
+    public function __construct(CategoryRepositoryInterface $categoryRepo, SubCategoryRepositoryInterface $subCategoryRepo)
     {
         $this->categoryRepo = $categoryRepo;
+        $this->subCategoryRepo = $subCategoryRepo;
     }
 
     /**
@@ -31,7 +37,7 @@ class CategoryService implements CategoryServiceInterface
         $slug = Str::slug($name);
 
         $canUpdateIcon = !empty($data['icon']);
-        return $this->createOrUpdate($data, $slug, $name,'store', $canUpdateIcon);
+        return $this->createOrUpdateCategory($data, $slug, $name,'store', $canUpdateIcon);
     }
 
     /**
@@ -48,7 +54,7 @@ class CategoryService implements CategoryServiceInterface
         $slug = ($category->name === $name) ? $slug : Str::slug($name);
         $canUpdateIcon = !empty($data['icon']);
 
-        return $this->createOrUpdate($data, $slug, $name, 'update', $canUpdateIcon, $category);
+        return $this->createOrUpdateCategory($data, $slug, $name, 'update', $canUpdateIcon, $category);
     }
 
     /**
@@ -57,7 +63,7 @@ class CategoryService implements CategoryServiceInterface
      * @param mixed $name
      * @return CategoryResource
      */
-    private function createOrUpdate(array $data, mixed $slug, mixed $name, string $method, bool $canUpdateIcon = false, ?Category $category = null): CategoryResource
+    private function createOrUpdateCategory(array $data, mixed $slug, mixed $name, string $method, bool $canUpdateIcon = false, ?Category $category = null): CategoryResource
     {
         if ($canUpdateIcon) {
             $icon = $data['icon'];
@@ -79,5 +85,24 @@ class CategoryService implements CategoryServiceInterface
         }
 
         return $this->categoryRepo->update($data, $category);
+    }
+
+    public function addSubCategory(array $data): SubCategoryResource
+    {
+        $data['slug'] = Str::slug($data['name']);
+
+        return $this->subCategoryRepo->store($data);
+    }
+
+    public function updateSubCategory(array $data): SubCategoryResource
+    {
+        $slug = $data['slug'];
+        $name = $data['name'];
+
+        $subCategory = $this->subCategoryRepo->getSubCategory($slug);
+
+        $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
+
+        return $this->subCategoryRepo->update($data, $subCategory);
     }
 }

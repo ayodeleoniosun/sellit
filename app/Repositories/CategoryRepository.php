@@ -25,11 +25,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $category = $this->category->where('slug', $slug);
 
-        if ($category->first()) {
-            return $category->with('subCategories', 'file')->first();
+        if (!$category->first()) {
+            return null;
         }
 
-        return null;
+        return $category->with('subCategories', 'file')->first();
     }
 
     public function store(array $data): CategoryResource
@@ -38,14 +38,11 @@ class CategoryRepository implements CategoryRepositoryInterface
             $file = $this->fileRepo->create(['path' => $data['filename']]);
         }
 
-        $this->category->name = $data['name'];
-        $this->category->slug = $data['slug'];
-        $this->category->file_id = $file->id ?? File::DEFAULT_ID;
-        $this->category->save();
+        $data['file_id'] = $file->id ?? File::DEFAULT_ID;
 
-        $this->category->fresh();
+        $this->category->create($data);
 
-        return new CategoryResource($this->getCategory($this->category->slug));
+        return new CategoryResource($this->getCategory($data['slug']));
     }
 
     public function update(array $data, Category $category): CategoryResource

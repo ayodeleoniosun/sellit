@@ -60,10 +60,13 @@ Route::prefix('v1')->group(function () {
 
         Route::controller(CategoryController::class)->prefix('category')->group(function () {
             Route::post('/', 'store')->name('category.store');
-            Route::post('/{id}', 'update')->name('category.update');
-            Route::post('/sub-category/store', 'storeSubCategory')->name('sub_category.store');
-            Route::put('/sub-category/{subId}', 'updateSubCategory')->name('sub_category.update');
-            Route::post('/sub-category/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub_category.sort_options.store');
+            Route::post('/{slug}', 'update')->name('category.update');
+        });
+
+        Route::controller(CategoryController::class)->prefix('sub-category')->group(function () {
+            Route::post('/', 'addSubCategory')->name('sub_category.store');
+            Route::put('/{slug}', 'updateSubCategory')->name('sub_category.update');
+            Route::post('/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub_category.sort_options.store');
         });
     });
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\AddCategoryRequest;
+use App\Http\Requests\Category\AddSubCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Http\Requests\Category\UpdateSubCategoryRequest;
 use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Http\JsonResponse;
 
@@ -27,5 +29,18 @@ class CategoryController extends Controller
         $data = array_merge($request->validated(), ['slug' => $slug]);
         $response = $this->category->update($data);
         return response()->success($response, 'Category successfully updated');
+    }
+
+    public function addSubCategory(AddSubCategoryRequest $request): JsonResponse
+    {
+        $response = $this->category->addSubCategory($request->validated());
+        return response()->success($response, 'Sub category successfully added');
+    }
+
+    public function updateSubCategory(UpdateSubCategoryRequest $request, $slug): JsonResponse
+    {
+        $data = array_merge($request->validated(), ['slug' => $slug]);
+        $response = $this->category->updateSubCategory($data);
+        return response()->success($response, 'Sub category successfully updated');
     }
 }

@@ -37,7 +37,7 @@ class CategorySeeder extends Seeder
                 'Motorcycles & Scooters',
                 'Trucks & Trailers',
                 'Vehicle Accessories',
-                'Watercrafts & Boats',
+                'Watercraft & Boats',
             ],
 
             'Property' => [
@@ -63,7 +63,7 @@ class CategorySeeder extends Seeder
                 'TV & DVD Equipments',
                 'Audio & Music Equipments',
                 'Computer Accessories',
-                'Compuer Hardware',
+                'Computer Hardware',
                 'Printers & Scanners',
                 'Headphones',
             ],
@@ -87,7 +87,6 @@ class CategorySeeder extends Seeder
                 'Shoes',
                 'Watches',
                 'Wedding wear & Accessories',
-                '',
             ],
 
             'Sports, Arts & Outdoor' => [
@@ -121,7 +120,7 @@ class CategorySeeder extends Seeder
                 'Doors',
                 'Electrical Equipment',
                 'Plumbing & Water Supply',
-                'Solar Enery',
+                'Solar Energy',
             ],
         ];
 

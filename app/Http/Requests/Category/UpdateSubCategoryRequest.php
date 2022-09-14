@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Category;
 
-use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateSubCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,15 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $category = Category::where('slug', $this->slug)->firstOrFail();
+        $subCategory = SubCategory::where('slug', $this->slug)->firstOrFail();
 
         return [
+            'category_id' => 'required|string|exists:categories,id',
             'name' => [
                 'required',
                 'string',
-                Rule::unique('categories', 'name')->ignore($category->id)
-            ],
-            'icon' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+                Rule::unique('sub_categories', 'name')->ignore($subCategory->id)
+            ]
         ];
     }
 }
