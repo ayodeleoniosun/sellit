@@ -1,16 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Ads;
 
 use App\Models\ActiveStatus;
-use App\Models\AdsPicture;
-use App\Models\AdsSortOption;
-use App\Models\Category;
-use App\Models\Review;
-use App\Models\SubCategory;
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class AdsResource extends JsonResource
 {

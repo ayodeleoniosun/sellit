@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Ads;
 
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class ReviewResource extends JsonResource
 {

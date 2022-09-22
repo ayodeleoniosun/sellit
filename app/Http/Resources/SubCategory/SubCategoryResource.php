@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\SubCategory;
 
+use App\Http\Resources\Category\CategoryResource;
 use App\Models\ActiveStatus;
-use App\Models\Ads;
-use App\Models\SortOption;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
-class AdsSortOptionResource extends JsonResource
+class SubCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,9 +18,10 @@ class AdsSortOptionResource extends JsonResource
     {
         return [
             'id'           => $this->id,
-            'ads'          => $this->whenLoaded('ads'),
-            'sort_options' => $this->whenLoaded('sort_option'),
-            'value'        => $this->value,
+            'name'         => ucfirst($this->name),
+            'slug'         => $this->slug,
+            'category'     => new CategoryResource($this->category),
+            'sort_options' => $this->whenLoaded('sortOptions'),
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,
         ];

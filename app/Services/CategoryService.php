@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Http\Resources\CategoryCollection;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\SubCategoryCollection;
-use App\Http\Resources\SubCategoryResource;
+use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\SubCategory\SubCategoryCollection;
+use App\Http\Resources\SubCategory\SubCategoryResource;
 use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\SubCategoryRepositoryInterface;

@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\SubCategory;
 
 use App\Models\ActiveStatus;
-use App\Models\SortOption;
-use App\Models\SubCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class SubCategorySortOptionResource extends JsonResource
 {

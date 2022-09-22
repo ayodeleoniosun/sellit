@@ -1,13 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Category;
 
 use App\Models\ActiveStatus;
-use App\Models\Ads;
-use App\Models\File;
-use App\Models\SubCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryResource extends JsonResource

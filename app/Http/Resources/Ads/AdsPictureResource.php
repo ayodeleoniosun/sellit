@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Ads;
 
 use App\Models\ActiveStatus;
-use App\Models\File;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class AdsPictureResource extends JsonResource
