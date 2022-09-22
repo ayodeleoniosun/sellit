@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'slug'            => $this->slug,
             'email'   => $this->email,
             'phone'    => $this->phone,
-            'verified'        => $this->hasVerifiedEmail(),
+            'verified'        => $this->isVerified(),
             'business'        => new UserBusinessInformationResource($this->whenLoaded('businessProfile')),
             'profile'         => new UserProfileResource($this->whenLoaded('profile')),
             'profile_picture' => new UserProfilePictureResource($this->picture),

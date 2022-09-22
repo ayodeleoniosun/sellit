@@ -37,6 +37,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'remember_token',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin' && $this->isVerified();
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->hasVerifiedEmail();
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

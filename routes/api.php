@@ -28,7 +28,7 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    Route::middleware(['auth:sanctum'])->prefix('users')->group(function () {
+    Route::middleware(['auth:sanctum', 'is_verified_user'])->prefix('users')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/{slug}', 'profile')->name('user.profile');
 
@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
+    Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function () {
         Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
 
