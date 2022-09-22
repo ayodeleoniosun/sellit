@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\File;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\FileRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryRepository implements CategoryRepositoryInterface
@@ -21,6 +22,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         $this->fileRepo = $fileRepo;
     }
 
+    public function index(Request $request): LengthAwarePaginator
+    {
+        return Category::with('subCategories')->paginate(10);
+    }
+
     public function getCategory(string $slug): ?Category
     {
         $category = $this->category->where('slug', $slug);
@@ -32,7 +38,7 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $category->with('subCategories', 'file')->first();
     }
 
-    public function store(array $data): CategoryResource
+    public function store(array $data): Category
     {
         if ($data['canUpdateIcon']) {
             $file = $this->fileRepo->create(['path' => $data['filename']]);
@@ -42,10 +48,10 @@ class CategoryRepository implements CategoryRepositoryInterface
 
         $this->category->create($data);
 
-        return new CategoryResource($this->getCategory($data['slug']));
+        return $this->getCategory($data['slug']);
     }
 
-    public function update(array $data, Category $category): CategoryResource
+    public function update(array $data, Category $category): Category
     {
         $formerIcon = $category->file;
         $canUpdateIcon = $data['canUpdateIcon'];
@@ -66,6 +72,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             $this->fileRepo->delete($formerIcon->id);
         }
 
-        return new CategoryResource($this->getCategory($category->slug));
+        return $this->getCategory($category->slug);
     }
 }

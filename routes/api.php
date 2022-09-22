@@ -58,12 +58,14 @@ Route::prefix('v1')->group(function () {
         Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
 
-        Route::controller(CategoryController::class)->prefix('category')->group(function () {
+        Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+            Route::get('/', 'index')->name('category.index');
             Route::post('/', 'store')->name('category.store');
             Route::post('/{slug}', 'update')->name('category.update');
         });
 
-        Route::controller(CategoryController::class)->prefix('sub-category')->group(function () {
+        Route::controller(CategoryController::class)->prefix('sub-categories')->group(function () {
+            Route::get('/', 'subCategories')->name('sub_category.index');
             Route::post('/', 'addSubCategory')->name('sub_category.store');
             Route::put('/{slug}', 'updateSubCategory')->name('sub_category.update');
             Route::post('/store-sort-options/{subId}', 'storeSubCategorySortOptions')->name('sub_category.sort_options.store');

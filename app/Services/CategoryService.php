@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\SubCategoryCollection;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
 use App\Services\Interfaces\CategoryServiceInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -27,6 +30,16 @@ class CategoryService implements CategoryServiceInterface
         $this->subCategoryRepo = $subCategoryRepo;
     }
 
+    public function index(Request $request): CategoryCollection
+    {
+        return new CategoryCollection($this->categoryRepo->index($request));
+    }
+
+    public function subCategories(Request $request): SubCategoryCollection
+    {
+        return new SubCategoryCollection($this->subCategoryRepo->index($request));
+    }
+
     /**
      * @param array $data
      * @return CategoryResource
@@ -37,6 +50,7 @@ class CategoryService implements CategoryServiceInterface
         $slug = Str::slug($name);
 
         $canUpdateIcon = !empty($data['icon']);
+
         return $this->createOrUpdateCategory($data, $slug, $name,'store', $canUpdateIcon);
     }
 
@@ -81,17 +95,19 @@ class CategoryService implements CategoryServiceInterface
         ];
 
         if ($method === 'store') {
-            return $this->categoryRepo->store($data);
+            $category = $this->categoryRepo->store($data);
+        } else {
+            $category = $this->categoryRepo->update($data, $category);
         }
 
-        return $this->categoryRepo->update($data, $category);
+        return new CategoryResource($category);;
     }
 
     public function addSubCategory(array $data): SubCategoryResource
     {
         $data['slug'] = Str::slug($data['name']);
 
-        return $this->subCategoryRepo->store($data);
+        return new SubCategoryResource($this->subCategoryRepo->store($data));
     }
 
     public function updateSubCategory(array $data): SubCategoryResource
@@ -103,6 +119,6 @@ class CategoryService implements CategoryServiceInterface
 
         $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
 
-        return $this->subCategoryRepo->update($data, $subCategory);
+        return new SubCategoryResource($this->subCategoryRepo->update($data, $subCategory));
     }
 }

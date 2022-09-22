@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Http\Resources\SubCategoryResource;
 use App\Models\SubCategory;
 use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
@@ -13,6 +14,11 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
     public function __construct(SubCategory $subCategory)
     {
         $this->subCategory = $subCategory;
+    }
+
+    public function index(Request $request): LengthAwarePaginator
+    {
+        return SubCategory::with('category', 'sortOptions')->paginate(10);
     }
 
     public function getSubCategory(string $slug): ?SubCategory
@@ -26,15 +32,14 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
         return $subCategory->with('category', 'sortOptions')->first();
     }
 
-    public function store(array $data): SubCategoryResource
+    public function store(array $data): SubCategory
     {
-        $this->subCategory->create($data);
-        return new SubCategoryResource($this->getSubCategory($data['slug']));
+        return $this->subCategory->create($data);
     }
 
-    public function update(array $data, SubCategory $subCategory): SubCategoryResource
+    public function update(array $data, SubCategory $subCategory): SubCategory
     {
         $subCategory->update($data);
-        return new SubCategoryResource($this->getSubCategory($subCategory->slug));
+        return $this->getSubCategory($subCategory->slug);
     }
 }

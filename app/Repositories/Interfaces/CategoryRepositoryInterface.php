@@ -2,14 +2,17 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CategoryRepositoryInterface
 {
-    public function store(array $data): CategoryResource;
+    public function index(Request $request): LengthAwarePaginator;
 
-    public function update(array $data, Category $category): CategoryResource;
+    public function store(array $data): Category;
+
+    public function update(array $data, Category $category): Category;
 
     public function getCategory(string $slug): ?Category;
 }
