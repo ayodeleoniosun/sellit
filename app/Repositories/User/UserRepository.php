@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
 
+use App\Entities\Repositories\FileRepositoryInterface;
+use App\Entities\Repositories\User\UserRepositoryInterface;
 use App\Models\BusinessProfile;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserProfilePicture;
-use App\Repositories\Interfaces\FileRepositoryInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 

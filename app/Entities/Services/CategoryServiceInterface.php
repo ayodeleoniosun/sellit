@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Services\Interfaces;
+namespace App\Entities\Services;
 
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
-use App\Http\Resources\SubCategory\SubCategorySortOptionResource;
 use Illuminate\Http\Request;
 
 interface CategoryServiceInterface

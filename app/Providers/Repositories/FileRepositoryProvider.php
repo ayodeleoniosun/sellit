@@ -2,8 +2,8 @@
 
 namespace App\Providers\Repositories;
 
+use App\Entities\Repositories\FileRepositoryInterface;
 use App\Repositories\FileRepository;
-use App\Repositories\Interfaces\FileRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class FileRepositoryProvider extends ServiceProvider

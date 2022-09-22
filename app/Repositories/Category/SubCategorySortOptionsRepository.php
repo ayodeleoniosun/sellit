@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Category;
 
+use App\Entities\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
 use App\Models\SortOption;
 use App\Models\SubCategorySortOption;
-use App\Repositories\Interfaces\SubCategorySortOptionsRepositoryInterface;
 
 class SubCategorySortOptionsRepository implements SubCategorySortOptionsRepositoryInterface
 {

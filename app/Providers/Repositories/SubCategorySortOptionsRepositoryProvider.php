@@ -2,8 +2,8 @@
 
 namespace App\Providers\Repositories;
 
-use App\Repositories\Interfaces\SubCategorySortOptionsRepositoryInterface;
-use App\Repositories\SubCategorySortOptionsRepository;
+use App\Entities\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
+use App\Repositories\Category\SubCategorySortOptionsRepository;
 use Illuminate\Support\ServiceProvider;
 
 class SubCategorySortOptionsRepositoryProvider extends ServiceProvider

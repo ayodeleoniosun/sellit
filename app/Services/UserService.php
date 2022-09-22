@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Entities\Repositories\User\UserRepositoryInterface;
+use App\Entities\Services\UserServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;

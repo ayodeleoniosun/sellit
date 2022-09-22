@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Repository;
 
+use App\Entities\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
-use App\Repositories\AuthRepository;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\User\AuthRepository;
 use Illuminate\Support\Str;
 
 beforeEach(function () {

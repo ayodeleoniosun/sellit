@@ -2,8 +2,8 @@
 
 namespace App\Providers\Services;
 
+use App\Entities\Services\UserServiceInterface;
 use App\Services\UserService;
-use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider

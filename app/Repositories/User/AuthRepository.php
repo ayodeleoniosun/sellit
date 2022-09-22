@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
 
+use App\Entities\Repositories\User\AuthRepositoryInterface;
+use App\Entities\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
-use App\Repositories\Interfaces\AuthRepositoryInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
 
 class AuthRepository implements AuthRepositoryInterface
 {

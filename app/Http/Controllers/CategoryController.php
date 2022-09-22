@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Services\CategoryServiceInterface;
 use App\Http\Requests\Category\AddCategoryRequest;
 use App\Http\Requests\Category\AddSubCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Requests\Category\UpdateSubCategoryRequest;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
-use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

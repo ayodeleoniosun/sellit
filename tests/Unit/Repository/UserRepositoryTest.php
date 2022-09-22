@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Repository;
 
+use App\Entities\Repositories\FileRepositoryInterface;
 use App\Models\File;
 use App\Models\User;
-use App\Repositories\Interfaces\FileRepositoryInterface;
-use App\Repositories\UserRepository;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\Str;
 use Tests\Traits\CreateCities;
 use Tests\Traits\CreateFiles;

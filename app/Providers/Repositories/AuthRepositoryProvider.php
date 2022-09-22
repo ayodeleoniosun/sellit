@@ -2,8 +2,8 @@
 
 namespace App\Providers\Repositories;
 
-use App\Repositories\AuthRepository;
-use App\Repositories\Interfaces\AuthRepositoryInterface;
+use App\Entities\Repositories\User\AuthRepositoryInterface;
+use App\Repositories\User\AuthRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AuthRepositoryProvider extends ServiceProvider

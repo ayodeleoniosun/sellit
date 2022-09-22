@@ -2,8 +2,8 @@
 
 namespace App\Providers\Services;
 
+use App\Entities\Services\CategoryServiceInterface;
 use App\Services\CategoryService;
-use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider

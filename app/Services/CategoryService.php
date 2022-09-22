@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
+use App\Entities\Repositories\Category\CategoryRepositoryInterface;
+use App\Entities\Repositories\Category\SubCategoryRepositoryInterface;
+use App\Entities\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
+use App\Entities\Services\CategoryServiceInterface;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
-use App\Http\Resources\SubCategory\SubCategorySortOptionResource;
 use App\Models\Category;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
-use App\Repositories\Interfaces\SubCategorySortOptionsRepositoryInterface;
-use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

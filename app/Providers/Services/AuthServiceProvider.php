@@ -2,8 +2,8 @@
 
 namespace App\Providers\Services;
 
+use App\Entities\Services\AuthServiceInterface;
 use App\Services\AuthService;
-use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

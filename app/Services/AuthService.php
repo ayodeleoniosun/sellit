@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Entities\Repositories\User\AuthRepositoryInterface;
+use App\Entities\Services\AuthServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserResource;
 use App\Jobs\SendWelcomeMail;
 use App\Models\User;
-use App\Repositories\Interfaces\AuthRepositoryInterface;
-use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;

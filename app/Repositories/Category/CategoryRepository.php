@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Category;
 
+use App\Entities\Repositories\Category\CategoryRepositoryInterface;
+use App\Entities\Repositories\FileRepositoryInterface;
 use App\Models\Category;
 use App\Models\File;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Repositories\Interfaces\FileRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;

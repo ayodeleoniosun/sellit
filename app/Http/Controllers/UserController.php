@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Services\UserServiceInterface;
 use App\Http\Requests\Users\UpdatePasswordRequest;
 use App\Http\Requests\Users\UpdateProfilePictureRequest;
 use App\Http\Requests\Users\UpdateUserBusinessInformationRequest;
 use App\Http\Requests\Users\UpdateUserProfileRequest;
-use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

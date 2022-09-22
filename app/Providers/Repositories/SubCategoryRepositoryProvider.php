@@ -2,8 +2,8 @@
 
 namespace App\Providers\Repositories;
 
-use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
-use App\Repositories\SubCategoryRepository;
+use App\Entities\Repositories\Category\SubCategoryRepositoryInterface;
+use App\Repositories\Category\SubCategoryRepository;
 use Illuminate\Support\ServiceProvider;
 
 class SubCategoryRepositoryProvider extends ServiceProvider

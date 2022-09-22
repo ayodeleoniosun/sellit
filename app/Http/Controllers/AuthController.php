@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Services\AuthServiceInterface;
 use App\Http\Requests\Users\UserRegistrationRequest;
-use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

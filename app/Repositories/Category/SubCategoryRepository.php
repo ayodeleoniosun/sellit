@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Category;
 
+use App\Entities\Repositories\Category\SubCategoryRepositoryInterface;
 use App\Models\SubCategory;
-use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
