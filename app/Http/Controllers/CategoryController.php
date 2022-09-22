@@ -37,6 +37,17 @@ class CategoryController extends Controller
         return response()->success($response, 'Category successfully added');
     }
 
+    public function storeSortOptions(Request $request, $subCategoryId): JsonResponse
+    {
+        $response = $this->category->storeSortOptions($request->all(), $subCategoryId);
+
+        if ($response > 0) {
+            return response()->success([], $response.' sort options successfully added');
+        }
+
+        return response()->error('No sort options added');
+    }
+
     public function update(UpdateCategoryRequest $request, $slug): JsonResponse
     {
         $data = array_merge($request->validated(), ['slug' => $slug]);

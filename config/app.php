@@ -181,6 +181,7 @@ return [
         \App\Providers\Repositories\FileRepositoryProvider::class,
         \App\Providers\Repositories\CategoryRepositoryProvider::class,
         \App\Providers\Repositories\SubCategoryRepositoryProvider::class,
+        \App\Providers\Repositories\SubCategorySortOptionsRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AuthServiceProvider::class,

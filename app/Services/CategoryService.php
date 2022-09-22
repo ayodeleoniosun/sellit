@@ -6,9 +6,11 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
+use App\Http\Resources\SubCategory\SubCategorySortOptionResource;
 use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
+use App\Repositories\Interfaces\SubCategorySortOptionsRepositoryInterface;
 use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,14 +22,22 @@ class CategoryService implements CategoryServiceInterface
 
     protected SubCategoryRepositoryInterface $subCategoryRepo;
 
+    protected SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo;
+
     /**
      * @param CategoryRepositoryInterface $categoryRepo
      * @param SubCategoryRepositoryInterface $subCategoryRepo
+     * @param SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo
      */
-    public function __construct(CategoryRepositoryInterface $categoryRepo, SubCategoryRepositoryInterface $subCategoryRepo)
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepo,
+        SubCategoryRepositoryInterface $subCategoryRepo,
+        SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo
+    )
     {
         $this->categoryRepo = $categoryRepo;
         $this->subCategoryRepo = $subCategoryRepo;
+        $this->subCategorySortOptionRepo = $subCategorySortOptionRepo;
     }
 
     public function index(Request $request): CategoryCollection
@@ -120,5 +130,10 @@ class CategoryService implements CategoryServiceInterface
         $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
 
         return new SubCategoryResource($this->subCategoryRepo->update($data, $subCategory));
+    }
+
+    public function storeSortOptions(array $data, int $subCategoryId): int
+    {
+        return $this->subCategorySortOptionRepo->store($data['sort_options'], $subCategoryId);
     }
 }

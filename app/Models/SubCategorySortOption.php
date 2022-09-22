@@ -22,5 +22,5 @@ class SubCategorySortOption extends Model
     {
         return $this->belongsTo(SortOption::class);
     }
-
+    
 }
