@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Services;
+namespace App\Contracts\Services;
 
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;

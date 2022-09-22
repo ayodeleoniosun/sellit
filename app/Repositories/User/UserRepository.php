@@ -2,8 +2,8 @@
 
 namespace App\Repositories\User;
 
-use App\Entities\Repositories\FileRepositoryInterface;
-use App\Entities\Repositories\User\UserRepositoryInterface;
+use App\Contracts\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
 use App\Models\BusinessProfile;
 use App\Models\User;
 use App\Models\UserProfile;

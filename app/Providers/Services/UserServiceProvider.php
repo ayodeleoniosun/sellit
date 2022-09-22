@@ -2,7 +2,7 @@
 
 namespace App\Providers\Services;
 
-use App\Entities\Services\UserServiceInterface;
+use App\Contracts\Services\UserServiceInterface;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 

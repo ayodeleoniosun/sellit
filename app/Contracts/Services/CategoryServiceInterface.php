@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Services;
+namespace App\Contracts\Services;
 
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;

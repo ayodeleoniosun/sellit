@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Entities\Repositories\User\UserRepositoryInterface;
-use App\Entities\Services\UserServiceInterface;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
+use App\Contracts\Services\UserServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Category;
 
-use App\Entities\Repositories\Category\CategoryRepositoryInterface;
-use App\Entities\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
+use App\Contracts\Repositories\FileRepositoryInterface;
 use App\Models\Category;
 use App\Models\File;
 use Illuminate\Http\Request;

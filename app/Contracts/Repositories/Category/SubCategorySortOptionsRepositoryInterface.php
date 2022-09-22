@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Repositories\Category;
+namespace App\Contracts\Repositories\Category;
 
 interface SubCategorySortOptionsRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Services\CategoryServiceInterface;
+use App\Contracts\Services\CategoryServiceInterface;
 use App\Http\Requests\Category\AddCategoryRequest;
 use App\Http\Requests\Category\AddSubCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;

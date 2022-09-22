@@ -2,7 +2,7 @@
 
 namespace App\Providers\Repositories;
 
-use App\Entities\Repositories\Category\CategoryRepositoryInterface;
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use Illuminate\Support\ServiceProvider;
 

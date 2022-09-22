@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Repositories\User;
+namespace App\Contracts\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Http\Request;

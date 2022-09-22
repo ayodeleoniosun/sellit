@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Entities\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\FileRepositoryInterface;
 use App\Models\File;
 
 class FileRepository implements FileRepositoryInterface

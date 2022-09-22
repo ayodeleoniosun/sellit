@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Repositories;
+namespace App\Contracts\Repositories;
 
 use App\Models\File;
 

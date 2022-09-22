@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Services\UserServiceInterface;
+use App\Contracts\Services\UserServiceInterface;
 use App\Http\Requests\Users\UpdatePasswordRequest;
 use App\Http\Requests\Users\UpdateProfilePictureRequest;
 use App\Http\Requests\Users\UpdateUserBusinessInformationRequest;

@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Entities\Repositories\Category\CategoryRepositoryInterface;
-use App\Entities\Repositories\Category\SubCategoryRepositoryInterface;
-use App\Entities\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
-use App\Entities\Services\CategoryServiceInterface;
+use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
+use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
+use App\Contracts\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
+use App\Contracts\Services\CategoryServiceInterface;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Category;
 
-use App\Entities\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
+use App\Contracts\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
 use App\Models\SortOption;
 use App\Models\SubCategorySortOption;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Category;
 
-use App\Entities\Repositories\Category\SubCategoryRepositoryInterface;
+use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;

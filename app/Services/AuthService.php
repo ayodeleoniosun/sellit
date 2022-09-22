@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Entities\Repositories\User\AuthRepositoryInterface;
-use App\Entities\Services\AuthServiceInterface;
+use App\Contracts\Repositories\User\AuthRepositoryInterface;
+use App\Contracts\Services\AuthServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserResource;
 use App\Jobs\SendWelcomeMail;

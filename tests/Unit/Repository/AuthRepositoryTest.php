@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Repository;
 
-use App\Entities\Repositories\User\UserRepositoryInterface;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Repositories\User\AuthRepository;
 use Illuminate\Support\Str;

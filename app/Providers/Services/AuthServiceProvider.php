@@ -2,7 +2,7 @@
 
 namespace App\Providers\Services;
 
-use App\Entities\Services\AuthServiceInterface;
+use App\Contracts\Services\AuthServiceInterface;
 use App\Services\AuthService;
 use Illuminate\Support\ServiceProvider;
 

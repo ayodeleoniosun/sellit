@@ -2,7 +2,7 @@
 
 namespace App\Providers\Services;
 
-use App\Entities\Services\CategoryServiceInterface;
+use App\Contracts\Services\CategoryServiceInterface;
 use App\Services\CategoryService;
 use Illuminate\Support\ServiceProvider;
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Repository;
 
-use App\Entities\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\FileRepositoryInterface;
 use App\Models\File;
 use App\Models\User;
 use App\Repositories\User\UserRepository;
