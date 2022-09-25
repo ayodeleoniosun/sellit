@@ -31,11 +31,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $category = $this->category->where('slug', $slug);
 
-        if (!$category->first()) {
-            return null;
-        }
-
-        return $category->with('subCategories', 'file')->first();
+        return $category->with('subCategories', 'file')->first() ?? null;
     }
 
     public function store(array $data): Category

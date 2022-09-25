@@ -18,19 +18,18 @@ class AdsResource extends JsonResource
         $countReviews = $this->reviews?->count() * 5;
         $sumRating = $this->reviews?->sum('rating');
 
-        $totalRating = ($sumRating > 0) ? round(($sumRating / $countReviews) * 5, 1) : 5.0;
+        $totalRating = ($sumRating > 0) ? round(($sumRating / $countReviews) * 5, 1) : 0.0;
 
         return [
             'id'           => $this->id,
-            'category'     => $this->whenLoaded('category'),
-            'sub_category' => $this->whenLoaded('subCategory'),
-            'seller'       => $this->whenLoaded('seller'),
-            'sort_options' => $this->whenLoaded('sortOptions'),
             'name'         => ucfirst($this->name),
             'slug'         => $this->slug,
             'description'  => ucfirst($this->description),
             'price'        => $this->price,
-            'reviews'      => $this->whenLoaded('reviews'),
+            'category'     => $this->whenLoaded('category'),
+            'sub_category' => $this->whenLoaded('subCategory'),
+            'seller'       => $this->whenLoaded('seller'),
+            'sort_options' => $this->whenLoaded('sortOptions'),
             'pictures'     => $this->whenLoaded('pictures'),
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,

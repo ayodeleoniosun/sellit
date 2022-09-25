@@ -26,17 +26,17 @@ class Ads extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->select('id', 'name', 'slug');
     }
 
     public function subCategory(): BelongsTo
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsTo(SubCategory::class)->select('id', 'category_id', 'name', 'slug');
     }
 
     public function seller(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name', 'slug', 'email', 'phone');
     }
 
     public function reviews(): HasMany

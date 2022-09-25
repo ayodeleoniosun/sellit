@@ -42,13 +42,13 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::controller(AdsController::class)->prefix('/ads')->group(function () {
-            Route::get('/', 'myAds')->name('ads.mine');
+            Route::get('/', 'myAds')->name('ads.myAds');
             Route::post('/', 'store')->name('ads.store');
-            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
             Route::put('/{id}', 'update')->name('ads.update');
+            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
             Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
             Route::post('/upload/pictures', 'uploadPictures')->name('ads.pictures.upload');
-            Route::delete('/{id}/picture/{pictureId}', 'deletePicture')->name('ads.picture.delete');
+            Route::delete('/{id}/picture/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
             Route::delete('/{id}', 'delete')->name('ads.delete');
             Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
         });
