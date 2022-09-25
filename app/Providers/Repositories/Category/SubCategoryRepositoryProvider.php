@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Repositories;
+namespace App\Providers\Repositories\Category;
 
 use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
 use App\Repositories\Category\SubCategoryRepository;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Repositories;
+namespace App\Providers\Repositories\Category;
 
 use App\Contracts\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
 use App\Repositories\Category\SubCategorySortOptionsRepository;

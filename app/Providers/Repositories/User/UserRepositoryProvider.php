@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Providers\Repositories;
+namespace App\Providers\Repositories\User;
 
-use App\Contracts\Repositories\User\AuthRepositoryInterface;
-use App\Repositories\User\AuthRepository;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
-class AuthRepositoryProvider extends ServiceProvider
+class UserRepositoryProvider extends ServiceProvider
 {
     /**
      * Register any application serivce.
@@ -16,8 +16,8 @@ class AuthRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            AuthRepositoryInterface::class,
-            AuthRepository::class
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
     }
 

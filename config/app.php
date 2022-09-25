@@ -176,17 +176,19 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //Repository Providers
-        \App\Providers\Repositories\AuthRepositoryProvider::class,
-        \App\Providers\Repositories\UserRepositoryProvider::class,
+        \App\Providers\Repositories\User\AuthRepositoryProvider::class,
+        \App\Providers\Repositories\User\UserRepositoryProvider::class,
         \App\Providers\Repositories\FileRepositoryProvider::class,
-        \App\Providers\Repositories\CategoryRepositoryProvider::class,
-        \App\Providers\Repositories\SubCategoryRepositoryProvider::class,
-        \App\Providers\Repositories\SubCategorySortOptionsRepositoryProvider::class,
+        \App\Providers\Repositories\Category\CategoryRepositoryProvider::class,
+        \App\Providers\Repositories\Category\SubCategoryRepositoryProvider::class,
+        \App\Providers\Repositories\Category\SubCategorySortOptionsRepositoryProvider::class,
+        \App\Providers\Repositories\Ads\AdsRepositoryProvider::class,
 
         //Service Providers
         \App\Providers\Services\AuthServiceProvider::class,
         \App\Providers\Services\UserServiceProvider::class,
         \App\Providers\Services\CategoryServiceProvider::class,
+        \App\Providers\Services\AdsServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
     ],
 
