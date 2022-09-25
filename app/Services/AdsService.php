@@ -35,7 +35,7 @@ class AdsService implements AdsServiceInterface
         $sellerAdsExist = $this->adsRepo->sellerAdsExist($data['slug'], $data['seller_id'], null);
 
         if ($sellerAdsExist) {
-            throw new CustomException('You have added this ads before');
+            throw new CustomException('You have added this ads before.');
         }
 
         return new AdsResource($this->adsRepo->store($data));
@@ -47,15 +47,15 @@ class AdsService implements AdsServiceInterface
     public function update(CreateNewAdsRequest $request, int $adsId): AdsResource
     {
         $data = $request->validated();
-        $data['seller_id'] = $request->user()->id;
+        $sellerId = $request->user()->id;
         $data['slug'] = Str::kebab($data['name']);
 
-        $sellerAdsExist = $this->adsRepo->sellerAdsExist($data['slug'], $data['seller_id'], $adsId, false);
+        $sellerAdsExist = $this->adsRepo->sellerAdsExist($data['slug'], $sellerId, $adsId, false);
 
         if ($sellerAdsExist) {
-            throw new CustomException('You have added this ads before');
+            throw new CustomException('You have added this ads before.');
         }
 
-        return new AdsResource($this->adsRepo->store($data));
+        return new AdsResource($this->adsRepo->update($data, $adsId));
     }
 }

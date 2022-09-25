@@ -14,9 +14,16 @@ class AdsRepository implements AdsRepositoryInterface
         $this->ads = $ads;
     }
 
-    public function getAds(string $slug): ?Ads
+    public function getAdsBySlug(string $slug): ?Ads
     {
-        $ads = $this->ads->where('slug', $slug);
+       $ads = $this->ads->where('slug', $slug);
+       return $ads->with('category', 'subCategory', 'sortOptions', 'seller', 'pictures')->first() ?? null;
+    }
+
+    public function getAdsById(int $adsId): ?Ads
+    {
+        $ads = $this->ads->find($adsId);
+
         return $ads->with('category', 'subCategory', 'sortOptions', 'seller', 'pictures')->first() ?? null;
     }
 
@@ -38,7 +45,14 @@ class AdsRepository implements AdsRepositoryInterface
     public function store(array $data): Ads
     {
         $ads = $this->ads->create($data);
+        return $this->getAdsBySlug($ads->slug);
+    }
 
-        return $this->getAds($ads->slug);
+    public function update(array $data, int $adsId): Ads
+    {
+        $ads = $this->ads->find($adsId);
+        $ads->update($data);
+        $ads->refresh();
+        return $this->getAdsBySlug($ads->slug);
     }
 }
