@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Repository;
 
-use App\Contracts\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Models\File;
 use App\Models\User;
 use App\Repositories\User\UserRepository;
@@ -39,7 +39,7 @@ test('can get duplicate user by phone number', function () {
     $user1 = $this->createUser();
     $user2 = $this->createUser();
 
-    $response = $this->userRepo->getDuplicateUserByPhoneNumber($user1->phone, $user2->id);
+    $response = $this->userRepo->phoneExist($user1->phone, $user2->id);
     $this->assertInstanceOf(User::class, $response);
     $this->assertEquals($user1->phone, $response->phone);
 });
@@ -47,7 +47,7 @@ test('can get duplicate user by phone number', function () {
 test('cannot get duplicate user by phone number', function () {
     $user = $this->createUser();
 
-    $response = $this->userRepo->getDuplicateUserByPhoneNumber($user->phone, $user->id);
+    $response = $this->userRepo->phoneExist($user->phone, $user->id);
     $this->assertNull($response);
 });
 

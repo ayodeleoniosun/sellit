@@ -3,7 +3,7 @@
 namespace App\Repositories\Category;
 
 use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
-use App\Contracts\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Models\Category;
 use App\Models\File;
 use Illuminate\Http\Request;

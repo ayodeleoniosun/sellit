@@ -6,6 +6,7 @@ use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 interface UserServiceInterface
 {
@@ -15,9 +16,9 @@ interface UserServiceInterface
 
     public function updateProfile(User $user, array $data): UserResource;
 
-    public function updatePassword(User $user, array $data): string;
+    public function updatePassword(int $userId, string $newPassword): string;
 
-    public function updateProfilePicture(User $user, array $data): UserResource;
+    public function updateProfilePicture(User $user, UploadedFile $picture): UserResource;
 
     public function logout(User $user): int;
 }

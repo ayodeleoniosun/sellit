@@ -10,4 +10,6 @@ interface AdsServiceInterface
     public function store(CreateNewAdsRequest $request): AdsResource;
 
     public function update(CreateNewAdsRequest $request, int $adsId): AdsResource;
+
+    public function uploadPictures(array $pictures, int $adsId);
 }

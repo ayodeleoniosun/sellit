@@ -2,7 +2,7 @@
 
 namespace App\Providers\Repositories;
 
-use App\Contracts\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Repositories\FileRepository;
 use Illuminate\Support\ServiceProvider;
 

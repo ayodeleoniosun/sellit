@@ -3,39 +3,18 @@
 namespace App\Repositories\User;
 
 use App\Contracts\Repositories\User\AuthRepositoryInterface;
-use App\Contracts\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
+use App\Repositories\BaseRepository;
 
-class AuthRepository implements AuthRepositoryInterface
+class AuthRepository extends BaseRepository implements AuthRepositoryInterface
 {
-    private User $user;
-
-    protected UserRepositoryInterface $userRepo;
-
-    public function __construct(User $user, UserRepositoryInterface $userRepo)
+    public function __construct(User $user)
     {
-        $this->user = $user;
-        $this->userRepo = $userRepo;
-    }
-
-    public function store(array $data): User
-    {
-        return $this->user->create($data);
-    }
-
-    public function getUserByEmailAddress(string $email): ?User
-    {
-        return $this->userRepo->getUserByEmailAddress($email);
+        parent::__construct($user);
     }
 
     public function createToken(User $user): string
     {
         return $user->createToken('auth_token')->plainTextToken;
     }
-
-    public function updatePassword(array $data, User $user): User
-    {
-        return $this->userRepo->updatePassword($data, $user);
-    }
-
 }

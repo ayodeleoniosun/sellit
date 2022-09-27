@@ -47,13 +47,13 @@ class UserController extends Controller
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        $response = $this->user->updatePassword($request->user(), $request->validated());
+        $this->user->updatePassword($request->user()->id, $request->new_password);
         return response()->success([], 'Password successfully updated');
     }
 
     public function updateProfilePicture(UpdateProfilePictureRequest $request): JsonResponse
     {
-        $response = $this->user->updateProfilePicture($request->user(), $request->validated());
+        $response = $this->user->updateProfilePicture($request->user(), $request->image);
         return response()->success($response, 'Profile picture successfully updated');
     }
 

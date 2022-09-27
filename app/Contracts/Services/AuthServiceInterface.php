@@ -2,12 +2,12 @@
 
 namespace App\Contracts\Services;
 
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 interface AuthServiceInterface
 {
-    public function register(array $data): User;
+    public function register(array $data): Model;
 
     public function login(array $data): array;
 

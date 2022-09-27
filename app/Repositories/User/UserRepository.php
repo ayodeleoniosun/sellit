@@ -2,54 +2,59 @@
 
 namespace App\Repositories\User;
 
-use App\Contracts\Repositories\FileRepositoryInterface;
+use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Contracts\Repositories\User\UserRepositoryInterface;
 use App\Models\BusinessProfile;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserProfilePicture;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    private User $user;
+    protected User $user;
+
+    protected UserProfilePicture $userProfilePicture;
 
     protected FileRepositoryInterface $fileRepo;
 
-    public function __construct(User $user, FileRepositoryInterface $fileRepo)
+    public function __construct(User $user, UserProfilePicture $userProfilePicture, FileRepositoryInterface $fileRepo)
     {
+        parent::__construct($user);
+
         $this->user = $user;
+        $this->userProfilePicture = $userProfilePicture;
         $this->fileRepo = $fileRepo;
     }
 
-    public function getUsers(Request $request): Collection
+    public function getUser(int $userId): Model
     {
-        return User::with('profile', 'businessProfile', 'pictures')->latest()->get();
+        return $this->find($userId, ['profile', 'businessProfile', 'pictures']);
     }
 
-    public function getUser(string $slug): ?User
+    public function getUserBySlug(string $slug): ?User
     {
-        $user = $this->user->where('slug', $slug);
-
-        if ($user->first()) {
-            return $user->with('profile', 'businessProfile', 'pictures')->first();
-        }
-
-        return null;
+        return $this->user->where('slug', $slug)->with('profile', 'businessProfile', 'pictures')->first();
     }
 
     public function getUserByEmailAddress(string $email): ?User
     {
-        return $this->user->where('email', $email)?->first();
+        return $this->user->where('email', $email)->first();
     }
 
-    public function getDuplicateUserByPhoneNumber(string $phone, int $id): ?User
+    public function phoneExist(string $phone, int $id): bool
     {
-        return $this->user->where('phone', $phone)->where('id', '<>', $id)->first();
+        return $this->user->where('phone', $phone)->where('id', '<>', $id)->exists();
     }
 
-    public function updateProfile(array $data, User $user): User
+    public function businessExist(string $name, int $userId): bool
+    {
+        return BusinessProfile::where('name', $name)->where('user_id', '<>', $userId)->exists();
+    }
+
+    public function updateProfile(array $data, User $user): Model
     {
         $user->update($data);
 
@@ -57,9 +62,7 @@ class UserRepository implements UserRepositoryInterface
             $this->updateUserProfile($data, $user);
         }
 
-        $user->refresh();
-
-        return $this->getUser($user->slug);
+        return $this->getUser($user->id);
     }
 
     public function updateUserProfile(array $data, User $user): void
@@ -70,44 +73,31 @@ class UserRepository implements UserRepositoryInterface
         );
     }
 
-    public function updateBusinessProfile(array $data, User $user): User
+    public function updateBusinessProfile(array $data, User $user): Model
     {
-        if (!$user->businessProfile) {
-            $user->businessProfile = new BusinessProfile();
-            $user->businessProfile->user_id = $user->id;
-        }
+        BusinessProfile::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $data['name'],
+                'slug' => Str::kebab($data['name']),
+                'description' => $data['description'],
+                'address' => $data['address'],
+            ]
+        );
 
-        $user->businessProfile->name = $data['name'];
-        $user->businessProfile->slug = strtolower($data['slug']);
-        $user->businessProfile->description = $data['description'];
-        $user->businessProfile->address = $data['address'];
-        $user->businessProfile->id ? $user->businessProfile->update() : $user->businessProfile->save();
-
-        $user->refresh();
-
-        return $this->getUser($user->slug);
+        return $this->getUser($user->id);
     }
 
-    public function updatePassword(array $data, User $user): User
-    {
-        $user->password = bcrypt($data['new_password']);
-        $user->update();
-
-        return $user;
-    }
-
-    public function updateProfilePicture(string $filename, User $user): User
+    public function updateProfilePicture(string $filename, User $user): Model
     {
         $file = $this->fileRepo->create(['path' => $filename]);
 
-        $user->pictures = new UserProfilePicture();
-        $user->pictures->user_id = $user->id;
-        $user->pictures->profile_picture_id = $file->id;
-        $user->pictures->save();
+        $this->userProfilePicture->create([
+            'user_id' => $user->id,
+            'profile_picture_id' => $file->id
+        ]);
 
-        $user->fresh();
-
-        return $this->getUser($user->slug);
+        return $this->getUser($user->id);
     }
 
     public function logout(User $user): int

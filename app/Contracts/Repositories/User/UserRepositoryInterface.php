@@ -3,28 +3,29 @@
 namespace App\Contracts\Repositories\User;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
-    public function getUsers(Request $request): Collection;
+    public function getUser(int $userId): Model;
 
-    public function getUser(string $slug): ?User;
+    public function getUserBySlug(string $slug): ?User;
 
     public function getUserByEmailAddress(string $email): ?User;
 
-    public function getDuplicateUserByPhoneNumber(string $phone, int $id): ?User;
+    public function phoneExist(string $phone, int $id): bool;
 
-    public function updateProfile(array $data, User $user): User;
+    public function businessExist(string $name, int $userId): bool;
+
+    public function updateProfile(array $data, User $user): Model;
 
     public function updateUserProfile(array $data, User $user): void;
 
-    public function updateBusinessProfile(array $data, User $user): User;
+    public function updateBusinessProfile(array $data, User $user): Model;
 
-    public function updatePassword(array $data, User $user): User;
-
-    public function updateProfilePicture(string $filename, User $user): User;
+    public function updateProfilePicture(string $filename, User $user): Model;
 
     public function logout(User $user): int;
 }

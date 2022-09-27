@@ -45,10 +45,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/', 'myAds')->name('ads.myAds');
             Route::post('/', 'store')->name('ads.store');
             Route::put('/{id}', 'update')->name('ads.update');
-            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
             Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
-            Route::post('/upload/pictures', 'uploadPictures')->name('ads.pictures.upload');
-            Route::delete('/{id}/picture/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
+            Route::post('/pictures/{id}', 'uploadPictures')->name('ads.pictures.upload');
+            Route::delete('/{id}/pictures/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
+            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
             Route::delete('/{id}', 'delete')->name('ads.delete');
             Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
         });

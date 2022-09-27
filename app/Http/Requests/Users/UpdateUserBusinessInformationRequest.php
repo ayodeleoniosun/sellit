@@ -25,7 +25,6 @@ class UpdateUserBusinessInformationRequest extends FormRequest
     {
         return [
             'name'        => 'required|string',
-            'slug'        => 'required|string',
             'description' => 'required|string',
             'address'     => 'required|string',
         ];

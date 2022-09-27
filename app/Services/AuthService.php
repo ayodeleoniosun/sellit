@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Contracts\Repositories\User\AuthRepositoryInterface;
+use App\Contracts\Repositories\User\UserRepositoryInterface;
 use App\Contracts\Services\AuthServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserResource;
 use App\Jobs\SendWelcomeMail;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -27,19 +28,22 @@ class AuthService implements AuthServiceInterface
 
     protected AuthRepositoryInterface $authRepo;
 
-    public function __construct(AuthRepositoryInterface $authRepo)
+    protected UserRepositoryInterface $userRepo;
+
+    public function __construct(AuthRepositoryInterface $authRepo, UserRepositoryInterface $userRepo)
     {
         $this->authRepo = $authRepo;
+        $this->userRepo = $userRepo;
     }
 
-    public function register(array $data): User
+    public function register(array $data): Model
     {
         $fullname = strtolower($data['first_name'] . ' ' . $data['last_name']);
 
         $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
         $data['password'] = Hash::make($data['password']);
 
-        $user = $this->authRepo->store($data);
+        $user = $this->authRepo->create($data);
 
         SendWelcomeMail::dispatch($user);
 
@@ -48,7 +52,7 @@ class AuthService implements AuthServiceInterface
 
     public function login(array $data): array
     {
-        $user = $this->authRepo->getUserByEmailAddress($data['email']);
+        $user = $this->userRepo->getUserByEmailAddress($data['email']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw new CustomException('Incorrect login credentials', Response::HTTP_UNAUTHORIZED);
