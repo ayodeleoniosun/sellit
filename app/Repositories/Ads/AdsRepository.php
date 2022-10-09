@@ -3,28 +3,34 @@
 namespace App\Repositories\Ads;
 
 use App\Contracts\Repositories\Ads\AdsRepositoryInterface;
+use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Models\Ads;
+use App\Models\AdsPicture;
+use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class AdsRepository implements AdsRepositoryInterface
+class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 {
-    private Ads $ads;
+    protected Ads $ads;
 
-    public function __construct(Ads $ads)
+    protected FileRepositoryInterface $fileRepo;
+
+    /**
+     * @param Ads $ads
+     * @param FileRepositoryInterface $fileRepo
+     */
+    public function __construct(Ads $ads, FileRepositoryInterface $fileRepo)
     {
+        parent::__construct($ads);
         $this->ads = $ads;
+        $this->fileRepo = $fileRepo;
     }
 
-    public function getAdsBySlug(string $slug): ?Ads
+    public function myAds(Request $request): LengthAwarePaginator
     {
-       $ads = $this->ads->where('slug', $slug);
-       return $ads->with('category', 'subCategory', 'sortOptions', 'seller', 'pictures')->first() ?? null;
-    }
-
-    public function getAdsById(int $adsId): ?Ads
-    {
-        $ads = $this->ads->find($adsId);
-
-        return $ads->with('category', 'subCategory', 'sortOptions', 'seller', 'pictures')->first() ?? null;
+        return Ads::where('seller_id', $request->user()->id)->with('category', 'subCategory', 'sortOptions', 'pictures')->paginate(10);
     }
 
     public function sellerAdsExist(string $slug, int $seller, ?int $adsId, bool $new = true): ?Ads
@@ -42,17 +48,38 @@ class AdsRepository implements AdsRepositoryInterface
         ])->where('id', '<>', $adsId)->first();
     }
 
-    public function store(array $data): Ads
-    {
-        $ads = $this->ads->create($data);
-        return $this->getAdsBySlug($ads->slug);
-    }
-
-    public function update(array $data, int $adsId): Ads
+    public function uploadPictures(array $pictures, int $adsId): Model
     {
         $ads = $this->ads->find($adsId);
-        $ads->update($data);
-        $ads->refresh();
-        return $this->getAdsBySlug($ads->slug);
+
+        $allPictures = [];
+
+        foreach ($pictures as $picture) {
+            $allPictures[] = $this->fileRepo->insertGetId([
+                'path' => $picture,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        foreach ($allPictures as $picture) {
+            $ads->pictures()->create([
+                'ads_id' => $adsId,
+                'file_id' => $picture
+            ]);
+        }
+
+        return $this->find($adsId, ['category', 'subCategory', 'sortOptions', 'pictures']);
+    }
+
+    public function deletePicture(AdsPicture $adsPicture): void
+    {
+        $file = $this->fileRepo->find($adsPicture->file_id);
+        $file->delete();
+    }
+
+    public function getPicture(Ads $ads, int $pictureId): AdsPicture|null
+    {
+        return $ads->pictures()->find($pictureId);
     }
 }

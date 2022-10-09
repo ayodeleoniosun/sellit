@@ -48,15 +48,15 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function update(int $id, array $attributes, array $relations = []): Model
     {
-        $model = $this->find($id);
+        $model = $this->model->find($id);
 
         $model->update($attributes);
 
         return $this->find($id, $relations);
     }
 
-    public function delete(int $id): void
+    public function delete(): void
     {
-        $this->find($id)->delete();
+        $this->model->delete();
     }
 }

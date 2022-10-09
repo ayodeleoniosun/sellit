@@ -29,6 +29,18 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware(['auth:sanctum', 'is_verified_user'])->prefix('users')->group(function () {
+        Route::controller(AdsController::class)->prefix('ads')->group(function () {
+            Route::get('/', 'myAds')->name('ads.myAds');
+            Route::post('/', 'store')->name('ads.store');
+            Route::put('/{id}', 'update')->name('ads.update');
+            Route::delete('/{id}', 'delete')->name('ads.delete');
+            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
+            Route::post('/pictures/{id}', 'uploadPictures')->name('ads.pictures.upload');
+            Route::delete('/pictures/{adsId}/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
+            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
+            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
+        });
+
         Route::controller(UserController::class)->group(function () {
             Route::get('/{slug}', 'profile')->name('user.profile');
 
@@ -39,18 +51,6 @@ Route::prefix('v1')->group(function () {
                 Route::put('/update/password', 'updatePassword')->name('user.update.password');
                 Route::get('/logout', 'logout')->name('user.logout');
             });
-        });
-
-        Route::controller(AdsController::class)->prefix('/ads')->group(function () {
-            Route::get('/', 'myAds')->name('ads.myAds');
-            Route::post('/', 'store')->name('ads.store');
-            Route::put('/{id}', 'update')->name('ads.update');
-            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
-            Route::post('/pictures/{id}', 'uploadPictures')->name('ads.pictures.upload');
-            Route::delete('/{id}/pictures/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
-            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
-            Route::delete('/{id}', 'delete')->name('ads.delete');
-            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
         });
     });
 

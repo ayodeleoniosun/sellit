@@ -29,18 +29,16 @@ return new class extends Migration {
         Schema::create('ads_pictures', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('file_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('file_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('ads_sort_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('sort_option_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('sort_option_id')->constrained()->cascadeOnDelete();
             $table->string('value');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

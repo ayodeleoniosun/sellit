@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('user_profile_pictures', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('profile_picture_id')->nullable()->constrained('files')->nullOnDelete();
+            $table->foreignId('profile_picture_id')->constrained('files')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

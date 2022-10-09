@@ -4,10 +4,14 @@ namespace App\Services;
 
 use App\Contracts\Repositories\Ads\AdsRepositoryInterface;
 use App\Contracts\Services\AdsServiceInterface;
-use App\Exceptions\Ads\AdsExistException;
 use App\Exceptions\CustomException;
 use App\Http\Requests\Ads\CreateNewAdsRequest;
+use App\Http\Requests\Ads\UploadAdsPicturesRequest;
+use App\Http\Resources\Ads\AdsCollection;
 use App\Http\Resources\Ads\AdsResource;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdsService implements AdsServiceInterface
@@ -22,6 +26,10 @@ class AdsService implements AdsServiceInterface
         $this->adsRepo = $adsRepo;
     }
 
+    public function myAds(Request $request): AdsCollection
+    {
+        return new AdsCollection($this->adsRepo->myAds($request));
+    }
 
     /**
      * @throws CustomException
@@ -38,7 +46,7 @@ class AdsService implements AdsServiceInterface
             throw new CustomException('You have added this ads before.');
         }
 
-        return new AdsResource($this->adsRepo->store($data));
+        return new AdsResource($this->adsRepo->create($data));
     }
 
     /**
@@ -46,8 +54,12 @@ class AdsService implements AdsServiceInterface
      */
     public function update(CreateNewAdsRequest $request, int $adsId): AdsResource
     {
-        $data = $request->validated();
         $sellerId = $request->user()->id;
+
+        $this->validateAds($sellerId, $adsId);
+
+        $data = $request->validated();
+
         $data['slug'] = Str::kebab($data['name']);
 
         $sellerAdsExist = $this->adsRepo->sellerAdsExist($data['slug'], $sellerId, $adsId, false);
@@ -56,6 +68,63 @@ class AdsService implements AdsServiceInterface
             throw new CustomException('You have added this ads before.');
         }
 
-        return new AdsResource($this->adsRepo->update($data, $adsId));
+        $relationsToRetrieve = ['category', 'subCategory', 'sortOptions', 'seller', 'pictures'];
+
+        return new AdsResource($this->adsRepo->update($adsId, $data, $relationsToRetrieve));
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function uploadPictures(UploadAdsPicturesRequest $request, int $adsId): AdsResource
+    {
+        $this->validateAds($request->user()->id, $adsId);
+        $paths = [];
+
+        foreach ($request->pictures as $key => $picture) {
+            $picture = (object) $picture;
+            $filename = $adsId . $key . time() . '.' . $picture->extension();
+
+            Storage::disk('s3')->put($filename, file_get_contents($picture->getRealPath()));
+            $paths[] = $filename;
+        }
+
+        return new AdsResource($this->adsRepo->uploadPictures($paths, $adsId));
+    }
+
+    /**
+     * @throws CustomException
+     */
+    private function validateAds(int $userId, int $adsId): Model
+    {
+        $ads = $this->adsRepo->find($adsId);
+
+        if (!$ads) {
+            throw new CustomException('Ads does not exist');
+        }
+
+        if ($ads->seller_id !== $userId) {
+            throw new CustomException('Unauthorized', 403);
+        }
+
+        return $ads;
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function deletePicture(Request $request, int $adsId, int $pictureId):void
+    {
+        $ads = $this->validateAds($request->user()->id, $adsId);
+
+        $adsPicture = $this->adsRepo->getPicture($ads, $pictureId);
+
+        if (!$adsPicture) {
+            throw new CustomException('Invalid resource');
+        }
+
+        Storage::disk('s3')->delete($adsPicture->file->path);
+
+        $this->adsRepo->deletePicture($adsPicture);
     }
 }

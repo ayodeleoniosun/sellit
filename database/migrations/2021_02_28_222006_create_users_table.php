@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('password');
             $table->string('remember_token')->nullable();
-            $table->string('role')->default('user'); //['user', 'admin']
+            $table->boolean('is_admin')->default(false);
             $table->dateTime('token_expires_at')->nullable();
             $table->string('activation_code')->nullable();
             $table->dateTime('email_verified_at')->nullable();

@@ -19,5 +19,5 @@ interface BaseRepositoryInterface
 
     public function update(int $id, array $attributes, array $relations = []): Model;
 
-    public function delete(int $id): void;
+    public function delete(): void;
 }

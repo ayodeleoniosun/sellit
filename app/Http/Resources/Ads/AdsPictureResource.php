@@ -18,10 +18,7 @@ class AdsPictureResource extends JsonResource
     {
         return [
             'id'          => $this->id,
-            'ads'         => $this->whenLoaded('ads'),
-            'picture_url' => Storage::disk('ads')->url($this->file->filename),
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
+            'url' => Storage::disk('s3')->url($this->file->path)
         ];
     }
 }

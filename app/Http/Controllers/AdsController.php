@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Services\AdsServiceInterface;
 use App\Http\Requests\Ads\CreateNewAdsRequest;
 use App\Http\Requests\Ads\UploadAdsPicturesRequest;
+use App\Http\Resources\Ads\AdsCollection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,11 @@ class AdsController extends Controller
     public function __construct(AdsServiceInterface $ads)
     {
         $this->ads = $ads;
+    }
+
+    public function myAds(Request $request): AdsCollection
+    {
+        return $this->ads->myAds($request);
     }
 
     public function store(CreateNewAdsRequest $request): JsonResponse
@@ -31,12 +37,13 @@ class AdsController extends Controller
 
     public function uploadPictures(UploadAdsPicturesRequest $request, int $adsId): JsonResponse
     {
-        $response = $this->ads->uploadPictures($request->pictures, $adsId);
+        $response = $this->ads->uploadPictures($request, $adsId);
+        return response()->success($response, 'Ads pictures successfully uploaded');
+    }
 
-        if ($response > 0) {
-            return response()->success([], $response.' ads pictures successfully uploaded');
-        }
-
-        return response()->error('No ads picture uploaded');
+    public function deletePicture(Request $request, int $adsId, int $pictureId): JsonResponse
+    {
+        $this->ads->deletePicture($request, $adsId, $pictureId);
+        return response()->success([], 'Ads picture successfully deleted');
     }
 }

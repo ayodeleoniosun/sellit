@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin' && $this->isVerified();
+        return $this->is_admin && $this->isVerified();
     }
 
     public function isVerified(): bool
