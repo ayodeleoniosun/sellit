@@ -4,9 +4,11 @@ namespace App\Repositories\Category;
 
 use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
 use App\Models\SortOption;
+use App\Models\SortOptionValues;
 use App\Models\SubCategory;
 use App\Models\SubCategorySortOption;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -28,6 +30,16 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
     public function index(Request $request): LengthAwarePaginator
     {
         return SubCategory::with('category', 'sortOptions')->paginate(10);
+    }
+
+    public function allSortOptions(Request $request): Collection
+    {
+        return SortOption::all();
+    }
+
+    public function sortOptionValues(Request $request, int $sortOptionId): Collection
+    {
+        return SortOptionValues::where('sort_option_id', $sortOptionId)->get();
     }
 
     public function getSubCategory(string $slug): ?SubCategory

@@ -55,6 +55,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function () {
         Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/sort-options', [CategoryController::class, 'allSortOptions'])->name('sort_options.index');
+        Route::get('/sort-option-values/{sortOptionId}', [CategoryController::class, 'sortOptionValues'])->name('sort_options.values');
 
         Route::controller(CategoryController::class)->prefix('categories')->group(function () {
             Route::get('/', 'index')->name('category.index');
@@ -66,6 +68,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/', 'subCategories')->name('sub_category.index');
             Route::post('/', 'addSubCategory')->name('sub_category.store');
             Route::put('/{slug}', 'updateSubCategory')->name('sub_category.update');
+            Route::get('/sort-options', 'allSortOptions')->name('sort_options.index');
             Route::post('/sort-options/{subCategoryId}', 'storeSortOptions')->name('sub_category.sort_options.store');
             Route::delete('/sort-option/{sortOptionId}', 'deleteSortOption')->name('sub_category.sort_options.delete');
         });

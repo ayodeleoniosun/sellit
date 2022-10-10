@@ -26,6 +26,20 @@ class CategoryController extends Controller
        return $this->category->index($request);
     }
 
+    public function allSortOptions(Request $request):JsonResponse
+    {
+        $response = $this->category->allSortOptions($request);
+
+        return response()->success($response, '');
+    }
+
+    public function sortOptionValues(Request $request, int $sortOptionId): JsonResponse
+    {
+        $response =  $this->category->sortOptionValues($request, $sortOptionId);
+
+        return response()->success($response, '');
+    }
+
     public function subCategories(Request $request): SubCategoryCollection
     {
         return $this->category->subCategories($request);

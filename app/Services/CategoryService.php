@@ -11,6 +11,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -39,6 +40,16 @@ class CategoryService implements CategoryServiceInterface
         return new CategoryCollection($this->categoryRepo->index($request));
     }
 
+    public function allSortOptions(Request $request): Collection
+    {
+        return $this->subCategoryRepo->allSortOptions($request);
+    }
+
+    public function sortOptionValues(Request $request, int $sortOptionId): Collection
+    {
+        return $this->subCategoryRepo->sortOptionValues($request, $sortOptionId);
+    }
+
     public function subCategories(Request $request): SubCategoryCollection
     {
         return new SubCategoryCollection($this->subCategoryRepo->index($request));
@@ -51,7 +62,7 @@ class CategoryService implements CategoryServiceInterface
     public function store(array $data): CategoryResource
     {
         $name = $data['name'];
-        $slug = Str::slug($name);
+        $slug = Str::kebab($name);
 
         $canUpdateIcon = !empty($data['icon']);
 
