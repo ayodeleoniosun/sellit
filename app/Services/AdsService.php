@@ -31,6 +31,16 @@ class AdsService implements AdsServiceInterface
         return new AdsCollection($this->adsRepo->myAds($request));
     }
 
+    public function categoryAds(Request $request, int $categoryId): AdsCollection
+    {
+        return new AdsCollection($this->adsRepo->categoryAds($request, $categoryId));
+    }
+
+    public function subCategoryAds(Request $request, int $categoryId, int $subCategoryId): AdsCollection
+    {
+        return new AdsCollection($this->adsRepo->subCategoryAds($request, $categoryId, $subCategoryId));
+    }
+
     /**
      * @throws CustomException
      */

@@ -12,6 +12,10 @@ interface AdsRepositoryInterface
 {
     public function myAds(Request $request): LengthAwarePaginator;
 
+    public function categoryAds(Request $request, int $categoryId): LengthAwarePaginator;
+
+    public function subCategoryAds(Request $request, int $categoryId, int $subCategoryId): LengthAwarePaginator;
+
     public function uploadPictures(array $pictures, int $adsId): Model;
 
     public function deletePicture(AdsPicture $adsPicture): void;

@@ -23,6 +23,16 @@ class AdsController extends Controller
         return $this->ads->myAds($request);
     }
 
+    public function categoryAds(Request $request, int $categoryId): AdsCollection
+    {
+        return $this->ads->categoryAds($request, $categoryId);
+    }
+
+    public function subCategoryAds(Request $request, int $categoryId, int $subCategoryId): AdsCollection
+    {
+        return $this->ads->subCategoryAds($request, $categoryId, $subCategoryId);
+    }
+
     public function store(CreateNewAdsRequest $request): JsonResponse
     {
         $response = $this->ads->store($request);

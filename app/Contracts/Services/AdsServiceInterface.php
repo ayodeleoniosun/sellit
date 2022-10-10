@@ -12,6 +12,10 @@ interface AdsServiceInterface
 {
     public function myAds(Request $request): AdsCollection;
 
+    public function categoryAds(Request $request, int $categoryId): AdsCollection;
+
+    public function subCategoryAds(Request $request, int $categoryId, int $subCategoryId): AdsCollection;
+
     public function store(CreateNewAdsRequest $request): AdsResource;
 
     public function update(CreateNewAdsRequest $request, int $adsId): AdsResource;

@@ -77,6 +77,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('ads')->group(function () {
         Route::controller(AdsController::class)->group(function () {
             Route::get('/', 'index')->name('ads.index');
+            Route::get('/category/{id}', 'categoryAds')->name('category.ads');
+            Route::get('/category/{id}/sub-category/{subId}', 'subCategoryAds')->name('sub_category.ads');
             Route::get('/{slug}', 'view')->name('ads.view');
         });
     });
@@ -84,9 +86,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::controller(CategoryController::class)->group(function () {
             Route::get('/', 'index')->name('category.index');
-            Route::get('/{id}/ads', 'categoryAds')->name('category.ads');
             Route::get('/{id}/sub-categories', 'subCategories')->name('sub_categories.index');
-            Route::get('/{id}/sub-category/{subId}/ads', 'subCategoryAds')->name('sub_category.ads');
         });
     });
 
