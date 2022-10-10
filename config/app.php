@@ -181,7 +181,6 @@ return [
         \App\Providers\Repositories\FileRepositoryProvider::class,
         \App\Providers\Repositories\Category\CategoryRepositoryProvider::class,
         \App\Providers\Repositories\Category\SubCategoryRepositoryProvider::class,
-        \App\Providers\Repositories\Category\SubCategorySortOptionsRepositoryProvider::class,
         \App\Providers\Repositories\Ads\AdsRepositoryProvider::class,
 
         //Service Providers
