@@ -128,7 +128,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email\" : \"ayodeleoniosun63@gail.com\",\n    \"phone\" : \"0813201674488\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
 						},
 						"url": {
 							"raw": "{{auth}}/register",
@@ -169,217 +169,434 @@
 			"item": [
 				{
 					"name": "Profile",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "{{authorization}}"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{users}}/ayodele-oniosun-8kk9p0wm",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"ayodele-oniosun-8kk9p0wm"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Personal Information",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authorization}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone\" : \"08132016744\",\n    \"state\": \"1\",\n    \"city\": \"2\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"item": [
+						{
+							"name": "Profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{authorization}}"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{users}}/ayodele-oniosun-1ohfjgcs",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"ayodele-oniosun-1ohfjgcs"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/personal-information",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"personal-information"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Business Information",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authorization}}",
-								"type": "text"
 							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\" : \"Business-101\",\n    \"slug\" : \"business-101\",\n    \"description\" : \"Lagos, Nigeria\",\n    \"address\": \"Lagos, Nigeria\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"response": []
+						},
+						{
+							"name": "Update Personal Information",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Olaun\",\n    \"phone\" : \"08132016744\",\n    \"state\": \"1\",\n    \"city\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/personal-information",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"personal-information"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/business-information",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"business-information"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Profile Picture",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authorization}}",
-								"type": "text"
 							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "image",
-									"type": "file",
-									"src": "/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
+							"response": []
+						},
+						{
+							"name": "Update Business Information",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Business name\",\n    \"description\" : \"Ikeja, Nigeria\",\n    \"address\": \"Lagos, Nigeria\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/business-information",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"business-information"
+									]
 								}
-							]
-						},
-						"url": {
-							"raw": "{{users}}/profile/update/picture",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"picture"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Change Password",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{authorization}}",
-								"type": "text"
 							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun\",\n    \"new_password_confirmation\" : \"ayodeleoniosun\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"response": []
+						},
+						{
+							"name": "Upload Profile Picture",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/picture",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"picture"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{users}}/profile/update/password",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"update",
-								"password"
-							]
+						{
+							"name": "Change Password",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"A,553534123.a\",\n    \"new_password_confirmation\" : \"A,553534123.a\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{users}}/profile/update/password",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{authorization}}"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{users}}/profile/logout",
+									"host": [
+										"{{users}}"
+									],
+									"path": [
+										"profile",
+										"logout"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Logout",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "{{authorization}}"
+					"name": "Ads",
+					"item": [
+						{
+							"name": "My Ads",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}",
+									"host": [
+										"{{ads}}"
+									]
+								}
 							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{users}}/profile/logout",
-							"host": [
-								"{{users}}"
-							],
-							"path": [
-								"profile",
-								"logout"
-							]
+							"response": []
+						},
+						{
+							"name": "Post Ads",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"1\",\n    \"name\" : \"This new ads\",\n    \"price\" : 2500,\n    \"description\" : \"cool and great\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ads}}",
+									"host": [
+										"{{ads}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Ads",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"1\",\n    \"name\" : \"This sysvv\",\n    \"price\" : \"3500\",\n    \"description\" : \"great and amazing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ads}}/20",
+									"host": [
+										"{{ads}}"
+									],
+									"path": [
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Pictures",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "pictures[]",
+											"type": "file",
+											"src": [
+												"/Users/ayodele/Documents/Ayodele_Oniosun_NIN.jpg",
+												"/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ads}}/pictures/3",
+									"host": [
+										"{{ads}}"
+									],
+									"path": [
+										"pictures",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Ads Picture",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}/pictures/3/12",
+									"host": [
+										"{{ads}}"
+									],
+									"path": [
+										"pictures",
+										"3",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Reviews",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{auth}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "rating",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "this is",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{user-ads}}/12/reviews",
+									"host": [
+										"{{user-ads}}"
+									],
+									"path": [
+										"12",
+										"reviews"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -486,17 +703,22 @@
 									]
 								},
 								"url": {
-									"raw": "{{categories}}/awesome-great",
+									"raw": "{{categories}}/test-categoryy",
 									"host": [
 										"{{categories}}"
 									],
 									"path": [
-										"awesome-great"
+										"test-categoryy"
 									]
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "SubCategory",
+					"item": [
 						{
 							"name": "All Sub Categories",
 							"request": {
@@ -540,7 +762,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testing sub\"\n}",
+									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testing sussss\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -574,7 +796,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testig ss\"\n}",
+									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testig ssx\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -582,12 +804,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{subCategories}}/testingxxy1111y",
+									"raw": "{{subCategories}}/testig-ss",
 									"host": [
 										"{{subCategories}}"
 									],
 									"path": [
-										"testingxxy1111y"
+										"testig-ss"
 									]
 								}
 							},
@@ -611,7 +833,45 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"sort_options\": [\n        \"colour\",\n        \"age_level\",\n        \"body\",\n        \"expected_salary\"\n    ]\n}",
+									"raw": "{\n    \"sort_options\" : [\n        1, 2, 4, 79, 78\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{subCategories}}/sort-options/3",
+									"host": [
+										"{{subCategories}}"
+									],
+									"path": [
+										"sort-options",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Sub Category Sort Options",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sort_options\" : [\n        78, 2, 7, 8\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -659,6 +919,67 @@
 									],
 									"path": [
 										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sort Options",
+					"item": [
+						{
+							"name": "All Sort Options",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{admin}}/sort-options",
+									"host": [
+										"{{admin}}"
+									],
+									"path": [
+										"sort-options"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All Sort Options Values",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{admin}}/sort-options",
+									"host": [
+										"{{admin}}"
+									],
+									"path": [
+										"sort-options"
 									]
 								}
 							},
@@ -719,7 +1040,7 @@
 		},
 		{
 			"key": "authorization",
-			"value": "Bearer 2|RrJXGMf99cWNB9yikcxcJKWSjwmpIsV9uIfTyAmS"
+			"value": "Bearer 2|EtKQ0ntkBchoMLJxZ5eszMfU4B9u7VyGBye7CTP4"
 		},
 		{
 			"key": "auth",
@@ -741,6 +1062,11 @@
 		{
 			"key": "subCategories",
 			"value": "{{admin}}/sub-categories",
+			"type": "string"
+		},
+		{
+			"key": "ads",
+			"value": "{{users}}/ads",
 			"type": "string"
 		}
 	]
