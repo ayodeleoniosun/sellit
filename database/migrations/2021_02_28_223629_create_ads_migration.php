@@ -32,14 +32,6 @@ return new class extends Migration {
             $table->foreignId('file_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
-
-        Schema::create('ads_sort_options', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ads_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('sort_option_id')->constrained()->cascadeOnDelete();
-            $table->string('value');
-            $table->timestamps();
-        });
     }
 
     /**

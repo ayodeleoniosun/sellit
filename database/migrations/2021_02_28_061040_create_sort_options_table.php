@@ -16,18 +16,21 @@ return new class extends Migration {
         Schema::create('sort_options', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug');
             $table->timestamps();
-            $table->softDeletes();
         });
 
-        $sort_options = [
-            'age_level', 'body', 'brand', 'colour', 'condition', 'expected_salary', 'facility', 'fuel', 'furnishing',
-            'gender', 'job_type', 'material', 'operating_system', 'price', 'processor', 'ram', 'screen_size',
-            'second_condition', 'storage_capacity', 'storage_type', 'transmission', 'type', 'bathroom', 'bedroom'
+        $sortOptions = [
+            'age levels', 'bathrooms', 'bedrooms', 'bodies', 'brands', 'colours', 'conditions', 'expected salaries', 'facilities', 'fuels', 'furnishings',
+            'genders', 'job types', 'materials', 'operating systems', 'prices', 'processors', 'rams', 'screen sizes',
+            'second conditions', 'storage capacities', 'storage types', 'transmissions', 'type'
         ];
 
-        foreach ($sort_options as $option) {
-            SortOption::create(['name' => $option]);
+        foreach ($sortOptions as $option) {
+            SortOption::create([
+                'name' => $option,
+                'slug' => \Illuminate\Support\Str::kebab($option)
+            ]);
         }
     }
 

@@ -5,28 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubCategorySortOption extends Model
+class SortOptionValues extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $guarded = ['id'];
-
-    public function subCategory(): BelongsTo
-    {
-        return $this->belongsTo(SubCategory::class);
-    }
 
     public function sortOption(): BelongsTo
     {
         return $this->belongsTo(SortOption::class);
     }
-
-    public function sortOptionValues(): HasMany
-    {
-        return $this->hasMany(SubCate);
-    }
-
 }

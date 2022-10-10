@@ -61,7 +61,7 @@ class CategoryController extends Controller
         return response()->success($response, 'Sub category successfully added');
     }
 
-    public function updateSubCategory(UpdateSubCategoryRequest $request, $slug): JsonResponse
+    public function updateSubCategory(UpdateSubCategoryRequest $request, string $slug): JsonResponse
     {
         $data = array_merge($request->validated(), ['slug' => $slug]);
         $response = $this->category->updateSubCategory($data);

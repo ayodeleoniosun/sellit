@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubCategorySortOption extends Model
+class SubCategorySortOptionValue extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -19,14 +19,14 @@ class SubCategorySortOption extends Model
         return $this->belongsTo(SubCategory::class);
     }
 
-    public function sortOption(): BelongsTo
+    public function subCategorySortOption(): BelongsTo
     {
-        return $this->belongsTo(SortOption::class);
+        return $this->belongsTo(SubCategorySortOption::class);
     }
 
-    public function sortOptionValues(): HasMany
+    public function sortOptionValues(): BelongsTo
     {
-        return $this->hasMany(SubCate);
+        return $this->belongsTo();
     }
 
 }
