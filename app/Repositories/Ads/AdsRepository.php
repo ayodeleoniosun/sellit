@@ -30,7 +30,7 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 
     public function myAds(Request $request): LengthAwarePaginator
     {
-        return Ads::where('seller_id', $request->user()->id)->with('category', 'subCategory', 'sortOptions', 'pictures')->paginate(10);
+        return $this->ads->where('seller_id', $request->user()->id)->with('category', 'subCategory', 'pictures')->paginate(10);
     }
 
     public function sellerAdsExist(string $slug, int $seller, ?int $adsId, bool $new = true): ?Ads
@@ -69,7 +69,7 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
             ]);
         }
 
-        return $this->find($adsId, ['category', 'subCategory', 'sortOptions', 'pictures']);
+        return $this->find($adsId, ['category', 'subCategory', 'pictures']);
     }
 
     public function deletePicture(AdsPicture $adsPicture): void

@@ -14,17 +14,28 @@ use Illuminate\Support\Str;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    protected User $user;
+    private User $user;
 
-    protected UserProfilePicture $userProfilePicture;
+    private BusinessProfile $businessProfile;
 
-    protected FileRepositoryInterface $fileRepo;
+    private UserProfile $userProfile;
 
-    public function __construct(User $user, UserProfilePicture $userProfilePicture, FileRepositoryInterface $fileRepo)
+    private UserProfilePicture $userProfilePicture;
+
+    private FileRepositoryInterface $fileRepo;
+
+    public function __construct(
+        User $user,
+        BusinessProfile $businessProfile,
+        UserProfile $userProfile,
+        UserProfilePicture $userProfilePicture,
+        FileRepositoryInterface $fileRepo)
     {
         parent::__construct($user);
 
         $this->user = $user;
+        $this->userProfile = $userProfile;
+        $this->businessProfile = $businessProfile;
         $this->userProfilePicture = $userProfilePicture;
         $this->fileRepo = $fileRepo;
     }
@@ -51,7 +62,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function businessExist(string $name, int $userId): bool
     {
-        return BusinessProfile::where('name', $name)->where('user_id', '<>', $userId)->exists();
+        return $this->businessProfile->where('name', $name)->where('user_id', '<>', $userId)->exists();
     }
 
     public function updateProfile(array $data, User $user): Model
@@ -67,7 +78,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function updateUserProfile(array $data, User $user): void
     {
-         UserProfile::updateOrCreate(
+         $this->userProfile->updateOrCreate(
             ['user_id' => $user->id],
             ['state_id' => $data['state'], 'city_id' => $data['city'] ]
         );
@@ -75,7 +86,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function updateBusinessProfile(array $data, User $user): Model
     {
-        BusinessProfile::updateOrCreate(
+        $this->businessProfile->updateOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => $data['name'],

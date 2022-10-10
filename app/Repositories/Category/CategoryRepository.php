@@ -14,17 +14,20 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     private Category $category;
 
+    private File $file;
+
     protected FileRepositoryInterface $fileRepo;
 
-    public function __construct(Category $category, FileRepositoryInterface $fileRepo)
+    public function __construct(Category $category, File $file, FileRepositoryInterface $fileRepo)
     {
         $this->category = $category;
+        $this->file = $file;
         $this->fileRepo = $fileRepo;
     }
 
     public function index(Request $request): LengthAwarePaginator
     {
-        return Category::with('subCategories')->paginate(10);
+        return $this->category->with('subCategories')->paginate(10);
     }
 
     public function getCategory(string $slug): ?Category
@@ -40,7 +43,7 @@ class CategoryRepository implements CategoryRepositoryInterface
             $file = $this->fileRepo->create(['path' => $data['filename']]);
         }
 
-        $data['file_id'] = $file->id ?? File::DEFAULT_ID;
+        $data['file_id'] = $file->id ?? $this->file::DEFAULT_ID;
 
         $this->category->create($data);
 
@@ -61,7 +64,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
         $category->update($data);
 
-        $canDeleteIcon = $canUpdateIcon && $formerIcon->id !== File::DEFAULT_ID;
+        $canDeleteIcon = $canUpdateIcon && $formerIcon->id !== $this->file::DEFAULT_ID;
 
         if ($canDeleteIcon) {
             Storage::disk('s3')->delete($formerIcon->path);

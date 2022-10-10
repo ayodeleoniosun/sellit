@@ -15,32 +15,46 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class SubCategoryRepository extends BaseRepository implements SubCategoryRepositoryInterface
 {
     private SubCategory $subCategory;
+
     private SubCategorySortOption $subCategorySortOption;
+
     private SortOption $sortOption;
 
-    public function __construct(SubCategory $subCategory, SubCategorySortOption $subCategorySortOption, SortOption $sortOption)
+    private SortOptionValues $sortOptionValues;
+
+    public function __construct(
+        SubCategory $subCategory,
+        SubCategorySortOption $subCategorySortOption,
+        SortOption $sortOption,
+        SortOptionValues $sortOptionValues)
     {
         parent::__construct($subCategory);
 
         $this->subCategory = $subCategory;
         $this->subCategorySortOption = $subCategorySortOption;
         $this->sortOption = $sortOption;
+        $this->sortOptionValues = $sortOptionValues;
     }
 
     public function index(Request $request): LengthAwarePaginator
     {
-        return SubCategory::with('category', 'sortOptions')->paginate(10);
+        return $this->subCategory->with('category')->paginate(10);
     }
 
     public function allSortOptions(Request $request): Collection
     {
-        return SortOption::all();
+        return $this->sortOption->all();
     }
 
     public function sortOptionValues(Request $request, int $sortOptionId): Collection
     {
-        return SortOptionValues::where('sort_option_id', $sortOptionId)->get();
+        return $this->sortOptionValues->where('sort_option_id', $sortOptionId)->get();
     }
+
+//    public function subCategorySortOptions(int $subCategoryId): Collection
+//    {
+//        return SortOptionValues::where('sort_option_id', $sortOptionId)->get();
+//    }
 
     public function getSubCategory(string $slug): ?SubCategory
     {
