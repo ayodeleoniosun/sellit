@@ -875,6 +875,68 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Sort Options",
+					"item": [
+						{
+							"name": "All Sort Options",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{admin}}/sort-options",
+									"host": [
+										"{{admin}}"
+									],
+									"path": [
+										"sort-options"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All Sort Options Values",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{admin}}/sort-option-values/4",
+									"host": [
+										"{{admin}}"
+									],
+									"path": [
+										"sort-option-values",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"event": [
@@ -902,123 +964,7 @@
 			"name": "Ads",
 			"item": [
 				{
-					"name": "Sort Options",
-					"item": [
-						{
-							"name": "All Sort Options",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/sort-options",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"sort-options"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All Sort Options Values",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/sort-option-values/4",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"sort-option-values",
-										"4"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Category",
-					"item": [
-						{
-							"name": "All Categories",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{categories}}",
-									"host": [
-										"{{categories}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All Sub Categories",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{categories}}/1/sub-categories",
-									"host": [
-										"{{categories}}"
-									],
-									"path": [
-										"1",
-										"sub-categories"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Ads",
+					"name": "All Ads",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1034,9 +980,153 @@
 							}
 						],
 						"url": {
-							"raw": "{{user-ads}}",
+							"raw": "{{ads}}",
 							"host": [
-								"{{user-ads}}"
+								"{{ads}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Ads",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ads}}/category/1",
+							"host": [
+								"{{ads}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sub Category Ads",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ads}}/category/1/sub-category/1",
+							"host": [
+								"{{ads}}"
+							],
+							"path": [
+								"category",
+								"1",
+								"sub-category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{categories}}",
+							"host": [
+								"{{categories}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Sub Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{categories}}/1/sub-categories",
+							"host": [
+								"{{categories}}"
+							],
+							"path": [
+								"1",
+								"sub-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sub Category Sort Options",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/sub-categories/1/sort-options",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sub-categories",
+								"1",
+								"sort-options"
 							]
 						}
 					},
