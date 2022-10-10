@@ -50,9 +50,9 @@ class CategoryService implements CategoryServiceInterface
         return $this->subCategoryRepo->sortOptionValues($request, $sortOptionId);
     }
 
-    public function subCategories(Request $request): SubCategoryCollection
+    public function subCategories(Request $request, int $categoryId): SubCategoryCollection
     {
-        return new SubCategoryCollection($this->subCategoryRepo->index($request));
+        return new SubCategoryCollection($this->subCategoryRepo->index($request, $categoryId));
     }
 
     /**

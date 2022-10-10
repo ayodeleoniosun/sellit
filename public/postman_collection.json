@@ -406,9 +406,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{ads}}",
+									"raw": "{{user-ads}}",
 									"host": [
-										"{{ads}}"
+										"{{user-ads}}"
 									]
 								}
 							},
@@ -440,9 +440,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{ads}}",
+									"raw": "{{user-ads}}",
 									"host": [
-										"{{ads}}"
+										"{{user-ads}}"
 									]
 								}
 							},
@@ -474,9 +474,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{ads}}/20",
+									"raw": "{{user-ads}}/20",
 									"host": [
-										"{{ads}}"
+										"{{user-ads}}"
 									],
 									"path": [
 										"20"
@@ -515,9 +515,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{ads}}/pictures/3",
+									"raw": "{{user-ads}}/pictures/3",
 									"host": [
-										"{{ads}}"
+										"{{user-ads}}"
 									],
 									"path": [
 										"pictures",
@@ -544,9 +544,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{ads}}/pictures/3/12",
+									"raw": "{{user-ads}}/pictures/3/12",
 									"host": [
-										"{{ads}}"
+										"{{user-ads}}"
 									],
 									"path": [
 										"pictures",
@@ -607,31 +607,6 @@
 					"name": "Category",
 					"item": [
 						{
-							"name": "All Categories",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{categories}}",
-									"host": [
-										"{{categories}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Add New Category",
 							"request": {
 								"method": "POST",
@@ -663,9 +638,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{categories}}",
+									"raw": "{{admin-categories}}",
 									"host": [
-										"{{categories}}"
+										"{{admin-categories}}"
 									]
 								}
 							},
@@ -703,9 +678,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{categories}}/test-categoryy",
+									"raw": "{{admin-categories}}/test-categoryy",
 									"host": [
-										"{{categories}}"
+										"{{admin-categories}}"
 									],
 									"path": [
 										"test-categoryy"
@@ -719,31 +694,6 @@
 				{
 					"name": "SubCategory",
 					"item": [
-						{
-							"name": "All Sub Categories",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{subCategories}}",
-									"host": [
-										"{{subCategories}}"
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "Add New Sub Category",
 							"request": {
@@ -770,9 +720,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{subCategories}}",
+									"raw": "{{admin-sub-categories}}",
 									"host": [
-										"{{subCategories}}"
+										"{{admin-sub-categories}}"
 									]
 								}
 							},
@@ -804,12 +754,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{subCategories}}/testig-ss",
+									"raw": "{{admin-sub-categories}}/testig-ssx",
 									"host": [
-										"{{subCategories}}"
+										"{{admin-sub-categories}}"
 									],
 									"path": [
-										"testig-ss"
+										"testig-ssx"
 									]
 								}
 							},
@@ -841,9 +791,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{subCategories}}/sort-options/3",
+									"raw": "{{admin-sub-categories}}/sort-options/3",
 									"host": [
-										"{{subCategories}}"
+										"{{admin-sub-categories}}"
 									],
 									"path": [
 										"sort-options",
@@ -879,9 +829,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{subCategories}}/sort-options/3",
+									"raw": "{{admin-sub-categories}}/sort-options/3",
 									"host": [
-										"{{subCategories}}"
+										"{{admin-sub-categories}}"
 									],
 									"path": [
 										"sort-options",
@@ -925,7 +875,32 @@
 							"response": []
 						}
 					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Ads",
+			"item": [
 				{
 					"name": "Sort Options",
 					"item": [
@@ -935,20 +910,15 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
 										"key": "Accept",
 										"value": "application/json",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "{{admin}}/sort-options",
+									"raw": "{{baseUrl}}/sort-options",
 									"host": [
-										"{{admin}}"
+										"{{baseUrl}}"
 									],
 									"path": [
 										"sort-options"
@@ -974,38 +944,103 @@
 									}
 								],
 								"url": {
-									"raw": "{{admin}}/sort-options",
+									"raw": "{{baseUrl}}/sort-option-values/4",
 									"host": [
-										"{{admin}}"
+										"{{baseUrl}}"
 									],
 									"path": [
-										"sort-options"
+										"sort-option-values",
+										"4"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
 				},
 				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
+					"name": "Category",
+					"item": [
+						{
+							"name": "All Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{categories}}",
+									"host": [
+										"{{categories}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All Sub Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{categories}}/1/sub-categories",
+									"host": [
+										"{{categories}}"
+									],
+									"path": [
+										"1",
+										"sub-categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ads",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{user-ads}}",
+							"host": [
+								"{{user-ads}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -1055,18 +1090,28 @@
 			"value": "{{baseUrl}}/admin"
 		},
 		{
-			"key": "categories",
+			"key": "admin-categories",
 			"value": "{{admin}}/categories",
 			"type": "string"
 		},
 		{
-			"key": "subCategories",
+			"key": "admin-sub-categories",
 			"value": "{{admin}}/sub-categories",
 			"type": "string"
 		},
 		{
-			"key": "ads",
+			"key": "user-ads",
 			"value": "{{users}}/ads",
+			"type": "string"
+		},
+		{
+			"key": "categories",
+			"value": "{{baseUrl}}/categories",
+			"type": "string"
+		},
+		{
+			"key": "ads",
+			"value": "{{baseUrl}}/ads",
 			"type": "string"
 		}
 	]

@@ -17,7 +17,7 @@ interface CategoryServiceInterface
 
     public function sortOptionValues(Request $request, int $sortOptionId): Collection;
 
-    public function subCategories(Request $request): SubCategoryCollection;
+    public function subCategories(Request $request, int $categoryId): SubCategoryCollection;
 
     public function store(array $data): CategoryResource;
 

@@ -40,9 +40,9 @@ class CategoryController extends Controller
         return response()->success($response, '');
     }
 
-    public function subCategories(Request $request): SubCategoryCollection
+    public function subCategories(Request $request, int $categoryId): SubCategoryCollection
     {
-        return $this->category->subCategories($request);
+        return $this->category->subCategories($request, $categoryId);
     }
 
     public function store(AddCategoryRequest $request): JsonResponse

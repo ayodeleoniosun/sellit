@@ -36,9 +36,9 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         $this->sortOptionValues = $sortOptionValues;
     }
 
-    public function index(Request $request): LengthAwarePaginator
+    public function index(Request $request, int $categoryId): LengthAwarePaginator
     {
-        return $this->subCategory->with('category')->paginate(10);
+        return $this->subCategory->whereCategoryId($categoryId)->with('category')->paginate(10);
     }
 
     public function allSortOptions(Request $request): Collection

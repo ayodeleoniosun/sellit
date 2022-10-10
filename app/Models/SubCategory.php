@@ -17,7 +17,7 @@ class SubCategory extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->select('id', 'name', 'slug');
     }
 
     public function sortOptions(): BelongsToMany
