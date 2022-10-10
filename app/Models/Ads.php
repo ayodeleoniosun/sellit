@@ -19,11 +19,6 @@ class Ads extends Model
         return $this->slug;
     }
 
-    public function sortOptions(): HasMany
-    {
-        return $this->hasMany(AdsSortOption::class);
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class)->select('id', 'name', 'slug');

@@ -25,7 +25,7 @@ class UpdateSubCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $subCategory = SubCategory::where('slug', $this->slug)->firstOrFail();
+        $subCategory = SubCategory::where('slug', $this->slug)->first();
 
         return [
             'category_id' => 'required|string|exists:categories,id',

@@ -3,17 +3,26 @@
 namespace App\Repositories\Category;
 
 use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
+use App\Models\SortOption;
 use App\Models\SubCategory;
+use App\Models\SubCategorySortOption;
+use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class SubCategoryRepository implements SubCategoryRepositoryInterface
+class SubCategoryRepository extends BaseRepository implements SubCategoryRepositoryInterface
 {
     private SubCategory $subCategory;
+    private SubCategorySortOption $subCategorySortOption;
+    private SortOption $sortOption;
 
-    public function __construct(SubCategory $subCategory)
+    public function __construct(SubCategory $subCategory, SubCategorySortOption $subCategorySortOption, SortOption $sortOption)
     {
+        parent::__construct($subCategory);
+
         $this->subCategory = $subCategory;
+        $this->subCategorySortOption = $subCategorySortOption;
+        $this->sortOption = $sortOption;
     }
 
     public function index(Request $request): LengthAwarePaginator
@@ -32,14 +41,30 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
         return $subCategory->with('category', 'sortOptions')->first();
     }
 
-    public function store(array $data): SubCategory
+    public function storeSortOptions(array $options, int $subCategoryId): int
     {
-        return $this->subCategory->create($data);
-    }
+        $subCategorySortOptionIds = $this->sortOption->join('sub_category_sort_options', function ($join) use ($subCategoryId) {
+            $join->on('sort_options.id', '=', 'sub_category_sort_options.sort_option_id')
+                ->where('sub_category_sort_options.sub_category_id', $subCategoryId);
+        })->pluck('sub_category_sort_options.sort_option_id')->toArray();
 
-    public function update(array $data, SubCategory $subCategory): SubCategory
-    {
-        $subCategory->update($data);
-        return $this->getSubCategory($subCategory->slug);
+        $newSortOptionIds = array_values(array_diff($options, $subCategorySortOptionIds));
+
+        if (count($newSortOptionIds) == 0) {
+            return 0;
+        }
+
+        $counter = 0;
+
+        foreach ($newSortOptionIds as $option) {
+            $this->subCategorySortOption->create([
+                'sub_category_id' => $subCategoryId,
+                'sort_option_id' => $option
+            ]);
+
+            $counter++;
+        }
+
+        return $counter;
     }
 }

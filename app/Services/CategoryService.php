@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Contracts\Repositories\Category\CategoryRepositoryInterface;
 use App\Contracts\Repositories\Category\SubCategoryRepositoryInterface;
-use App\Contracts\Repositories\Category\SubCategorySortOptionsRepositoryInterface;
 use App\Contracts\Services\CategoryServiceInterface;
+use App\Exceptions\CustomException;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
@@ -21,22 +21,17 @@ class CategoryService implements CategoryServiceInterface
 
     protected SubCategoryRepositoryInterface $subCategoryRepo;
 
-    protected SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo;
-
     /**
      * @param CategoryRepositoryInterface $categoryRepo
      * @param SubCategoryRepositoryInterface $subCategoryRepo
-     * @param SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepo,
         SubCategoryRepositoryInterface $subCategoryRepo,
-        SubCategorySortOptionsRepositoryInterface $subCategorySortOptionRepo
     )
     {
         $this->categoryRepo = $categoryRepo;
         $this->subCategoryRepo = $subCategoryRepo;
-        $this->subCategorySortOptionRepo = $subCategorySortOptionRepo;
     }
 
     public function index(Request $request): CategoryCollection
@@ -109,14 +104,14 @@ class CategoryService implements CategoryServiceInterface
             $category = $this->categoryRepo->update($data, $category);
         }
 
-        return new CategoryResource($category);;
+        return new CategoryResource($category);
     }
 
     public function addSubCategory(array $data): SubCategoryResource
     {
         $data['slug'] = Str::slug($data['name']);
 
-        return new SubCategoryResource($this->subCategoryRepo->store($data));
+        return new SubCategoryResource($this->subCategoryRepo->create($data));
     }
 
     public function updateSubCategory(array $data): SubCategoryResource
@@ -128,11 +123,20 @@ class CategoryService implements CategoryServiceInterface
 
         $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
 
-        return new SubCategoryResource($this->subCategoryRepo->update($data, $subCategory));
+        return new SubCategoryResource($this->subCategoryRepo->update($subCategory->id, $data));
     }
 
+    /**
+     * @throws CustomException
+     */
     public function storeSortOptions(array $data, int $subCategoryId): int
     {
-        return $this->subCategorySortOptionRepo->store($data['sort_options'], $subCategoryId);
+        $subCategory = $this->subCategoryRepo->find($subCategoryId);
+
+        if (!$subCategory) {
+            throw new CustomException('Sub category does not exist.');
+        }
+
+        return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategoryId);
     }
 }

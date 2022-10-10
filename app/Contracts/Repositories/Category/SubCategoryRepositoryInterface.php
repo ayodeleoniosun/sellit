@@ -6,9 +6,7 @@ use App\Models\SubCategory;
 
 interface SubCategoryRepositoryInterface
 {
-    public function store(array $data): SubCategory;
+    public function getSubCategory(string $slug): SubCategory|null;
 
-    public function getSubCategory(string $slug): ?SubCategory;
-
-    public function update(array $data, SubCategory $subCategory): SubCategory;
+    public function storeSortOptions(array $options, int $subCategoryId): int;
 }

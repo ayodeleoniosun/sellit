@@ -23,10 +23,4 @@ class SubCategorySortOption extends Model
     {
         return $this->belongsTo(SortOption::class);
     }
-
-    public function sortOptionValues(): HasMany
-    {
-        return $this->hasMany(SubCate);
-    }
-
 }

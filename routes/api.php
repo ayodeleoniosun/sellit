@@ -34,11 +34,9 @@ Route::prefix('v1')->group(function () {
             Route::post('/', 'store')->name('ads.store');
             Route::put('/{id}', 'update')->name('ads.update');
             Route::delete('/{id}', 'delete')->name('ads.delete');
-            Route::post('/{id}/sort-options', 'storeSortOptions')->name('ads.sort_options.store');
             Route::post('/pictures/{id}', 'uploadPictures')->name('ads.pictures.upload');
             Route::delete('/pictures/{adsId}/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
             Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
-            Route::delete('/{id}/sort-option/{sortOptionId}', 'deleteSortOption')->name('ads.sort_options.delete');
         });
 
         Route::controller(UserController::class)->group(function () {
@@ -68,7 +66,8 @@ Route::prefix('v1')->group(function () {
             Route::get('/', 'subCategories')->name('sub_category.index');
             Route::post('/', 'addSubCategory')->name('sub_category.store');
             Route::put('/{slug}', 'updateSubCategory')->name('sub_category.update');
-            Route::post('/sort-options/{subId}', 'storeSortOptions')->name('sub_category.sort_options.store');
+            Route::post('/sort-options/{subCategoryId}', 'storeSortOptions')->name('sub_category.sort_options.store');
+            Route::delete('/sort-option/{sortOptionId}', 'deleteSortOption')->name('sub_category.sort_options.delete');
         });
     });
 

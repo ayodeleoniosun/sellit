@@ -41,8 +41,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('ads_pictures');
-        Schema::dropIfExists('ads_sort_options');
         Schema::dropIfExists('ads');
+        Schema::dropIfExists('ads_pictures');
     }
 };

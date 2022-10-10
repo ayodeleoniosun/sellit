@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         $response = $this->user->index($request);
-        
+
         return response()->success($response);
     }
 
