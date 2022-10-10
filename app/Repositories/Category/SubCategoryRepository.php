@@ -53,7 +53,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
 
     public function subCategorySortOptions(int $subCategoryId): Collection
     {
-        return $this->subCategorySortOption->whereSubCategoryId($subCategoryId)->get();
+        return $this->subCategorySortOption->whereSubCategoryId($subCategoryId)->with('sortOption')->get();
     }
 
     public function getSubCategory(string $slug): ?SubCategory

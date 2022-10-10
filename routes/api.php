@@ -55,6 +55,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function () {
         Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/sort-options', [CategoryController::class, 'allSortOptions'])->name('sort_options.index');
+        Route::get('/sort-option-values/{sortOptionId}', [CategoryController::class, 'sortOptionValues'])->name('sort_options.values');
 
         Route::controller(CategoryController::class)->prefix('categories')->group(function () {
             Route::post('/', 'store')->name('category.store');
@@ -71,9 +73,6 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    Route::get('/sort-options', [CategoryController::class, 'allSortOptions'])->name('sort_options.index');
-    Route::get('/sort-option-values/{sortOptionId}', [CategoryController::class, 'sortOptionValues'])->name('sort_options.values');
-
     Route::prefix('ads')->group(function () {
         Route::controller(AdsController::class)->group(function () {
             Route::get('/', 'index')->name('ads.index');
@@ -87,6 +86,12 @@ Route::prefix('v1')->group(function () {
         Route::controller(CategoryController::class)->group(function () {
             Route::get('/', 'index')->name('category.index');
             Route::get('/{id}/sub-categories', 'subCategories')->name('sub_categories.index');
+        });
+    });
+
+    Route::prefix('sub-categories')->group(function () {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/{id}/sort-options', 'subCategorySortOptions')->name('sub_categories.sort-options');
         });
     });
 

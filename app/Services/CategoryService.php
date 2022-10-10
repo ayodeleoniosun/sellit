@@ -10,9 +10,12 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
+use App\Http\Resources\SubCategory\SubCategorySortOptionResource;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -86,6 +89,55 @@ class CategoryService implements CategoryServiceInterface
         return $this->createOrUpdateCategory($data, $slug, $name, 'update', $canUpdateIcon, $category);
     }
 
+    public function addSubCategory(array $data): SubCategoryResource
+    {
+        $data['slug'] = Str::slug($data['name']);
+
+        return new SubCategoryResource($this->subCategoryRepo->create($data));
+    }
+
+    public function updateSubCategory(array $data): SubCategoryResource
+    {
+        $slug = $data['slug'];
+        $name = $data['name'];
+
+        $subCategory = $this->subCategoryRepo->getSubCategory($slug);
+
+        $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
+
+        return new SubCategoryResource($this->subCategoryRepo->update($subCategory->id, $data));
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function storeSortOptions(array $data, int $subCategoryId): int
+    {
+        $this->validateSubCategory($subCategoryId);
+
+        return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategoryId);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function updateSortOptions(array $data, int $subCategoryId): array
+    {
+        $this->validateSubCategory($subCategoryId);
+
+        return $this->subCategoryRepo->updateSortOptions($data['sort_options'], $subCategoryId);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function subCategorySortOptions(Request $request, int $subCategoryId):AnonymousResourceCollection
+    {
+        $this->validateSubCategory($subCategoryId);
+
+        return SubCategorySortOptionResource::collection($this->subCategoryRepo->subCategorySortOptions($subCategoryId));
+    }
+
     /**
      * @param array $data
      * @param mixed $slug
@@ -118,50 +170,15 @@ class CategoryService implements CategoryServiceInterface
         return new CategoryResource($category);
     }
 
-    public function addSubCategory(array $data): SubCategoryResource
-    {
-        $data['slug'] = Str::slug($data['name']);
-
-        return new SubCategoryResource($this->subCategoryRepo->create($data));
-    }
-
-    public function updateSubCategory(array $data): SubCategoryResource
-    {
-        $slug = $data['slug'];
-        $name = $data['name'];
-
-        $subCategory = $this->subCategoryRepo->getSubCategory($slug);
-
-        $data['slug'] = ($subCategory->name === $name) ? $slug : Str::slug($name);
-
-        return new SubCategoryResource($this->subCategoryRepo->update($subCategory->id, $data));
-    }
-
     /**
      * @throws CustomException
      */
-    public function storeSortOptions(array $data, int $subCategoryId): int
+    private function validateSubCategory(int $subCategoryId): void
     {
         $subCategory = $this->subCategoryRepo->find($subCategoryId);
 
         if (!$subCategory) {
-            throw new CustomException('Sub category does not exist.');
+            throw new CustomException('Sub category does not exist');
         }
-
-        return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategoryId);
-    }
-
-    /**
-     * @throws CustomException
-     */
-    public function updateSortOptions(array $data, int $subCategoryId): array
-    {
-        $subCategory = $this->subCategoryRepo->find($subCategoryId);
-
-        if (!$subCategory) {
-            throw new CustomException('Sub category does not exist.');
-        }
-
-        return $this->subCategoryRepo->updateSortOptions($data['sort_options'], $subCategoryId);
     }
 }

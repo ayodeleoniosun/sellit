@@ -8,6 +8,7 @@ use App\Http\Resources\SubCategory\SubCategoryCollection;
 use App\Http\Resources\SubCategory\SubCategoryResource;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 interface CategoryServiceInterface
 {
@@ -16,6 +17,8 @@ interface CategoryServiceInterface
     public function allSortOptions(Request $request): Collection;
 
     public function sortOptionValues(Request $request, int $sortOptionId): Collection;
+
+    public function subCategorySortOptions(Request $request, int $subCategoryId): AnonymousResourceCollection;
 
     public function subCategories(Request $request, int $categoryId): SubCategoryCollection;
 

@@ -20,12 +20,8 @@ class SubCategorySortOption extends Model
         return $this->belongsTo(SubCategory::class);
     }
 
-    public function sortOption(): BelongsToMany
+    public function sortOption(): BelongsTo
     {
-        return $this->belongsToMany(
-            SortOption::class,
-            'sort_options',
-            'sort_option_id'
-        );
+        return $this->belongsTo(SortOption::class);
     }
 }
