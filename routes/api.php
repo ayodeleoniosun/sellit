@@ -34,7 +34,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/', 'store')->name('ads.store');
             Route::put('/{id}', 'update')->name('ads.update');
             Route::delete('/{id}', 'delete')->name('ads.delete');
-            Route::post('/pictures/{id}', 'uploadPictures')->name('ads.pictures.upload');
+            Route::post('/pictures/{adsId}', 'uploadPictures')->name('ads.pictures.upload');
             Route::delete('/pictures/{adsId}/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
             Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
         });
@@ -70,7 +70,7 @@ Route::prefix('v1')->group(function () {
             Route::put('/{slug}', 'updateSubCategory')->name('sub_category.update');
             Route::get('/sort-options', 'allSortOptions')->name('sort_options.index');
             Route::post('/sort-options/{subCategoryId}', 'storeSortOptions')->name('sub_category.sort_options.store');
-            Route::delete('/sort-option/{sortOptionId}', 'deleteSortOption')->name('sub_category.sort_options.delete');
+            Route::put('/sort-options/{subCategoryId}', 'updateSortOptions')->name('sub_category.sort_options.update');
         });
     });
 

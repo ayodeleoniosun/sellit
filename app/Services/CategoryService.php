@@ -150,4 +150,18 @@ class CategoryService implements CategoryServiceInterface
 
         return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategoryId);
     }
+
+    /**
+     * @throws CustomException
+     */
+    public function updateSortOptions(array $data, int $subCategoryId): array
+    {
+        $subCategory = $this->subCategoryRepo->find($subCategoryId);
+
+        if (!$subCategory) {
+            throw new CustomException('Sub category does not exist.');
+        }
+
+        return $this->subCategoryRepo->updateSortOptions($data['sort_options'], $subCategoryId);
+    }
 }

@@ -48,13 +48,13 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
 
     public function sortOptionValues(Request $request, int $sortOptionId): Collection
     {
-        return $this->sortOptionValues->where('sort_option_id', $sortOptionId)->get();
+        return $this->sortOptionValues->whereSortOptionId($sortOptionId)->get();
     }
 
-//    public function subCategorySortOptions(int $subCategoryId): Collection
-//    {
-//        return SortOptionValues::where('sort_option_id', $sortOptionId)->get();
-//    }
+    public function subCategorySortOptions(int $subCategoryId): Collection
+    {
+        return $this->subCategorySortOption->whereSubCategoryId($subCategoryId)->get();
+    }
 
     public function getSubCategory(string $slug): ?SubCategory
     {
@@ -69,6 +69,8 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
 
     public function storeSortOptions(array $options, int $subCategoryId): int
     {
+        $options = $this->validSortOptions($options);
+
         $subCategorySortOptionIds = $this->sortOption->join('sub_category_sort_options', function ($join) use ($subCategoryId) {
             $join->on('sort_options.id', '=', 'sub_category_sort_options.sort_option_id')
                 ->where('sub_category_sort_options.sub_category_id', $subCategoryId);
@@ -89,5 +91,41 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         }
 
         return $counter;
+    }
+
+    public function updateSortOptions(array $options, int $subCategoryId): array
+    {
+        $subCategory = $this->subCategory->find($subCategoryId);
+
+        $options = $this->validSortOptions($options);
+
+        $subCategorySortOptionIds = $this->subCategorySortOptions($subCategoryId)->pluck('sort_option_id')->toArray();
+
+        $sortOptionIdsToBeRemoved = array_values(array_diff($subCategorySortOptionIds, array_intersect($options, $subCategorySortOptionIds)));
+        $removed = 0;
+
+        if (count($sortOptionIdsToBeRemoved) > 0) {
+            foreach ($sortOptionIdsToBeRemoved as $option) {
+                $subCategory->sortOptions()->detach($option);
+                $removed++;
+            }
+        }
+
+        $sortOptionIdsToBeAdded = array_values(array_diff($options, $subCategorySortOptionIds));
+        $added = 0;
+
+        if (count($sortOptionIdsToBeAdded) > 0) {
+            foreach ($sortOptionIdsToBeAdded as $option) {
+                $subCategory->sortOptions()->attach($option);
+                $added++;
+            }
+        }
+
+        return [$removed, $added];
+    }
+
+    private function validSortOptions (array $options): array
+    {
+        return $this->sortOption->whereIn('id', $options)->pluck('id')->toArray();
     }
 }

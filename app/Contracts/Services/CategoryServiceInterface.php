@@ -21,11 +21,13 @@ interface CategoryServiceInterface
 
     public function store(array $data): CategoryResource;
 
-    public function storeSortOptions(array $data, int $subCategoryId): int;
-
     public function update(array $data): CategoryResource;
 
     public function addSubCategory(array $data): SubCategoryResource;
 
     public function updateSubCategory(array $data): SubCategoryResource;
+
+    public function storeSortOptions(array $data, int $subCategoryId): int;
+
+    public function updateSortOptions(array $data, int $subCategoryId): array;
 }
