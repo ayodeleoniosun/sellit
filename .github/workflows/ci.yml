@@ -51,11 +51,11 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Run tests
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: vendor/bin/pest --parallel
+#      - name: Run tests
+#        env:
+#          DB_CONNECTION: sqlite
+#          DB_DATABASE: database/database.sqlite
+#        run: vendor/bin/pest --parallel
 
       - name: Run static analysis
         run: vendor/bin/phpstan analyze --memory-limit=1G
