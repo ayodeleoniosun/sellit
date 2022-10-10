@@ -54,14 +54,11 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
             return 0;
         }
 
+        $subCategory = $this->subCategory->find($subCategoryId);
         $counter = 0;
 
         foreach ($newSortOptionIds as $option) {
-            $this->subCategorySortOption->create([
-                'sub_category_id' => $subCategoryId,
-                'sort_option_id' => $option
-            ]);
-
+            $subCategory->sortOptions()->attach($option);
             $counter++;
         }
 
