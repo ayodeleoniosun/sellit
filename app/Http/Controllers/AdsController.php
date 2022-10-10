@@ -18,6 +18,11 @@ class AdsController extends Controller
         $this->ads = $ads;
     }
 
+    public function index(Request $request): AdsCollection
+    {
+        return $this->ads->index($request);
+    }
+
     public function myAds(Request $request): AdsCollection
     {
         return $this->ads->myAds($request);

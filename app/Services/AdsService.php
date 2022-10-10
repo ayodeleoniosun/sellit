@@ -26,6 +26,11 @@ class AdsService implements AdsServiceInterface
         $this->adsRepo = $adsRepo;
     }
 
+    public function index(Request $request): AdsCollection
+    {
+        return new AdsCollection($this->adsRepo->index($request));
+    }
+
     public function myAds(Request $request): AdsCollection
     {
         return new AdsCollection($this->adsRepo->myAds($request));

@@ -10,6 +10,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface AdsRepositoryInterface
 {
+    public function index(Request $request): LengthAwarePaginator;
+
     public function myAds(Request $request): LengthAwarePaginator;
 
     public function categoryAds(Request $request, int $categoryId): LengthAwarePaginator;

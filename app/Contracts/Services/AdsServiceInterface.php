@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 interface AdsServiceInterface
 {
+    public function index(Request $request): AdsCollection;
+
     public function myAds(Request $request): AdsCollection;
 
     public function categoryAds(Request $request, int $categoryId): AdsCollection;

@@ -28,6 +28,11 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         $this->fileRepo = $fileRepo;
     }
 
+    public function index(Request $request): LengthAwarePaginator
+    {
+        return $this->ads->with('category', 'subCategory', 'pictures')->paginate(10);
+    }
+
     public function myAds(Request $request): LengthAwarePaginator
     {
         return $this->ads->whereSellerId($request->user()->id)->with('category', 'subCategory', 'pictures')->paginate(10);
