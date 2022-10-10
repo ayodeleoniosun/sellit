@@ -34,7 +34,8 @@ class CategoryController extends Controller
     public function store(AddCategoryRequest $request): JsonResponse
     {
         $response = $this->category->store($request->validated());
-        return response()->success($response, 'Category successfully added');
+
+        return response()->success($response, 'Category successfully added', 201);
     }
 
     public function storeSortOptions(Request $request, $subCategoryId): JsonResponse
@@ -42,7 +43,7 @@ class CategoryController extends Controller
         $response = $this->category->storeSortOptions($request->all(), $subCategoryId);
 
         if ($response > 0) {
-            return response()->success([], $response.' sort options successfully added');
+            return response()->success([], $response.' sort options successfully added', 201);
         }
 
         return response()->error('No sort options added');
@@ -50,21 +51,26 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, $slug): JsonResponse
     {
-        $data = array_merge($request->validated(), ['slug' => $slug]);
+        $data = array_merge($request->validated(), compact('slug'));
+
         $response = $this->category->update($data);
+
         return response()->success($response, 'Category successfully updated');
     }
 
     public function addSubCategory(AddSubCategoryRequest $request): JsonResponse
     {
         $response = $this->category->addSubCategory($request->validated());
-        return response()->success($response, 'Sub category successfully added');
+
+        return response()->success($response, 'Sub category successfully added', 201);
     }
 
     public function updateSubCategory(UpdateSubCategoryRequest $request, string $slug): JsonResponse
     {
-        $data = array_merge($request->validated(), ['slug' => $slug]);
+        $data = array_merge($request->validated(), compact('slug'));
+
         $response = $this->category->updateSubCategory($data);
+
         return response()->success($response, 'Sub category successfully updated');
     }
 }
