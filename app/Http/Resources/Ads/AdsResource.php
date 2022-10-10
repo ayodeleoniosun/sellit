@@ -29,7 +29,6 @@ class AdsResource extends JsonResource
             'category'     => $this->whenLoaded('category'),
             'sub_category' => $this->whenLoaded('subCategory'),
             'seller'       => $this->whenLoaded('seller'),
-            'sort_options' => $this->whenLoaded('sortOptions'),
             'pictures'     => AdsPictureResource::collection($this->pictures),
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,

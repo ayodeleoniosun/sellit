@@ -20,7 +20,7 @@ class SubCategoryResource extends JsonResource
             'id'           => $this->id,
             'name'         => ucfirst($this->name),
             'slug'         => $this->slug,
-            'category'     => new CategoryResource($this->category),
+            'category'     => $this->whenLoaded('category'),
             'sort_options' => $this->whenLoaded('sortOptions'),
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,
