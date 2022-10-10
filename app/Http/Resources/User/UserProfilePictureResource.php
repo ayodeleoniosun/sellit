@@ -18,8 +18,6 @@ class UserProfilePictureResource extends JsonResource
         return [
             'id'         => $this->id,
             'path'       => Storage::disk('s3')->url($this->file->path),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

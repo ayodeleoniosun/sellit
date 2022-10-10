@@ -22,8 +22,6 @@ class SubCategoryResource extends JsonResource
             'slug'         => $this->slug,
             'category'     => $this->whenLoaded('category'),
             'sort_options' => $this->whenLoaded('sortOptions'),
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
         ];
     }
 }

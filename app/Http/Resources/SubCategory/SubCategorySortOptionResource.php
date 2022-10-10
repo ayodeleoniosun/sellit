@@ -17,10 +17,7 @@ class SubCategorySortOptionResource extends JsonResource
     {
         return [
             'id'           => $this->id,
-            'sub_category' => $this->whenLoaded('subCategory'),
             'sort_option'  => $this->whenLoaded('sortOption'),
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
         ];
     }
 }

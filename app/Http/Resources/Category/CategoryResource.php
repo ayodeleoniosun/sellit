@@ -22,9 +22,7 @@ class CategoryResource extends JsonResource
             'name'           => ucfirst($this->name),
             'slug'           => $this->slug,
             'icon'           => Storage::disk('s3')->url($this->file->path),
-            'total_sub_categories' => count($this->whenLoaded('subCategories')),
-            'created_at'     => $this->created_at,
-            'updated_at'     => $this->updated_at,
+            'total_sub_categories' => count($this->whenLoaded('subCategories'))
         ];
     }
 }

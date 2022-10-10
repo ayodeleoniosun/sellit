@@ -20,8 +20,6 @@ class UserBusinessInformationResource extends JsonResource
             'slug'        => $this->slug,
             'description' => ucfirst($this->description),
             'address'     => ucfirst($this->address),
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
         ];
     }
 }
