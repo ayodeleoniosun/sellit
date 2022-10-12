@@ -25,4 +25,6 @@ interface AdsRepositoryInterface
     public function sellerAdsExist(string $slug, int $seller, int $adsId, bool $new = true): Ads|null;
 
     public function getPicture(Ads $ads, int $pictureId): AdsPicture|null;
+
+    public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null,  int|null $subCategoryId = null): LengthAwarePaginator;
 }

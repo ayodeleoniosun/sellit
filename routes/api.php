@@ -94,11 +94,4 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}/sort-options', 'subCategorySortOptions')->name('sub_categories.sort-options');
         });
     });
-
-    /*
-        filter ads by newest, lowest price, highest price, oldest
-        filter ads by sort options
-        get similar ads
-    */
-
 });

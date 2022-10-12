@@ -30,22 +30,22 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 
     public function index(Request $request): LengthAwarePaginator
     {
-        return $this->ads->with('category', 'subCategory', 'pictures')->paginate(10);
+        return $this->filterAds($request);
     }
 
     public function myAds(Request $request): LengthAwarePaginator
     {
-        return $this->ads->whereSellerId($request->user()->id)->with('category', 'subCategory', 'pictures')->paginate(10);
+        return $this->filterAds($request, 'user');
     }
 
     public function categoryAds(Request $request, int $categoryId): LengthAwarePaginator
     {
-        return $this->ads->whereCategoryId($categoryId)->with('seller', 'pictures')->paginate(10);
+        return $this->filterAds($request, 'category', $categoryId);
     }
 
     public function subCategoryAds(Request $request, int $categoryId, int $subCategoryId): LengthAwarePaginator
     {
-        return $this->ads->whereCategoryId($categoryId)->whereSubCategoryId($subCategoryId)->with('seller', 'pictures')->paginate(10);
+        return $this->filterAds($request, 'category', $categoryId, $subCategoryId);
     }
 
     public function sellerAdsExist(string $slug, int $seller, ?int $adsId, bool $new = true): ?Ads
@@ -96,5 +96,37 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
     public function getPicture(Ads $ads, int $pictureId): AdsPicture|null
     {
         return $ads->pictures()->find($pictureId);
+    }
+
+    public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null,  int|null $subCategoryId = null): LengthAwarePaginator
+    {
+
+        if ($type === 'user') {
+            $ads = $this->ads->whereSellerId($request->user()->id)->with('category', 'subCategory', 'pictures');
+        } else if ($type === 'category') {
+            $ads = $this->ads->whereCategoryId($categoryId)->with('seller', 'pictures');
+        }  else if ($type === 'sub_category') {
+            $ads = $this->ads->whereCategoryId($categoryId)->whereSubCategoryId($subCategoryId)->with('seller', 'pictures');
+        } else {
+            $ads = $this->ads->with('category', 'subCategory', 'seller', 'pictures');
+        }
+
+        if ($request->type === 'newest') {
+            $ads = $ads->latest();
+        }
+
+        if ($request->type === 'oldest') {
+            $ads = $ads->oldest();
+        }
+
+        if ($request->price === 'lowest') {
+            $ads = $ads->orderBy('price');
+        }
+
+        if ($request->price === 'highest') {
+            $ads = $ads->orderBy('price', 'DESC');
+        }
+
+        return $ads->paginate(10);
     }
 }
