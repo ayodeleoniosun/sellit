@@ -68,22 +68,13 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         return $subCategory->with('category', 'sortOptions')->first();
     }
 
-    public function storeSortOptions(array $options, int $subCategoryId): int
+    public function storeSortOptions(array $options, SubCategory $subCategory): int
     {
         $options = $this->validSortOptions($options);
 
-        $subCategorySortOptionIds = $this->sortOption->join('sub_category_sort_options', function ($join) use ($subCategoryId) {
-            $join->on('sort_options.id', '=', 'sub_category_sort_options.sort_option_id')
-                ->where('sub_category_sort_options.sub_category_id', $subCategoryId);
-        })->pluck('sub_category_sort_options.sort_option_id')->toArray();
-
+        $subCategorySortOptionIds = $subCategory->allSortOptions()->pluck('sort_option_id')->toArray();
         $newSortOptionIds = array_values(array_diff($options, $subCategorySortOptionIds));
 
-        if (count($newSortOptionIds) == 0) {
-            return 0;
-        }
-
-        $subCategory = $this->subCategory->find($subCategoryId);
         $counter = 0;
 
         foreach ($newSortOptionIds as $option) {

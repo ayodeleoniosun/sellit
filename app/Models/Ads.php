@@ -35,6 +35,11 @@ class Ads extends Model
         return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name', 'slug', 'email', 'phone');
     }
 
+    public function allSortOptions(): HasMany
+    {
+        return $this->hasMany(AdsSortOption::class);
+    }
+
     public function sortOptions(): BelongsToMany
     {
         return $this->belongsToMany(

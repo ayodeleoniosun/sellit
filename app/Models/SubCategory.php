@@ -20,6 +20,11 @@ class SubCategory extends Model
         return $this->belongsTo(Category::class)->select('id', 'name', 'slug');
     }
 
+    public function allSortOptions(): HasMany
+    {
+        return $this->hasMany(SubCategorySortOption::class);
+    }
+
     public function sortOptions(): BelongsToMany
     {
         return $this->belongsToMany(

@@ -113,9 +113,9 @@ class CategoryService implements CategoryServiceInterface
      */
     public function storeSortOptions(array $data, int $subCategoryId): int
     {
-        $this->validateSubCategory($subCategoryId);
+        $subCategory = $this->validateSubCategory($subCategoryId);
 
-        return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategoryId);
+        return $this->subCategoryRepo->storeSortOptions($data['sort_options'], $subCategory);
     }
 
     /**
@@ -173,12 +173,14 @@ class CategoryService implements CategoryServiceInterface
     /**
      * @throws CustomException
      */
-    private function validateSubCategory(int $subCategoryId): void
+    private function validateSubCategory(int $subCategoryId): Model
     {
         $subCategory = $this->subCategoryRepo->find($subCategoryId);
 
         if (!$subCategory) {
             throw new CustomException('Sub category does not exist');
         }
+
+        return $subCategory;
     }
 }

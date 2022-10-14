@@ -146,16 +146,8 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
     {
         $options = $this->validSortOptionValues($options);
 
-        $adsSortOptionIds = $this->adsSortOption->join('sort_option_values', function ($join) use ($ads) {
-            $join->on('ads_sort_options.sort_option_values_id', '=', 'sort_option_values.id')
-                ->where('ads_sort_options.ads_id', $ads->id);
-        })->pluck('ads_sort_options.sort_option_values_id')->toArray();
-
+        $adsSortOptionIds = $ads->allSortOptions()->pluck('sort_option_values_id')->toArray();
         $newSortOptionIds = array_values(array_diff($options, $adsSortOptionIds));
-
-        if (count($newSortOptionIds) == 0) {
-            return 0;
-        }
 
         $counter = 0;
 
