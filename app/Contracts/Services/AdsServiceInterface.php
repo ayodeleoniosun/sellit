@@ -12,6 +12,8 @@ interface AdsServiceInterface
 {
     public function index(Request $request): AdsCollection;
 
+    public function view(int $adsId): AdsResource;
+
     public function myAds(Request $request): AdsCollection;
 
     public function categoryAds(Request $request, int $categoryId): AdsCollection;
@@ -26,6 +28,6 @@ interface AdsServiceInterface
 
     public function deletePicture(Request $request, int $adsId, int $pictureId): void;
 
-    public function storeSortOptions(Request $request, int $adsId): int;
+    public function storeSortOptions(Request $request, int $adsId): int|string;
 
 }

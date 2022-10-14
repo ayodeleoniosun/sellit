@@ -17,7 +17,7 @@ class AdsSortOption extends Model
         return $this->belongsTo(Ads::class);
     }
 
-    public function sortOptionValue(): BelongsTo
+    public function sortOptionValues(): BelongsTo
     {
         return $this->belongsTo(SortOptionValues::class);
     }

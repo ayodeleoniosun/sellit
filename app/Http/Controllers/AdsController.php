@@ -6,6 +6,7 @@ use App\Contracts\Services\AdsServiceInterface;
 use App\Http\Requests\Ads\CreateNewAdsRequest;
 use App\Http\Requests\Ads\UploadAdsPicturesRequest;
 use App\Http\Resources\Ads\AdsCollection;
+use App\Http\Resources\Ads\AdsResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,11 @@ class AdsController extends Controller
     public function index(Request $request): AdsCollection
     {
         return $this->ads->index($request);
+    }
+
+    public function view(Request $request, int $adsId): AdsResource
+    {
+        return $this->ads->view($adsId);
     }
 
     public function myAds(Request $request): AdsCollection

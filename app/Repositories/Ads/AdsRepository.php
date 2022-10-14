@@ -6,7 +6,6 @@ use App\Contracts\Repositories\Ads\AdsRepositoryInterface;
 use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Models\Ads;
 use App\Models\AdsPicture;
-use App\Models\AdsSortOption;
 use App\Models\SortOptionValues;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -21,15 +20,12 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 
     private SortOptionValues $sortOptionValues;
 
-    private AdsSortOption $adsSortOption;
-
     /**
      * @param Ads $ads
      * @param FileRepositoryInterface $fileRepo
      */
     public function __construct(
         Ads $ads,
-        AdsSortOption $adsSortOption,
         FileRepositoryInterface $fileRepo,
         SortOptionValues $sortOptionValues
     )
@@ -37,7 +33,6 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         parent::__construct($ads);
 
         $this->ads = $ads;
-        $this->adsSortOption = $adsSortOption;
         $this->fileRepo = $fileRepo;
         $this->sortOptionValues = $sortOptionValues;
     }
@@ -142,9 +137,9 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         return $ads->paginate(10);
     }
 
-    public function storeSortOptionValues(array $options, Ads $ads): int
+    public function storeSortOptionValues(array $options, Ads $ads): int|string
     {
-        $options = $this->validSortOptionValues($options);
+        $options = $this->sortOptionValues->whereIn('id', $options)->pluck('id')->toArray();
 
         $adsSortOptionIds = $ads->allSortOptions()->pluck('sort_option_values_id')->toArray();
         $newSortOptionIds = array_values(array_diff($options, $adsSortOptionIds));
@@ -157,10 +152,5 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         }
 
         return $counter;
-    }
-
-    private function validSortOptionValues (array $options): array
-    {
-        return $this->sortOptionValues->whereIn('id', $options)->pluck('id')->toArray();
     }
 }

@@ -13,6 +13,7 @@
         "friendsofphp/php-cs-fixer": "^3.8",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laracasts/presenter": "^0.2.5",
         "laravel/framework": "^9.5",
         "laravel/helpers": "^1.5",
         "laravel/legacy-factories": "^1.1",

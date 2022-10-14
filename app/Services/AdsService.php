@@ -31,6 +31,11 @@ class AdsService implements AdsServiceInterface
         return new AdsCollection($this->adsRepo->index($request));
     }
 
+    public function view(int $adsId): AdsResource
+    {
+        return new AdsResource($this->adsRepo->find($adsId, ['seller', 'category', 'subCategory', 'allSortOptions']));
+    }
+
     public function myAds(Request $request): AdsCollection
     {
         return new AdsCollection($this->adsRepo->myAds($request));
@@ -128,7 +133,7 @@ class AdsService implements AdsServiceInterface
     /**
      * @throws CustomException
      */
-    public function storeSortOptions(Request $request, int $adsId): int
+    public function storeSortOptions(Request $request, int $adsId): int|string
     {
         $ads = $this->validateAds($request->user()->id, $adsId);
 

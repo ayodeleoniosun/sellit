@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', 'delete')->name('ads.delete');
             Route::post('/pictures/{adsId}', 'uploadPictures')->name('ads.pictures.upload');
             Route::delete('/pictures/{adsId}/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
+            Route::post('/sort-options/{adsId}', 'storeSortOptions')->name('ads.store.sort-options');
             Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
         });
 
@@ -76,6 +77,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('ads')->group(function () {
         Route::controller(AdsController::class)->group(function () {
             Route::get('/', 'index')->name('ads.index');
+            Route::get('/{id}', 'view')->name('ads.view');
             Route::get('/category/{id}', 'categoryAds')->name('category.ads');
             Route::get('/category/{id}/sub-category/{subId}', 'subCategoryAds')->name('sub_category.ads');
             Route::get('/{slug}', 'view')->name('ads.view');
@@ -94,4 +96,5 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}/sort-options', 'subCategorySortOptions')->name('sub_categories.sort-options');
         });
     });
+
 });
