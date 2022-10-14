@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"A,553534123.a\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,7 +216,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Olaun\",\n    \"phone\" : \"08132016744\",\n    \"state\": \"1\",\n    \"city\": \"2\"\n}",
+									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Olaun\",\n    \"phone\" : \"08132016749\",\n    \"state\": \"1\",\n    \"city\": \"3\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -255,7 +255,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\" : \"Business name\",\n    \"description\" : \"Ikeja, Nigeria\",\n    \"address\": \"Lagos, Nigeria\"\n}",
+									"raw": "{\n    \"name\" : \"Ayodele business\",\n    \"description\" : \"Lagos, Nigeria\",\n    \"address\": \"Lagos, Nigeria\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -334,7 +334,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"A,553534123.a\",\n    \"new_password_confirmation\" : \"A,553534123.a\"\n}",
+									"raw": "{\n    \"current_password\" : \"A,553534123.a\",\n    \"new_password\" : \"A,553534123.a\",\n    \"new_password_confirmation\" : \"A,553534123.a\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -390,6 +390,126 @@
 					"name": "Ads",
 					"item": [
 						{
+							"name": "Sort Options",
+							"item": [
+								{
+									"name": "Store Ads Sort Options",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{authorization}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"sort_option_values\" : [3,6]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{user-ads}}/sort-options/3",
+											"host": [
+												"{{user-ads}}"
+											],
+											"path": [
+												"sort-options",
+												"3"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Pictures",
+							"item": [
+								{
+									"name": "Upload Ads Picture",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{authorization}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "pictures[]",
+													"type": "file",
+													"src": [
+														"/Users/ayodele/Documents/Ayodele_Oniosun_NIN.jpg",
+														"/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
+													]
+												}
+											]
+										},
+										"url": {
+											"raw": "{{user-ads}}/pictures/3",
+											"host": [
+												"{{user-ads}}"
+											],
+											"path": [
+												"pictures",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Ads Picture",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{authorization}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{user-ads}}/pictures/5/11",
+											"host": [
+												"{{user-ads}}"
+											],
+											"path": [
+												"pictures",
+												"5",
+												"11"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "My Ads",
 							"request": {
 								"method": "GET",
@@ -432,7 +552,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"1\",\n    \"name\" : \"This new ads\",\n    \"price\" : 2500,\n    \"description\" : \"cool and great\"\n}",
+									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"2\",\n    \"name\" : \"This new ads and it's great\",\n    \"price\" : 5600,\n    \"description\" : \"cool and great\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -466,7 +586,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"1\",\n    \"name\" : \"This sysvv\",\n    \"price\" : \"3500\",\n    \"description\" : \"great and amazing\"\n}",
+									"raw": "{\n    \"category_id\" : \"1\",\n    \"sub_category_id\" : \"1\",\n    \"name\" : \"This new ads and it's great\",\n    \"price\" : \"5700\",\n    \"description\" : \"great and amazing\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -474,84 +594,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{user-ads}}/20",
+									"raw": "{{user-ads}}/5",
 									"host": [
 										"{{user-ads}}"
 									],
 									"path": [
-										"20"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Upload Pictures",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "pictures[]",
-											"type": "file",
-											"src": [
-												"/Users/ayodele/Documents/Ayodele_Oniosun_NIN.jpg",
-												"/Users/ayodele/Documents/Ayodele_oniosun_profile_picture.jpg"
-											]
-										}
-									]
-								},
-								"url": {
-									"raw": "{{user-ads}}/pictures/3",
-									"host": [
-										"{{user-ads}}"
-									],
-									"path": [
-										"pictures",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Ads Picture",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{authorization}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{user-ads}}/pictures/3/12",
-									"host": [
-										"{{user-ads}}"
-									],
-									"path": [
-										"pictures",
-										"3",
-										"12"
+										"5"
 									]
 								}
 							},
@@ -632,7 +680,7 @@
 										},
 										{
 											"key": "name",
-											"value": "test categoryy",
+											"value": "test category nowqw",
 											"type": "text"
 										}
 									]
@@ -712,7 +760,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testing sussss\"\n}",
+									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testing suss\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -746,7 +794,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testig ssx\"\n}",
+									"raw": "{\n    \"category_id\": \"1\",\n    \"name\": \"testig suss\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -783,7 +831,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"sort_options\" : [\n        1, 2, 4, 79, 78\n    ]\n}",
+									"raw": "{\n    \"sort_options\" : [\n        2,6,9\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -821,7 +869,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"sort_options\" : [\n        78, 2, 7, 8\n    ]\n}",
+									"raw": "{\n    \"sort_options\" : [\n        1,4,78, 2, 7, 8\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -963,6 +1011,135 @@
 		{
 			"name": "Ads",
 			"item": [
+				{
+					"name": "Filter Ads",
+					"item": [
+						{
+							"name": "Filter by Latest Ads",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}?type=newest",
+									"host": [
+										"{{ads}}"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "newest"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Oldest Ads",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}?type=oldest",
+									"host": [
+										"{{ads}}"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "oldest"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Lowest Price",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}?price=lowest",
+									"host": [
+										"{{ads}}"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "lowest"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Highest Price",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ads}}?price=highest",
+									"host": [
+										"{{ads}}"
+									],
+									"query": [
+										{
+											"key": "price",
+											"value": "highest"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "All Ads",
 					"request": {
@@ -1119,13 +1296,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/sub-categories/1/sort-options",
+							"raw": "{{baseUrl}}/sub-categories/3/sort-options",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"sub-categories",
-								"1",
+								"3",
 								"sort-options"
 							]
 						}
@@ -1165,7 +1342,7 @@
 		},
 		{
 			"key": "authorization",
-			"value": "Bearer 2|EtKQ0ntkBchoMLJxZ5eszMfU4B9u7VyGBye7CTP4"
+			"value": "Bearer 4|WHOkQ6MvGIIVAU5seda4h4vob0egPDaO5mMVFt2H"
 		},
 		{
 			"key": "auth",

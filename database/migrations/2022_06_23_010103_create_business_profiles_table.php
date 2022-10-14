@@ -19,9 +19,8 @@ return new class extends Migration {
             $table->string('slug');
             $table->longText('description');
             $table->string('address');
-            $table->softDeletes();
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

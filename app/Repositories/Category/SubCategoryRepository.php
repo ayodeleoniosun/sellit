@@ -39,7 +39,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
 
     public function index(Request $request, int $categoryId): LengthAwarePaginator
     {
-        return $this->subCategory->whereCategoryId($categoryId)->with('category')->paginate(10);
+        return $this->subCategory->whereCategoryId($categoryId)->with('category', 'allSortOptions')->paginate(10);
     }
 
     public function allSortOptions(Request $request): Collection
@@ -65,7 +65,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
             return null;
         }
 
-        return $subCategory->with('category', 'sortOptions')->first();
+        return $subCategory->with('category', 'allSortOptions')->first();
     }
 
     public function storeSortOptions(array $options, SubCategory $subCategory): int

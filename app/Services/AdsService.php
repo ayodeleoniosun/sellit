@@ -88,7 +88,7 @@ class AdsService implements AdsServiceInterface
             throw new CustomException('You have added this ads before.');
         }
 
-        $relationsToRetrieve = ['category', 'subCategory', 'sortOptions', 'seller', 'pictures'];
+        $relationsToRetrieve = ['category', 'subCategory', 'allSortOptions', 'seller', 'pictures'];
 
         return new AdsResource($this->adsRepo->update($adsId, $data, $relationsToRetrieve));
     }
