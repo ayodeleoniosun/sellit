@@ -52,11 +52,15 @@ class AdsController extends Controller
         return response()->success($response, 'Ads successfully updated');
     }
 
-    public function storeSortOptions(Request $request, int $subCategoryId): JsonResponse
+    public function storeSortOptions(Request $request, int $adsId): JsonResponse
     {
-        $response = $this->ads->storeSortOptions($request, $subCategoryId);
+        $response = $this->ads->storeSortOptions($request, $adsId);
 
-        return response()->success($response, 'Ads successfully added', 201);
+        if ($response > 0) {
+            return response()->success([], $response.' sort options successfully added', 201);
+        }
+
+        return response()->error('No sort options added');
     }
 
     public function uploadPictures(UploadAdsPicturesRequest $request, int $adsId): JsonResponse

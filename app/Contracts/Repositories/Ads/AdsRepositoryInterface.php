@@ -26,5 +26,7 @@ interface AdsRepositoryInterface
 
     public function getPicture(Ads $ads, int $pictureId): AdsPicture|null;
 
+    public function storeSortOptionValues(array $options, Ads $ads): int;
+
     public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null,  int|null $subCategoryId = null): LengthAwarePaginator;
 }

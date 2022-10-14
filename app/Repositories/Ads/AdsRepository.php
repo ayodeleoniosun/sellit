@@ -6,6 +6,8 @@ use App\Contracts\Repositories\Ads\AdsRepositoryInterface;
 use App\Contracts\Repositories\File\FileRepositoryInterface;
 use App\Models\Ads;
 use App\Models\AdsPicture;
+use App\Models\AdsSortOption;
+use App\Models\SortOptionValues;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -13,19 +15,31 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 {
-    protected Ads $ads;
+    private Ads $ads;
 
-    protected FileRepositoryInterface $fileRepo;
+    private FileRepositoryInterface $fileRepo;
+
+    private SortOptionValues $sortOptionValues;
+
+    private AdsSortOption $adsSortOption;
 
     /**
      * @param Ads $ads
      * @param FileRepositoryInterface $fileRepo
      */
-    public function __construct(Ads $ads, FileRepositoryInterface $fileRepo)
+    public function __construct(
+        Ads $ads,
+        AdsSortOption $adsSortOption,
+        FileRepositoryInterface $fileRepo,
+        SortOptionValues $sortOptionValues
+    )
     {
         parent::__construct($ads);
+
         $this->ads = $ads;
+        $this->adsSortOption = $adsSortOption;
         $this->fileRepo = $fileRepo;
+        $this->sortOptionValues = $sortOptionValues;
     }
 
     public function index(Request $request): LengthAwarePaginator
@@ -90,6 +104,7 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
     public function deletePicture(AdsPicture $adsPicture): void
     {
         $file = $this->fileRepo->find($adsPicture->file_id);
+
         $file->delete();
     }
 
@@ -111,22 +126,49 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
             $ads = $this->ads->with('category', 'subCategory', 'seller', 'pictures');
         }
 
-        if ($request->type === 'newest') {
+        $filterType = $request->type;
+        $price = $request->price;
+
+        $ads->when($filterType === 'newest', function ($query) use ($ads) {
             $ads = $ads->latest();
-        }
-
-        if ($request->type === 'oldest') {
+        })->when($filterType === 'oldest', function ($query) use ($ads) {
             $ads = $ads->oldest();
-        }
-
-        if ($request->price === 'lowest') {
+        })->when($price === 'lowest', function ($query) use ($ads) {
             $ads = $ads->orderBy('price');
-        }
-
-        if ($request->price === 'highest') {
+        })->when($price === 'highest', function ($query) use ($ads) {
             $ads = $ads->orderBy('price', 'DESC');
-        }
+        });
 
         return $ads->paginate(10);
+    }
+
+    public function storeSortOptionValues(array $options, Ads $ads): int
+    {
+        $options = $this->validSortOptionValues($options);
+
+        $adsSortOptionIds = $this->adsSortOption->join('sort_option_values', function ($join) use ($ads) {
+            $join->on('ads_sort_options.sort_option_values_id', '=', 'sort_option_values.id')
+                ->where('ads_sort_options.ads_id', $ads->id);
+        })->pluck('ads_sort_options.sort_option_values_id')->toArray();
+
+        $newSortOptionIds = array_values(array_diff($options, $adsSortOptionIds));
+
+        if (count($newSortOptionIds) == 0) {
+            return 0;
+        }
+
+        $counter = 0;
+
+        foreach ($newSortOptionIds as $option) {
+            $ads->sortOptions()->attach($option);
+            $counter++;
+        }
+
+        return $counter;
+    }
+
+    private function validSortOptionValues (array $options): array
+    {
+        return $this->sortOptionValues->whereIn('id', $options)->pluck('id')->toArray();
     }
 }

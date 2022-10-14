@@ -110,24 +110,6 @@ class AdsService implements AdsServiceInterface
     /**
      * @throws CustomException
      */
-    private function validateAds(int $userId, int $adsId): Model
-    {
-        $ads = $this->adsRepo->find($adsId);
-
-        if (!$ads) {
-            throw new CustomException('Ads does not exist');
-        }
-
-        if ($ads->seller_id !== $userId) {
-            throw new CustomException('Unauthorized', 403);
-        }
-
-        return $ads;
-    }
-
-    /**
-     * @throws CustomException
-     */
     public function deletePicture(Request $request, int $adsId, int $pictureId):void
     {
         $ads = $this->validateAds($request->user()->id, $adsId);
@@ -141,5 +123,33 @@ class AdsService implements AdsServiceInterface
         Storage::disk('s3')->delete($adsPicture->file->path);
 
         $this->adsRepo->deletePicture($adsPicture);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    public function storeSortOptions(Request $request, int $adsId): int
+    {
+        $ads = $this->validateAds($request->user()->id, $adsId);
+
+        return $this->adsRepo->storeSortOptionValues($request->sort_option_values, $ads);
+    }
+
+    /**
+     * @throws CustomException
+     */
+    private function validateAds(int $userId, int $adsId): Model
+    {
+        $ads = $this->adsRepo->find($adsId);
+
+        if (!$ads) {
+            throw new CustomException('Ads does not exist');
+        }
+
+        if ($ads->seller_id !== $userId) {
+            throw new CustomException('Unauthorized', 403);
+        }
+
+        return $ads;
     }
 }

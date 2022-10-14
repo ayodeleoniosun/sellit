@@ -25,4 +25,7 @@ interface AdsServiceInterface
     public function uploadPictures(UploadAdsPicturesRequest $request, int $adsId): AdsResource;
 
     public function deletePicture(Request $request, int $adsId, int $pictureId): void;
+
+    public function storeSortOptions(Request $request, int $adsId): int;
+
 }

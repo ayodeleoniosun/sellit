@@ -26,7 +26,8 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         SubCategory $subCategory,
         SubCategorySortOption $subCategorySortOption,
         SortOption $sortOption,
-        SortOptionValues $sortOptionValues)
+        SortOptionValues $sortOptionValues
+    )
     {
         parent::__construct($subCategory);
 
