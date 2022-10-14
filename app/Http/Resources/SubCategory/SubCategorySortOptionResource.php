@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\SubCategory;
 
-use App\Models\ActiveStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SubCategorySortOptionResource extends JsonResource

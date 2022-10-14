@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Category;
 
-use App\Http\Resources\SubCategory\SubCategoryResource;
-use App\Models\ActiveStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 

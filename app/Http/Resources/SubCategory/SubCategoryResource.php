@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\SubCategory;
 
-use App\Http\Resources\Category\CategoryResource;
-use App\Models\ActiveStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SubCategoryResource extends JsonResource

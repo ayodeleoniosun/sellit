@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Ads;
 
-use App\Models\ActiveStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdsResource extends JsonResource
@@ -28,7 +27,8 @@ class AdsResource extends JsonResource
             'price'        => $this->price,
             'category'     => $this->whenLoaded('category'),
             'sub_category' => $this->whenLoaded('subCategory'),
-            'seller'       => $this->whenLoaded('seller'),
+            'seller'       => $this->seller,
+            'sort_options' => $this->present()->sortOptions(),
             'pictures'     => AdsPictureResource::collection($this->pictures),
             'total_rating' => $totalRating,
             'created_at'   => $this->created_at,

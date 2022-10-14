@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Ads;
 
-use App\Models\ActiveStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
