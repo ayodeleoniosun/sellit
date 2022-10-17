@@ -3,8 +3,11 @@
 namespace Tests\Unit\Repository;
 
 use App\Contracts\Repositories\File\FileRepositoryInterface;
+use App\Models\BusinessProfile;
 use App\Models\File;
 use App\Models\User;
+use App\Models\UserProfile;
+use App\Models\UserProfilePicture;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Str;
 use Tests\Traits\CreateCities;
@@ -15,9 +18,12 @@ uses(CreateStates::class, CreateCities::class, CreateFiles::class);
 
 beforeEach(function () {
     $this->user = new User();
+    $this->userProfile = new UserProfile();
+    $this->businessProfile = new BusinessProfile();
+    $this->userProfilePicture = new UserProfilePicture();
     $this->mockFile = new File();
     $this->fileRepo = \Mockery::mock(FileRepositoryInterface::class);
-    $this->userRepo = new UserRepository($this->user, $this->fileRepo);
+    $this->userRepo = new UserRepository($this->user, $this->userProfile, $this->businessProfile, $this->userProfilePicture, $this->fileRepo);
 });
 
 test('can get user by email address', function () {
@@ -40,15 +46,14 @@ test('can get duplicate user by phone number', function () {
     $user2 = $this->createUser();
 
     $response = $this->userRepo->phoneExist($user1->phone, $user2->id);
-    $this->assertInstanceOf(User::class, $response);
-    $this->assertEquals($user1->phone, $response->phone);
+    $this->assertTrue($response);
 });
 
 test('cannot get duplicate user by phone number', function () {
     $user = $this->createUser();
 
     $response = $this->userRepo->phoneExist($user->phone, $user->id);
-    $this->assertNull($response);
+    $this->assertFalse($response);
 });
 
 test('can update user profile only', function () {
@@ -90,28 +95,34 @@ test('can update user profile with state and city', function () {
     $this->assertEquals($user->profile->city_id, $response->profile->city_id);
 });
 
+test('can get user by id', function () {
+    $user = $this->createUser();
+
+    $response = $this->userRepo->getUser($user->id);
+
+    $this->assertInstanceOf(User::class, $response);
+    $this->assertEquals($user->id, $response->id);
+});
+
+test('cannot get user by id', function () {
+    $response = $this->userRepo->getUser(2);
+
+    $this->assertNull($response);
+});
+
 test('can get user by slug', function () {
     $user = $this->createUser();
 
-    $response = $this->userRepo->getUser($user->slug);
+    $response = $this->userRepo->getUserBySlug($user->slug);
 
     $this->assertInstanceOf(User::class, $response);
     $this->assertEquals($user->slug, $response->slug);
 });
 
 test('cannot get user by slug', function () {
-    $response = $this->userRepo->getUser('invalid_slug');
+    $response = $this->userRepo->getUserBySlug('invalid slug');
 
     $this->assertNull($response);
-});
-
-test('can update user password', function () {
-    $user = $this->createUser();
-
-    $data = ['new_password' => 'new_password'];
-    $this->userRepo->updatePassword($data, $user);
-
-    //cannot assert anything because the method is void
 });
 
 test('can update profile picture', function () {
@@ -138,4 +149,4 @@ test('can logout user', function () {
 
     $response = $this->userRepo->logout($user);
     $this->assertIsInt($response);
-});
+})->group('testing');

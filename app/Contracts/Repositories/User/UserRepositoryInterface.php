@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
-    public function getUser(int $userId): Model;
+    public function getUser(int $userId): ?Model;
 
     public function getUserBySlug(string $slug): ?User;
 

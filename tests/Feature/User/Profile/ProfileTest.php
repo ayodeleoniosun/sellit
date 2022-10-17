@@ -12,7 +12,7 @@ use Tests\Traits\CreateStates;
 uses(CreateStates::class, CreateCities::class);
 
 beforeEach(function () {
-    $this->user = actingAs($this->createUser());
+    $this->user = actingAs($this->createVerifiedUser());
 });
 
 test('can view profile', function () {
@@ -47,7 +47,7 @@ test('cannot update profile with empty fields', function () {
 });
 
 test('cannot update profile with existing phone number', function () {
-    $user = $this->createUser();
+    $user = $this->createVerifiedUser();
     $state = $this->createState();
     $city = $this->createCity();
 

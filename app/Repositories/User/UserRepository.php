@@ -16,9 +16,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     private User $user;
 
-    private BusinessProfile $businessProfile;
-
     private UserProfile $userProfile;
+
+    private BusinessProfile $businessProfile;
 
     private UserProfilePicture $userProfilePicture;
 
@@ -26,10 +26,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function __construct(
         User $user,
-        BusinessProfile $businessProfile,
         UserProfile $userProfile,
+        BusinessProfile $businessProfile,
         UserProfilePicture $userProfilePicture,
-        FileRepositoryInterface $fileRepo)
+        FileRepositoryInterface $fileRepo
+    )
     {
         parent::__construct($user);
 
@@ -40,7 +41,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->fileRepo = $fileRepo;
     }
 
-    public function getUser(int $userId): Model
+    public function getUser(int $userId): ?Model
     {
         return $this->find($userId, ['profile', 'businessProfile', 'pictures']);
     }

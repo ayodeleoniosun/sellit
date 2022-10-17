@@ -51,7 +51,7 @@ class UserService implements UserServiceInterface
         $phoneNumberExist = $this->userRepo->phoneExist($data['phone'], $user->id);
 
         if ($phoneNumberExist) {
-            throw new CustomException('Phone number belongs to another user');
+            throw new CustomException('Phone number belongs to another user', 403);
         }
 
         return new UserResource($this->userRepo->updateProfile($data, $user));

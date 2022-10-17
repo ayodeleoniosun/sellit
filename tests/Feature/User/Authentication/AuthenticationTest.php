@@ -17,7 +17,7 @@ test('cannot login with invalid credentials', function () {
 });
 
 test('can login with valid credentials', function () {
-    $user = $this->createUser();
+    $user = $this->createVerifiedUser();
 
     $data = ['email' => $user->email, 'password' => 'password'];
 
