@@ -149,4 +149,4 @@ test('can logout user', function () {
 
     $response = $this->userRepo->logout($user);
     $this->assertIsInt($response);
-})->group('testing');
+});
