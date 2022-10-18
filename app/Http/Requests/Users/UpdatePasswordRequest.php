@@ -28,12 +28,7 @@ class UpdatePasswordRequest extends FormRequest
         $user = $this->user();
 
         return [
-            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
-                if (! Hash::check($value, $user->password)) {
-                    return $fail(_('The current password is incorrect'));
-                }
-            },
-            ],
+            'current_password' => ['required', 'string'],
             'new_password' => ['required', 'confirmed',
                 Password::min(8)->mixedCase()
                     ->letters()
