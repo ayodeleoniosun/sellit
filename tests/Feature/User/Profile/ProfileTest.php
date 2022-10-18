@@ -102,7 +102,7 @@ test('cannot update password with wrong current password', function () {
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
-    //$this->assertEquals('The current password is incorrect', $responseJson->errors->current_password[0]);
+    $this->assertEquals('The current password is incorrect', $responseJson->errors->current_password[0]);
 });
 
 test('cannot update password with short passwords', function () {
