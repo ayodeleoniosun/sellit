@@ -75,14 +75,14 @@ jobs:
           name: "Create database and run migrations"
           env:
             DB_CONNECTION: sqlite
-            DB_DATABASE: database/testing.sqlite
+            DB_DATABASE: database/database.sqlite
           command: |
-            touch database/testing.sqlite
+            touch database/database.sqlite
             php artisan migrate --env=testing
 
       - run:
           name: "Run automated tests"
           env:
             DB_CONNECTION: sqlite
-            DB_DATABASE: database/testing.sqlite
+            DB_DATABASE: database/database.sqlite
           command: ./vendor/bin/pest --parallel
