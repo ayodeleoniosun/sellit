@@ -25,7 +25,7 @@ class UploadAdsPicturesRequest extends FormRequest
     {
         return [
             'pictures' => 'required|array|max:5',
-            'pictures.*'    => 'required|image|mimes:jpg, png, jpeg',
+            'pictures.*' => 'required|image|mimes:jpg, png, jpeg',
         ];
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 test('cannot send forgot password link to non existent email', function () {
     $data = ['email' => 'invalid@email.com'];
 
-    $response = $this->postJson($this->baseUrl . '/auth/forgot-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/forgot-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -20,7 +20,7 @@ test('send forgot password link to existing email', function () {
     Mail::fake();
     $data = ['email' => $this->createUser()->email];
 
-    $response = $this->postJson($this->baseUrl . '/auth/forgot-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/forgot-password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
@@ -31,7 +31,7 @@ test('send forgot password link to existing email', function () {
 test('cannot reset password with empty token', function () {
     $data = ['token' => ''];
 
-    $response = $this->postJson($this->baseUrl . '/auth/reset-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -40,11 +40,11 @@ test('cannot reset password with empty token', function () {
 
 test('cannot reset password with short passwords', function () {
     $data = [
-        'password'              => '12345',
+        'password' => '12345',
         'password_confirmation' => '12345',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/reset-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -53,11 +53,11 @@ test('cannot reset password with short passwords', function () {
 
 test('cannot reset password with non matching passwords', function () {
     $data = [
-        'password'              => '1234567',
+        'password' => '1234567',
         'password_confirmation' => '12345678',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/reset-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -66,13 +66,13 @@ test('cannot reset password with non matching passwords', function () {
 
 test('cannot reset password with an invalid token', function () {
     $data = [
-        'email'                 => $this->createUser()->email,
-        'password'              => '12345678',
+        'email' => $this->createUser()->email,
+        'password' => '12345678',
         'password_confirmation' => '12345678',
-        'token'                 => Str::random(60),
+        'token' => Str::random(60),
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/reset-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -84,13 +84,13 @@ test('can reset password', function () {
     $token = Password::createToken($user);
 
     $data = [
-        'email'                 => $user->email,
-        'token'                 => $token,
-        'password'              => $user->email,
+        'email' => $user->email,
+        'token' => $token,
+        'password' => $user->email,
         'password_confirmation' => $user->email,
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/reset-password', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/reset-password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 

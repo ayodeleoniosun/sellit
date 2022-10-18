@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Mail;
 
 test('cannot register with short password', function () {
     $data = [
-        'first_name'    => 'firstname',
-        'last_name'     => 'lastname',
+        'first_name' => 'firstname',
+        'last_name' => 'lastname',
         'email' => 'email@sellit.test',
-        'phone'  => '08123456789',
-        'password'      => '12345',
+        'phone' => '08123456789',
+        'password' => '12345',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/register', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/register', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -22,12 +22,12 @@ test('cannot register with short password', function () {
 
 test('cannot register if some fields are empty', function () {
     $data = [
-        'first_name'   => 'firstname',
+        'first_name' => 'firstname',
         'phone' => '08123456789',
-        'password'     => '1234567',
+        'password' => '1234567',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/register', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/register', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -38,7 +38,7 @@ test('cannot register if some fields are empty', function () {
 test('cannot register if email or phone number exist', function () {
     $user = $this->createUser();
 
-    $response = $this->postJson($this->baseUrl . '/auth/register', $user->getAttributes());
+    $response = $this->postJson($this->baseUrl.'/auth/register', $user->getAttributes());
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -49,14 +49,14 @@ test('cannot register if email or phone number exist', function () {
 test('can register new user', function () {
     Mail::fake();
     $data = [
-        'first_name'    => 'firstname',
-        'last_name'     => 'lastname',
+        'first_name' => 'firstname',
+        'last_name' => 'lastname',
         'email' => 'email@sellit.test',
-        'phone'  => '08123456789',
-        'password'      => 'email@sellit.test',
+        'phone' => '08123456789',
+        'password' => 'email@sellit.test',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/register', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/register', $data);
     $response->assertCreated();
     $responseJson = json_decode($response->content());
 
@@ -67,4 +67,3 @@ test('can register new user', function () {
     $this->assertEquals($data['email'], $responseJson->data->email);
     $this->assertEquals($data['phone'], $responseJson->data->phone);
 });
-

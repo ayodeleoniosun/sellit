@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdsController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -96,5 +96,4 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}/sort-options', 'subCategorySortOptions')->name('sub_categories.sort-options');
         });
     });
-
 });

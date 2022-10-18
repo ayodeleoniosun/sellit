@@ -27,8 +27,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         SubCategorySortOption $subCategorySortOption,
         SortOption $sortOption,
         SortOptionValues $sortOptionValues
-    )
-    {
+    ) {
         parent::__construct($subCategory);
 
         $this->subCategory = $subCategory;
@@ -61,7 +60,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
     {
         $subCategory = $this->subCategory->where('slug', $slug);
 
-        if (!$subCategory->first()) {
+        if (! $subCategory->first()) {
             return null;
         }
 
@@ -116,7 +115,7 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
         return [$removed, $added];
     }
 
-    private function validSortOptions (array $options): array
+    private function validSortOptions(array $options): array
     {
         return $this->sortOption->whereIn('id', $options)->pluck('id')->toArray();
     }

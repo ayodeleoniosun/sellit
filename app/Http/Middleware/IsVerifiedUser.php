@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Response;
 
 class IsVerifiedUser
@@ -29,15 +29,15 @@ class IsVerifiedUser
     }
 
     /**
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return JsonResponse|mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->isVerified()) {
+        if (! $request->user()->isVerified()) {
             return Response::json([
-                'message' => 'Unauthorized'
+                'message' => 'Unauthorized',
             ], 403);
         }
 

@@ -13,7 +13,7 @@ $factory->define(
             'phone' => '080'.rand(111111111, 999999999),
             'password' => bcrypt('secret'),
             'bearer_token' => ApiUtility::generate_bearer_token(),
-            'token_expires_at' => ApiUtility::next_one_month()
+            'token_expires_at' => ApiUtility::next_one_month(),
         ];
     }
 );

@@ -21,15 +21,14 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
     private SortOptionValues $sortOptionValues;
 
     /**
-     * @param Ads $ads
-     * @param FileRepositoryInterface $fileRepo
+     * @param  Ads  $ads
+     * @param  FileRepositoryInterface  $fileRepo
      */
     public function __construct(
         Ads $ads,
         FileRepositoryInterface $fileRepo,
         SortOptionValues $sortOptionValues
-    )
-    {
+    ) {
         parent::__construct($ads);
 
         $this->ads = $ads;
@@ -62,13 +61,13 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         if ($new) {
             return $this->ads->where([
                 'slug' => $slug,
-                'seller_id' => $seller
+                'seller_id' => $seller,
             ])->first();
         }
 
         return $this->ads->where([
             'slug' => $slug,
-            'seller_id' => $seller
+            'seller_id' => $seller,
         ])->where('id', '<>', $adsId)->first();
     }
 
@@ -89,7 +88,7 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         foreach ($allPictures as $picture) {
             $ads->pictures()->create([
                 'ads_id' => $adsId,
-                'file_id' => $picture
+                'file_id' => $picture,
             ]);
         }
 
@@ -108,14 +107,13 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         return $ads->pictures()->find($pictureId);
     }
 
-    public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null,  int|null $subCategoryId = null): LengthAwarePaginator
+    public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null, int|null $subCategoryId = null): LengthAwarePaginator
     {
-
         if ($type === 'user') {
             $ads = $this->ads->whereSellerId($request->user()->id)->with('category', 'subCategory', 'pictures');
-        } else if ($type === 'category') {
+        } elseif ($type === 'category') {
             $ads = $this->ads->whereCategoryId($categoryId)->with('seller', 'pictures');
-        }  else if ($type === 'sub_category') {
+        } elseif ($type === 'sub_category') {
             $ads = $this->ads->whereCategoryId($categoryId)->whereSubCategoryId($subCategoryId)->with('seller', 'pictures');
         } else {
             $ads = $this->ads->with('category', 'subCategory', 'seller', 'pictures');

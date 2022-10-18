@@ -19,7 +19,7 @@ class AdsService implements AdsServiceInterface
     protected AdsRepositoryInterface $adsRepo;
 
     /**
-     * @param AdsRepositoryInterface $adsRepo
+     * @param  AdsRepositoryInterface  $adsRepo
      */
     public function __construct(AdsRepositoryInterface $adsRepo)
     {
@@ -103,7 +103,7 @@ class AdsService implements AdsServiceInterface
 
         foreach ($request->pictures as $key => $picture) {
             $picture = (object) $picture;
-            $filename = $adsId . $key . time() . '.' . $picture->extension();
+            $filename = $adsId.$key.time().'.'.$picture->extension();
 
             Storage::disk('s3')->put($filename, file_get_contents($picture->getRealPath()));
             $paths[] = $filename;
@@ -115,13 +115,13 @@ class AdsService implements AdsServiceInterface
     /**
      * @throws CustomException
      */
-    public function deletePicture(Request $request, int $adsId, int $pictureId):void
+    public function deletePicture(Request $request, int $adsId, int $pictureId): void
     {
         $ads = $this->validateAds($request->user()->id, $adsId);
 
         $adsPicture = $this->adsRepo->getPicture($ads, $pictureId);
 
-        if (!$adsPicture) {
+        if (! $adsPicture) {
             throw new CustomException('Invalid resource');
         }
 
@@ -147,7 +147,7 @@ class AdsService implements AdsServiceInterface
     {
         $ads = $this->adsRepo->find($adsId);
 
-        if (!$ads) {
+        if (! $ads) {
             throw new CustomException('Ads does not exist');
         }
 

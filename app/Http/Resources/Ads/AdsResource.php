@@ -9,7 +9,7 @@ class AdsResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
@@ -20,19 +20,19 @@ class AdsResource extends JsonResource
         $totalRating = ($sumRating > 0) ? round(($sumRating / $countReviews) * 5, 1) : 0.0;
 
         return [
-            'id'           => $this->id,
-            'name'         => ucfirst($this->name),
-            'slug'         => $this->slug,
-            'description'  => ucfirst($this->description),
-            'price'        => $this->price,
-            'category'     => $this->whenLoaded('category'),
+            'id' => $this->id,
+            'name' => ucfirst($this->name),
+            'slug' => $this->slug,
+            'description' => ucfirst($this->description),
+            'price' => $this->price,
+            'category' => $this->whenLoaded('category'),
             'sub_category' => $this->whenLoaded('subCategory'),
-            'seller'       => $this->seller,
+            'seller' => $this->seller,
             'sort_options' => $this->present()->sortOptions(),
-            'pictures'     => AdsPictureResource::collection($this->pictures),
+            'pictures' => AdsPictureResource::collection($this->pictures),
             'total_rating' => $totalRating,
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

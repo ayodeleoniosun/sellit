@@ -13,7 +13,7 @@ abstract class TestCase extends BaseTestCase
     protected function setup(): void
     {
         parent::setUp();
-        $this->baseUrl = config('app.url') . '/api/v1';
+        $this->baseUrl = config('app.url').'/api/v1';
         $this->faker = \Faker\Factory::create();
     }
 }

@@ -36,7 +36,7 @@ class UserService implements UserServiceInterface
     {
         $user = $this->userRepo->getUserBySlug($data['slug']);
 
-        if (!$user) {
+        if (! $user) {
             throw new CustomException('User not found', 404);
         }
 
@@ -71,7 +71,7 @@ class UserService implements UserServiceInterface
         return new UserResource($this->userRepo->updateBusinessProfile($data, $user));
     }
 
-    public function updatePassword(int $userId,string $newPassword): string
+    public function updatePassword(int $userId, string $newPassword): string
     {
         $data['password'] = Hash::make($newPassword);
 
@@ -84,7 +84,7 @@ class UserService implements UserServiceInterface
     {
         $picture = (object) $picture;
         $extension = $picture->extension();
-        $filename = $user->id . '' . time() . '.' . $extension;
+        $filename = $user->id.''.time().'.'.$extension;
 
         Storage::disk('s3')->put($filename, file_get_contents($picture->getRealPath()));
 

@@ -12,5 +12,6 @@ class File extends Model
     protected $guarded = ['id'];
 
     const MAX_FILESIZE = 5000;
+
     const DEFAULT_ID = 1;
 }

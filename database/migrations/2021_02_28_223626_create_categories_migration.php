@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\Category;
-use App\Models\SubCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -22,7 +20,6 @@ return new class extends Migration {
             $table->foreignId('file_id')->default(1)->constrained();
             $table->timestamps();
             $table->softDeletes();
-
         });
 
         Schema::create('sub_categories', function (Blueprint $table) {

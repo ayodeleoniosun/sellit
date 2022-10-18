@@ -18,7 +18,7 @@ class FileFactory extends Factory
     public function definition()
     {
         return [
-            'path' => Str::random(11) . '.jpg',
+            'path' => Str::random(11).'.jpg',
         ];
     }
 }

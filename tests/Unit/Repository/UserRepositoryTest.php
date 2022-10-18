@@ -61,8 +61,8 @@ test('can update user profile only', function () {
 
     $data = [
         'first_name' => $this->faker->name(),
-        'last_name'  => $this->faker->name(),
-        'phone'      => Str::random(11),
+        'last_name' => $this->faker->name(),
+        'phone' => Str::random(11),
     ];
 
     $response = $this->userRepo->updateProfile($data, $user);
@@ -79,10 +79,10 @@ test('can update user profile with state and city', function () {
 
     $data = [
         'first_name' => $this->faker->name(),
-        'last_name'  => $this->faker->name(),
-        'phone'      => Str::random(11),
-        'state'      => 1,
-        'city'       => 1,
+        'last_name' => $this->faker->name(),
+        'phone' => Str::random(11),
+        'state' => 1,
+        'city' => 1,
     ];
 
     $response = $this->userRepo->updateProfile($data, $user);
@@ -128,7 +128,7 @@ test('cannot get user by slug', function () {
 test('can update profile picture', function () {
     $user = $this->createUser();
 
-    $filePath = Str::random(11) . '.jpg';
+    $filePath = Str::random(11).'.jpg';
 
     $this->mockFile->id = 1;
     $this->mockFile->path = $filePath;

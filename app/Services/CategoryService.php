@@ -26,14 +26,13 @@ class CategoryService implements CategoryServiceInterface
     protected SubCategoryRepositoryInterface $subCategoryRepo;
 
     /**
-     * @param CategoryRepositoryInterface $categoryRepo
-     * @param SubCategoryRepositoryInterface $subCategoryRepo
+     * @param  CategoryRepositoryInterface  $categoryRepo
+     * @param  SubCategoryRepositoryInterface  $subCategoryRepo
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepo,
         SubCategoryRepositoryInterface $subCategoryRepo,
-    )
-    {
+    ) {
         $this->categoryRepo = $categoryRepo;
         $this->subCategoryRepo = $subCategoryRepo;
     }
@@ -59,7 +58,7 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return CategoryResource
      */
     public function store(array $data): CategoryResource
@@ -67,13 +66,13 @@ class CategoryService implements CategoryServiceInterface
         $name = $data['name'];
         $slug = Str::kebab($name);
 
-        $canUpdateIcon = !empty($data['icon']);
+        $canUpdateIcon = ! empty($data['icon']);
 
-        return $this->createOrUpdateCategory($data, $slug, $name,'store', $canUpdateIcon);
+        return $this->createOrUpdateCategory($data, $slug, $name, 'store', $canUpdateIcon);
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return CategoryResource
      */
     public function update(array $data): CategoryResource
@@ -84,7 +83,7 @@ class CategoryService implements CategoryServiceInterface
         $category = $this->categoryRepo->getCategory($slug);
 
         $slug = ($category->name === $name) ? $slug : Str::slug($name);
-        $canUpdateIcon = !empty($data['icon']);
+        $canUpdateIcon = ! empty($data['icon']);
 
         return $this->createOrUpdateCategory($data, $slug, $name, 'update', $canUpdateIcon, $category);
     }
@@ -131,7 +130,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * @throws CustomException
      */
-    public function subCategorySortOptions(Request $request, int $subCategoryId):AnonymousResourceCollection
+    public function subCategorySortOptions(Request $request, int $subCategoryId): AnonymousResourceCollection
     {
         $this->validateSubCategory($subCategoryId);
 
@@ -139,9 +138,9 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * @param array $data
-     * @param mixed $slug
-     * @param mixed $name
+     * @param  array  $data
+     * @param  mixed  $slug
+     * @param  mixed  $name
      * @return CategoryResource
      */
     private function createOrUpdateCategory(array $data, mixed $slug, mixed $name, string $method, bool $canUpdateIcon = false, ?Category $category = null): CategoryResource
@@ -150,7 +149,7 @@ class CategoryService implements CategoryServiceInterface
             $icon = $data['icon'];
             $extension = $icon->extension();
 
-            $filename = $slug . strtolower(Str::random(8)) . '.' . $extension;
+            $filename = $slug.strtolower(Str::random(8)).'.'.$extension;
             Storage::disk('s3')->put($filename, file_get_contents($icon->getRealPath()));
         }
 
@@ -158,7 +157,7 @@ class CategoryService implements CategoryServiceInterface
             'name' => $name,
             'slug' => $slug,
             'filename' => $filename ?? '',
-            'canUpdateIcon' => $canUpdateIcon
+            'canUpdateIcon' => $canUpdateIcon,
         ];
 
         if ($method === 'store') {
@@ -177,7 +176,7 @@ class CategoryService implements CategoryServiceInterface
     {
         $subCategory = $this->subCategoryRepo->find($subCategoryId);
 
-        if (!$subCategory) {
+        if (! $subCategory) {
             throw new CustomException('Sub category does not exist');
         }
 

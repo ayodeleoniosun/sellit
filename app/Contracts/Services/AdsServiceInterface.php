@@ -29,5 +29,4 @@ interface AdsServiceInterface
     public function deletePicture(Request $request, int $adsId, int $pictureId): void;
 
     public function storeSortOptions(Request $request, int $adsId): int|string;
-
 }

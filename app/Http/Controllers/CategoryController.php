@@ -23,10 +23,10 @@ class CategoryController extends Controller
 
     public function index(Request $request): CategoryCollection
     {
-       return $this->category->index($request);
+        return $this->category->index($request);
     }
 
-    public function allSortOptions(Request $request):JsonResponse
+    public function allSortOptions(Request $request): JsonResponse
     {
         $response = $this->category->allSortOptions($request);
 
@@ -35,12 +35,12 @@ class CategoryController extends Controller
 
     public function sortOptionValues(Request $request, int $sortOptionId): JsonResponse
     {
-        $response =  $this->category->sortOptionValues($request, $sortOptionId);
+        $response = $this->category->sortOptionValues($request, $sortOptionId);
 
         return response()->success($response, '');
     }
 
-    public function subCategorySortOptions(Request $request, int $subCategoryId):JsonResponse
+    public function subCategorySortOptions(Request $request, int $subCategoryId): JsonResponse
     {
         $response = $this->category->subCategorySortOptions($request, $subCategoryId);
 
@@ -98,7 +98,7 @@ class CategoryController extends Controller
     public function updateSortOptions(Request $request, $subCategoryId): JsonResponse
     {
         $response = $this->category->updateSortOptions($request->all(), $subCategoryId);
-        list ($removed, $added) = $response;
+        [$removed, $added] = $response;
 
         return response()->success([], $removed.' sort options removed and '.$added.' new sort options successfully added');
     }

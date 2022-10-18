@@ -30,8 +30,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         BusinessProfile $businessProfile,
         UserProfilePicture $userProfilePicture,
         FileRepositoryInterface $fileRepo
-    )
-    {
+    ) {
         parent::__construct($user);
 
         $this->user = $user;
@@ -79,9 +78,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function updateUserProfile(array $data, User $user): void
     {
-         $this->userProfile->updateOrCreate(
+        $this->userProfile->updateOrCreate(
             ['user_id' => $user->id],
-            ['state_id' => $data['state'], 'city_id' => $data['city'] ]
+            ['state_id' => $data['state'], 'city_id' => $data['city']]
         );
     }
 
@@ -106,7 +105,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         $this->userProfilePicture->create([
             'user_id' => $user->id,
-            'profile_picture_id' => $file->id
+            'profile_picture_id' => $file->id,
         ]);
 
         return $this->getUser($user->id);

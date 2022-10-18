@@ -138,8 +138,8 @@ class CategorySeeder extends Seeder
                 foreach ($sub_categories as $sub_category) {
                     SubCategory::create([
                         'category_id' => $category_id,
-                        'name'        => $sub_category,
-                        'slug'        => Str::slug($sub_category, '-'),
+                        'name' => $sub_category,
+                        'slug' => Str::slug($sub_category, '-'),
                     ]);
                 }
             }

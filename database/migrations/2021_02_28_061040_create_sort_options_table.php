@@ -5,7 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -23,13 +24,13 @@ return new class extends Migration {
         $sortOptions = [
             'age levels', 'bathrooms', 'bedrooms', 'bodies', 'brands', 'colours', 'conditions', 'expected salaries', 'facilities', 'fuels', 'furnishings',
             'genders', 'job types', 'materials', 'operating systems', 'prices', 'processors', 'rams', 'screen sizes',
-            'second conditions', 'storage capacities', 'storage types', 'transmissions', 'type'
+            'second conditions', 'storage capacities', 'storage types', 'transmissions', 'type',
         ];
 
         foreach ($sortOptions as $option) {
             SortOption::create([
                 'name' => $option,
-                'slug' => \Illuminate\Support\Str::kebab($option)
+                'slug' => \Illuminate\Support\Str::kebab($option),
             ]);
         }
     }

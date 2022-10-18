@@ -16,7 +16,7 @@ class CitySeeder extends Seeder
     public function run()
     {
         $all_cities = [
-            'Abia'                            => [
+            'Abia' => [
                 'Aba',
                 'Arochukwu',
                 'Abiriba',
@@ -25,9 +25,9 @@ class CitySeeder extends Seeder
                 'Bende',
                 'Nkporo',
                 'Ohafia',
-                'Umuahia'
+                'Umuahia',
             ],
-            'Adamawa'                         => [
+            'Adamawa' => [
                 'Belel',
                 'Gambe',
                 'Jimeta',
@@ -35,45 +35,45 @@ class CitySeeder extends Seeder
                 'Numan',
                 'Yola',
             ],
-            'Akwa Ibom'                       => [
+            'Akwa Ibom' => [
                 'Ikot Abasi',
                 'Ikot Ekpene',
                 'Oron',
                 'Uyo',
             ],
-            'Anambra'                         => [
+            'Anambra' => [
                 'Awka',
                 'Okpoko',
                 'Onitsha',
             ],
-            'Bauchi'                          => [
+            'Bauchi' => [
                 'Azare',
                 'Bauchi',
                 'Jama\'are',
                 'Katagum',
                 'Misau',
             ],
-            'Bayelsa'                         => [
+            'Bayelsa' => [
                 'Brass',
             ],
-            'Benue'                           => [
+            'Benue' => [
                 'Gboko',
                 'Makurdi',
                 'Otukpo',
             ],
-            'Borno'                           => [
+            'Borno' => [
                 'Bama',
                 'Biu',
                 'Dikwa',
                 'Kukawa',
                 'Maiduguri',
             ],
-            'Cross River'                     => [
+            'Cross River' => [
                 'Calabar',
                 'Ogoja',
                 'Ugep',
             ],
-            'Delta'                           => [
+            'Delta' => [
                 'Asaba',
                 'Burutu',
                 'Koko',
@@ -81,14 +81,14 @@ class CitySeeder extends Seeder
                 'Ughelli',
                 'Warri',
             ],
-            'Ebonyi'                          => [
+            'Ebonyi' => [
                 'Abakaliki',
             ],
-            'Edo'                             => [
+            'Edo' => [
                 'Benin City',
                 'Uromi',
             ],
-            'Ekiti'                           => [
+            'Ekiti' => [
                 'Ado Ekiti',
                 'Effom-Alaiye',
                 'Ijero',
@@ -96,7 +96,7 @@ class CitySeeder extends Seeder
                 'Ilawe-Ekiti',
                 'Ise-Ekiti',
             ],
-            'Enugu'                           => [
+            'Enugu' => [
                 'Enugu',
                 'Nsukka',
             ],
@@ -108,16 +108,16 @@ class CitySeeder extends Seeder
                 'Kuje',
                 'Kwali',
             ],
-            'Gombe'                           => [
+            'Gombe' => [
                 'Deba Habe',
                 'Gombe',
                 'Kumo',
             ],
-            'Imo'                             => [
+            'Imo' => [
                 'Okigwe',
                 'Owerri',
             ],
-            'Jigawa'                          => [
+            'Jigawa' => [
                 'Birnin Kudu',
                 'Dutse',
                 'Garki',
@@ -125,39 +125,39 @@ class CitySeeder extends Seeder
                 'Hadeija',
                 'Kazaure',
             ],
-            'Kaduna'                          => [
+            'Kaduna' => [
                 'Jemaa',
                 'Kaduna',
                 'Zaria',
             ],
-            'Kano'                            => [
+            'Kano' => [
                 'Kano',
             ],
-            'Katsina'                         => [
+            'Katsina' => [
                 'Daura',
                 'Funtua',
                 'Katsina',
             ],
-            'Kebbi'                           => [
+            'Kebbi' => [
                 'Argungu',
                 'Birnin Kebbi',
                 'Gwandu',
                 'Yelwa',
             ],
-            'Kogi'                            => [
+            'Kogi' => [
                 'Idah',
                 'Kabba',
                 'Lokoja',
                 'Okene',
             ],
-            'Kwara'                           => [
+            'Kwara' => [
                 'Ilorin',
                 'Jebba',
                 'Lefiagi',
                 'Offa',
                 'Pategi',
             ],
-            'Lagos'                           => [
+            'Lagos' => [
                 'Badagry',
                 'Epe',
                 'Ikeja',
@@ -167,12 +167,12 @@ class CitySeeder extends Seeder
                 'Shomolu',
                 'Victoria Island',
             ],
-            'Nasarawa'                        => [
+            'Nasarawa' => [
                 'Keffi',
                 'Lafia',
                 'Nasarawa',
             ],
-            'Niger'                           => [
+            'Niger' => [
                 'Agaie',
                 'Baro',
                 'Bida',
@@ -181,21 +181,21 @@ class CitySeeder extends Seeder
                 'Minna',
                 'Suleja',
             ],
-            'Ogun'                            => [
+            'Ogun' => [
                 'Abeokuta',
                 'Ijebu-Ode',
                 'Ilaro',
                 'Obafemi-Owode',
                 'Sagamu',
             ],
-            'Ondo'                            => [
+            'Ondo' => [
                 'Akure',
                 'Ikare',
                 'Oka-Akoko',
                 'Ondo',
                 'Owo',
             ],
-            'Osun'                            => [
+            'Osun' => [
                 'Ede',
                 'Gbongan',
                 'Ikire',
@@ -208,7 +208,7 @@ class CitySeeder extends Seeder
                 'Iwo',
                 'Osogbo',
             ],
-            'Oyo'                             => [
+            'Oyo' => [
                 'Ibadan',
                 'Igboho',
                 'Iseyin',
@@ -217,13 +217,13 @@ class CitySeeder extends Seeder
                 'Oyo',
                 'Saki',
             ],
-            'Plateau'                         => [
+            'Plateau' => [
                 'Bukuru',
                 'Jos',
                 'Vom',
                 'Wase',
             ],
-            'Rivers'                          => [
+            'Rivers' => [
                 'Bonny',
                 'Buguma',
                 'Degema',
@@ -231,21 +231,21 @@ class CitySeeder extends Seeder
                 'Okrika',
                 'Port Harcourt',
             ],
-            'Sokoto'                          => [
+            'Sokoto' => [
                 'Sokoto',
             ],
-            'Taraba'                          => [
+            'Taraba' => [
                 'Ibi',
                 'Jalingo',
                 'Muri',
             ],
-            'Yobe'                            => [
+            'Yobe' => [
                 'Damaturu',
                 'Gashua',
                 'Bguru',
                 'Potiskum',
             ],
-            'Zamfara'                         => [
+            'Zamfara' => [
                 'Gusau',
                 'Kaura Namoda',
             ],
@@ -258,7 +258,7 @@ class CitySeeder extends Seeder
                 foreach ($cities as $city) {
                     City::create([
                         'state_id' => $state_id,
-                        'name'     => $city
+                        'name' => $city,
                     ]);
                 }
             }

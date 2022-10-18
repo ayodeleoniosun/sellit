@@ -4,8 +4,6 @@ namespace App\Contracts\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {

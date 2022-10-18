@@ -38,9 +38,9 @@ class AuthService implements AuthServiceInterface
 
     public function register(array $data): Model
     {
-        $fullname = strtolower($data['first_name'] . ' ' . $data['last_name']);
+        $fullname = strtolower($data['first_name'].' '.$data['last_name']);
 
-        $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
+        $data['slug'] = Str::slug($fullname).'-'.strtolower(Str::random(8));
         $data['password'] = Hash::make($data['password']);
 
         $user = $this->authRepo->create($data);
@@ -54,14 +54,14 @@ class AuthService implements AuthServiceInterface
     {
         $user = $this->userRepo->getUserByEmailAddress($data['email']);
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (! $user || ! Hash::check($data['password'], $user->password)) {
             throw new CustomException('Incorrect login credentials', Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $this->authRepo->createToken($user);
 
         return [
-            'user'  => new UserResource($user),
+            'user' => new UserResource($user),
             'token' => $token,
         ];
     }

@@ -31,7 +31,7 @@ class UpdateCategoryRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                Rule::unique('categories', 'name')->ignore($category->id)
+                Rule::unique('categories', 'name')->ignore($category->id),
             ],
             'icon' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
         ];

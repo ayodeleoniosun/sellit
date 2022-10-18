@@ -32,8 +32,8 @@ class UpdateSubCategoryRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                Rule::unique('sub_categories', 'name')->ignore($subCategory->id)
-            ]
+                Rule::unique('sub_categories', 'name')->ignore($subCategory->id),
+            ],
         ];
     }
 }

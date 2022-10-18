@@ -24,11 +24,11 @@ class CreateNewAdsRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id'    => 'required|string|exists:categories,id',
-            'sub_category_id'    => 'required|string|exists:sub_categories,id',
-            'name'     => 'required|string',
+            'category_id' => 'required|string|exists:categories,id',
+            'sub_category_id' => 'required|string|exists:sub_categories,id',
+            'name' => 'required|string',
             'price' => 'required|integer',
-            'description'  => 'required|string',
+            'description' => 'required|string',
         ];
     }
 }

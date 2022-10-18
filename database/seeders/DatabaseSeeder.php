@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             StateSeeder::class,
             CitySeeder::class,
-            SortOptionSeeder::class
+            SortOptionSeeder::class,
         ]);
     }
 }

@@ -5,10 +5,10 @@ namespace Tests\Feature\User;
 test('cannot login with invalid credentials', function () {
     $data = [
         'email' => 'email@sellit.test',
-        'password'      => 'email@sellit.test',
+        'password' => 'email@sellit.test',
     ];
 
-    $response = $this->postJson($this->baseUrl . '/auth/login', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/login', $data);
     $response->assertUnauthorized();
     $responseJson = json_decode($response->content());
 
@@ -21,7 +21,7 @@ test('can login with valid credentials', function () {
 
     $data = ['email' => $user->email, 'password' => 'password'];
 
-    $response = $this->postJson($this->baseUrl . '/auth/login', $data);
+    $response = $this->postJson($this->baseUrl.'/auth/login', $data);
     $responseJson = json_decode($response->content());
 
     $response->assertOk()

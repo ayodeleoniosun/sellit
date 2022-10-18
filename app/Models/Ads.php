@@ -64,4 +64,3 @@ class Ads extends Model
         return $this->hasMany(AdsPicture::class);
     }
 }
-

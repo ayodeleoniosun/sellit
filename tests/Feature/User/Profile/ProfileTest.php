@@ -16,7 +16,7 @@ beforeEach(function () {
 });
 
 test('can view profile', function () {
-    $response = $this->getJson($this->baseUrl . '/users/' . $this->user->slug);
+    $response = $this->getJson($this->baseUrl.'/users/'.$this->user->slug);
     $response->assertOk();
 
     $resource = new UserResource($this->user);
@@ -35,10 +35,10 @@ test('can view profile', function () {
 test('cannot update profile with empty fields', function () {
     $data = [
         'first_name' => 'firstname',
-        'phone'      => '08123456789',
+        'phone' => '08123456789',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/personal-information', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/personal-information', $data);
 
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
@@ -53,13 +53,13 @@ test('cannot update profile with existing phone number', function () {
 
     $data = [
         'first_name' => 'firstname',
-        'last_name'  => 'lastname',
-        'phone'      => $user->phone,
-        'state'      => $state->id,
-        'city'       => $city->id,
+        'last_name' => 'lastname',
+        'phone' => $user->phone,
+        'state' => $state->id,
+        'city' => $city->id,
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/personal-information', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/personal-information', $data);
     $response->assertForbidden();
     $responseJson = json_decode($response->content());
 
@@ -73,13 +73,13 @@ test('can update profile', function () {
 
     $data = [
         'first_name' => 'new firstname',
-        'last_name'  => 'new lastname',
-        'phone'      => Str::random(11),
-        'state'      => $state->id,
-        'city'       => $city->id,
+        'last_name' => 'new lastname',
+        'phone' => Str::random(11),
+        'state' => $state->id,
+        'city' => $city->id,
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/personal-information', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/personal-information', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
@@ -87,18 +87,18 @@ test('can update profile', function () {
     $this->assertEquals('Profile successfully updated', $responseJson->message);
     $this->assertEquals($responseJson->data->first_name, ucfirst($data['first_name']));
     $this->assertEquals($responseJson->data->last_name, ucfirst($data['last_name']));
-    $this->assertEquals($responseJson->data->fullname, ucwords($data['first_name'] . ' ' . $data['last_name']));
+    $this->assertEquals($responseJson->data->fullname, ucwords($data['first_name'].' '.$data['last_name']));
     $this->assertEquals($responseJson->data->phone, $data['phone']);
 });
 
 test('cannot update password with wrong current password', function () {
     $data = [
-        'current_password'          => '12345678',
-        'new_password'              => ',password_123456789',
+        'current_password' => '12345678',
+        'new_password' => ',password_123456789',
         'new_password_confirmation' => ',password_123456789',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/password', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -107,12 +107,12 @@ test('cannot update password with wrong current password', function () {
 
 test('cannot update password with short passwords', function () {
     $data = [
-        'current_password'          => '12345678',
-        'new_password'              => '123456',
+        'current_password' => '12345678',
+        'new_password' => '123456',
         'new_password_confirmation' => '123456',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/password', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -121,12 +121,12 @@ test('cannot update password with short passwords', function () {
 
 test('cannot update password with non matching passwords', function () {
     $data = [
-        'current_password'          => '12345678',
-        'new_password'              => '12345',
+        'current_password' => '12345678',
+        'new_password' => '12345',
         'new_password_confirmation' => '123456',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/password', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -135,12 +135,12 @@ test('cannot update password with non matching passwords', function () {
 
 test('cannot update password with weak passwords', function () {
     $data = [
-        'current_password'          => '12345678',
-        'new_password'              => '123456',
+        'current_password' => '12345678',
+        'new_password' => '123456',
         'new_password_confirmation' => '123456',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/password', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -152,12 +152,12 @@ test('cannot update password with weak passwords', function () {
 
 test('can update password', function () {
     $data = [
-        'current_password'          => 'password',
-        'new_password'              => 'password@123A',
+        'current_password' => 'password',
+        'new_password' => 'password@123A',
         'new_password_confirmation' => 'password@123A',
     ];
 
-    $response = $this->putJson($this->baseUrl . '/users/profile/update/password', $data);
+    $response = $this->putJson($this->baseUrl.'/users/profile/update/password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
@@ -168,7 +168,7 @@ test('can update password', function () {
 test('cannot update profile picture with invalid file', function () {
     $data = ['image' => 'filename.jpg'];
 
-    $response = $this->postJson($this->baseUrl . '/users/profile/update/picture', $data);
+    $response = $this->postJson($this->baseUrl.'/users/profile/update/picture', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -181,7 +181,7 @@ test('can update profile picture', function () {
     $file = UploadedFile::fake()->image('avatar.png');
     $data = ['image' => $file];
 
-    $response = $this->postJson($this->baseUrl . '/users/profile/update/picture', $data);
+    $response = $this->postJson($this->baseUrl.'/users/profile/update/picture', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
