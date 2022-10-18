@@ -10,7 +10,7 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.1-node-browsers
+      - image: circleci/php:8.1-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -37,27 +37,53 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
+      - run:
+        name: "Install composer packages"
+        command: composer install -n --prefer-dist
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+
+      - run:
+          name: "Generate app keys and storage link"
+          command: |
+            npm install
+            mv .env.pipelines .env
+            php artisan key:generate
+            chmod -R 777 storage bootstrap/cache
+            php artisan storage:link
+
       - restore_cache:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
 
-      # prepare the database
-      - run: touch storage/testing.sqlite
-      - run: php artisan migrate --env=testing --database=sqlite_testing --force
+      - run:
+          name: Run static analysis
+          command: vendor/bin/phpstan analyze --memory-limit=1G
 
-      # run tests with phpunit or codecept
-      #- run: ./vendor/bin/phpunit
-      - run: ./vendor/bin/codecept build
-      - run: ./vendor/bin/codecept run
+      - run:
+          name: Run code style fixer
+          command: vendor/bin/pint
+
+      - run:
+          name: "Create database and run migrations"
+          env:
+            DB_CONNECTION: sqlite
+            DB_DATABASE: database/testing.sqlite
+          command: |
+            touch database/testing.sqlite
+            php artisan migrate --env=testing
+
+      - run:
+          name: "Run automated tests"
+          env:
+            DB_CONNECTION: sqlite
+            DB_DATABASE: database/testing.sqlite
+          command: ./vendor/bin/pest --parallel
