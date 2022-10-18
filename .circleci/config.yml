@@ -49,7 +49,6 @@ jobs:
       - run:
           name: "Generate app keys and storage link"
           command: |
-            npm install
             mv .env.pipelines .env
             php artisan key:generate
             chmod -R 777 storage bootstrap/cache
