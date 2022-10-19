@@ -27,7 +27,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
 
@@ -35,24 +34,13 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            # "composer.lock" can be used if it is committed to the repo
-            - v1-dependencies-{{ checksum "composer.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
       - run:
           name: "Install composer dependencies"
           command: composer install -n --prefer-dist
-
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
-
       - run:
           name: "Generate app keys and storage link"
           command: |
@@ -61,31 +49,35 @@ jobs:
             chmod -R 777 storage bootstrap/cache
             php artisan storage:link
 
-      - restore_cache:
-          keys:
-            - node-v1-{{ checksum "package.json" }}
-            - node-v1-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-
   analysis:
     <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
       - run:
           name: Run static analysis
-          command: vendor/bin/phpstan analyze --memory-limit=1G
+          command: ./vendor/bin/phpstan analyze --memory-limit=1G
 
       - run:
           name: Run code style fixer
-          command: vendor/bin/pint
+          command: ./vendor/bin/pint
 
   test:
     <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
           name: "Create database and run migrations"
           env:
@@ -94,7 +86,6 @@ jobs:
           command: |
             touch database/database.sqlite
             php artisan migrate --env=testing
-
       - run:
           name: "Run automated tests"
           env:
