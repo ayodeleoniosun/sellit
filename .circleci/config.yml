@@ -104,12 +104,6 @@ workflows:
   build-setup-test:
     jobs:
       - build
-      - setup-app:
-          requires:
-            - build
-      - analysis:
-          requires:
-            - setup-app
-      - test:
-          requires:
-            - setup-app
+      - setup-app
+      - analysis
+      - test
