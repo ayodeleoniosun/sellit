@@ -1,6 +1,7 @@
 # PHP CircleCI 2.0 configuration file
 # See: https://circleci.com/docs/2.0/language-php/
 defaults: &defaults
+  working_directory: ~/laravel
   docker:
     - image: cimg/php:8.1.11
 
