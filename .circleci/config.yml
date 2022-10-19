@@ -104,6 +104,12 @@ workflows:
   build-setup-test:
     jobs:
       - install-php-extensions
-      - setup-laravel-app
-      - run-static-analysis
-      - run-automated-tests
+      - setup-laravel-app:
+          requires:
+            - install-php-extensions
+      - run-static-analysis:
+          requires:
+            - setup-laravel-app
+      - run-automated-tests:
+          requires:
+            - run-static-analysis
