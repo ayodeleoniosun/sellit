@@ -42,7 +42,7 @@ jobs:
           paths:
             - ./vendor
       - run:
-          name: "Generate app keys and storage link"
+          name: "Generate app key and storage link"
           command: |
             mv .env.pipelines .env
             php artisan key:generate
@@ -78,6 +78,12 @@ jobs:
             - v1-dependencies-{{ checksum "composer.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - run:
+          name: "Generate app key"
+          command: |
+            mv .env.pipelines .env
+            php artisan key:generate
+
       - run:
           name: "Create database and run migrations"
           env:
