@@ -132,7 +132,7 @@ class CategorySeeder extends Seeder
         }
 
         foreach ($all_sub_categories as $category => $sub_categories) {
-            $category_id = Category::where('name', $category)->value('id');
+            $category_id = Category::where('name', strtolower($category))->value('id');
 
             if ($category_id) {
                 foreach ($sub_categories as $sub_category) {
