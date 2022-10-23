@@ -54,7 +54,6 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function () {
-        Route::get('/overview', [AdminController::class, 'overview'])->name('admin.overview');
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
         Route::get('/sort-options', [CategoryController::class, 'allSortOptions'])->name('sort_options.index');
         Route::get('/sort-option-values/{sortOptionId}', [CategoryController::class, 'sortOptionValues'])->name('sort_options.values');
