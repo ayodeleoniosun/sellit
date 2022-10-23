@@ -25,7 +25,14 @@ class UploadAdsPicturesRequest extends FormRequest
     {
         return [
             'pictures' => 'required|array|max:5',
-            'pictures.*' => 'required|image|mimes:jpg, png, jpeg',
+            'pictures.*' => 'required|image|mimes:jpg, png, jpeg|max:2048',
+        ];
+    }
+
+    public function messages() {
+        return [
+            'pictures.max' => 'Maximum allowed number of images is 5',
+            'pictures.*.max' => 'Maximum allowed size for an image is 2MB',
         ];
     }
 }

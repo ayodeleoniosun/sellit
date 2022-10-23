@@ -34,9 +34,9 @@ Route::prefix('v1')->group(function () {
             Route::post('/', 'store')->name('ads.store');
             Route::put('/{id}', 'update')->name('ads.update');
             Route::delete('/{id}', 'delete')->name('ads.delete');
-            Route::post('/pictures/{adsId}', 'uploadPictures')->name('ads.pictures.upload');
-            Route::delete('/pictures/{adsId}/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
-            Route::post('/sort-options/{adsId}', 'storeSortOptions')->name('ads.store.sort-options');
+            Route::post('/{adsId}/pictures', 'uploadPictures')->name('ads.pictures.upload');
+            Route::delete('/{adsId}/pictures/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
+            Route::post('/{adsId}/sort-options', 'storeSortOptions')->name('ads.store.sort-options');
             Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
         });
 

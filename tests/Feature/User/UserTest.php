@@ -19,4 +19,4 @@ test('can view all users', function () {
             '*' => ['id', 'first_name', 'last_name', 'fullname', 'slug', 'email', 'phone', 'verified', 'business', 'profile', 'profile_picture', 'created_at'],
         ],
     ]);
-})->group('testing');
+});
