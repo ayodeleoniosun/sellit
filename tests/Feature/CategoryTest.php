@@ -12,6 +12,7 @@ beforeEach(function () {
 });
 
 test('can view all categories', function () {
+    Storage::fake('s3');
     $response = $this->getJson($this->baseUrl.'/categories');
     $response->assertOk();
     $responseJson = json_decode($response->content());
