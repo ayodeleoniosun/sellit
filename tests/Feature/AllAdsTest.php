@@ -44,6 +44,41 @@ test('can view all ads', function () {
     ]);
 });
 
+test('can view single ads', function () {
+    //add new ads
+    $data = [
+        'category_id' => '1',
+        'sub_category_id' => '2',
+        'name' => 'new ads',
+        'price' => 5000,
+        'description' => 'this is the description'
+    ];
+
+    $response = $this->postJson($this->baseUrl.'/users/ads', $data);
+    $response->assertCreated();
+    $adsId = json_decode($response->content())->data->id;
+
+    //view ads details
+    $response = $this->getJson($this->baseUrl.'/ads/'.$adsId);
+    $response->assertOk();
+
+    $response->assertJsonStructure([
+        'data' => [
+            'id', 'name', 'slug', 'description', 'price',
+            'category' => [
+                'id', 'name', 'slug'
+            ],
+            'sub_category' => [
+                'id', 'category_id', 'name', 'slug'
+            ],
+            'seller' => [
+                'id', 'first_name', 'last_name', 'slug', 'email', 'phone'
+            ],
+            'sort_options', 'pictures', 'total_rating'
+        ]
+    ]);
+});
+
 test('can view all category ads', function () {
     //add new ads
     $data = [

@@ -37,7 +37,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/{adsId}/pictures', 'uploadPictures')->name('ads.pictures.upload');
             Route::delete('/{adsId}/pictures/{pictureId}', 'deletePicture')->name('ads.pictures.delete');
             Route::post('/{adsId}/sort-options', 'storeSortOptions')->name('ads.store.sort-options');
-            Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
+            //Route::post('/{id}/reviews', 'storeReviews')->name('ads.reviews.store');
         });
 
         Route::controller(UserController::class)->group(function () {
@@ -77,7 +77,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}', 'view')->name('ads.view');
             Route::get('/category/{id}', 'categoryAds')->name('category.ads');
             Route::get('/category/{id}/sub-category/{subId}', 'subCategoryAds')->name('sub_category.ads');
-            Route::get('/{slug}', 'view')->name('ads.view');
         });
     });
 
