@@ -124,9 +124,9 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         $price = $request->price;
 
         $ads->when($filterType === 'newest', function ($query) use (&$ads) {
-            $ads = $ads->latest();
+            $ads = $ads->orderBy('id', 'DESC');
         })->when($filterType === 'oldest', function ($query) use (&$ads) {
-            $ads = $ads->oldest();
+            $ads = $ads->orderBy('id');
         })->when($price === 'lowest', function ($query) use (&$ads) {
             $ads = $ads->orderBy('price');
         })->when($price === 'highest', function ($query) use (&$ads) {

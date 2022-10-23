@@ -136,6 +136,7 @@ test('can view user ads', function () {
 
     $this->postJson($this->baseUrl.'/users/ads', $data);
 
+    //View user ads
     $response = $this->getJson($this->baseUrl.'/users/ads');
     $response->assertOk();
 
