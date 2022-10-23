@@ -11,6 +11,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 
 class AdsRepository extends BaseRepository implements AdsRepositoryInterface
 {
@@ -122,13 +123,13 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         $filterType = $request->type;
         $price = $request->price;
 
-        $ads->when($filterType === 'newest', function ($query) use ($ads) {
+        $ads->when($filterType === 'newest', function ($query) use (&$ads) {
             $ads = $ads->latest();
-        })->when($filterType === 'oldest', function ($query) use ($ads) {
+        })->when($filterType === 'oldest', function ($query) use (&$ads) {
             $ads = $ads->oldest();
-        })->when($price === 'lowest', function ($query) use ($ads) {
+        })->when($price === 'lowest', function ($query) use (&$ads) {
             $ads = $ads->orderBy('price');
-        })->when($price === 'highest', function ($query) use ($ads) {
+        })->when($price === 'highest', function ($query) use (&$ads) {
             $ads = $ads->orderBy('price', 'DESC');
         });
 
@@ -150,5 +151,18 @@ class AdsRepository extends BaseRepository implements AdsRepositoryInterface
         }
 
         return $counter;
+    }
+
+    public function deleteAds(Ads $ads): void
+    {
+        $pictures = $ads->pictures()->get();
+
+        foreach ($pictures as $picture) {
+            Storage::disk('s3')->delete($picture->file->path);
+            $picture->file->delete();
+        }
+
+        $ads->allSortOptions()->delete();
+        $ads->delete();
     }
 }

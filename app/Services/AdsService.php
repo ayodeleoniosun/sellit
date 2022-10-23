@@ -143,6 +143,16 @@ class AdsService implements AdsServiceInterface
     /**
      * @throws CustomException
      */
+    public function delete(Request $request, int $adsId): void
+    {
+        $ads = $this->validateAds($request->user()->id, $adsId);
+
+        $this->adsRepo->deleteAds($ads);
+    }
+
+    /**
+     * @throws CustomException
+     */
     private function validateAds(int $userId, int $adsId): Model
     {
         $ads = $this->adsRepo->find($adsId);

@@ -28,5 +28,7 @@ interface AdsRepositoryInterface
 
     public function storeSortOptionValues(array $options, Ads $ads): int|string;
 
+    public function deleteAds(Ads $ads): void;
+
     public function filterAds(Request $request, string|null $type = null, int|null $categoryId = null, int|null $subCategoryId = null): LengthAwarePaginator;
 }

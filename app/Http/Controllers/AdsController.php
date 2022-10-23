@@ -82,4 +82,11 @@ class AdsController extends Controller
 
         return response()->success([], 'Ads picture successfully deleted', 204);
     }
+
+    public function delete(Request $request, int $adsId): JsonResponse
+    {
+        $this->ads->delete($request, $adsId);
+
+        return response()->success([], 'Ads successfully deleted', 204);
+    }
 }
