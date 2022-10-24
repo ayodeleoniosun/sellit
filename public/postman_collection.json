@@ -418,13 +418,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{user-ads}}/sort-options/3",
+											"raw": "{{user-ads}}/3/sort-options",
 											"host": [
 												"{{user-ads}}"
 											],
 											"path": [
-												"sort-options",
-												"3"
+												"3",
+												"sort-options"
 											]
 										}
 									},
@@ -465,13 +465,13 @@
 											]
 										},
 										"url": {
-											"raw": "{{user-ads}}/pictures/3",
+											"raw": "{{user-ads}}/1/pictures",
 											"host": [
 												"{{user-ads}}"
 											],
 											"path": [
-												"pictures",
-												"3"
+												"1",
+												"pictures"
 											]
 										}
 									},
@@ -494,14 +494,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{user-ads}}/pictures/5/11",
+											"raw": "{{user-ads}}/1/pictures/8",
 											"host": [
 												"{{user-ads}}"
 											],
 											"path": [
+												"1",
 												"pictures",
-												"5",
-												"11"
+												"8"
 											]
 										}
 									},
@@ -569,6 +569,34 @@
 							"response": []
 						},
 						{
+							"name": "Delete Ads",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{authorization}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{user-ads}}/1",
+									"host": [
+										"{{user-ads}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update Ads",
 							"request": {
 								"method": "PUT",
@@ -594,12 +622,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{user-ads}}/5",
+									"raw": "{{user-ads}}/5/",
 									"host": [
 										"{{user-ads}}"
 									],
 									"path": [
-										"5"
+										"5",
+										""
 									]
 								}
 							},
@@ -972,13 +1001,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{admin}}/sort-option-values/4",
+									"raw": "{{admin}}/sort-option-values/1",
 									"host": [
 										"{{admin}}"
 									],
 									"path": [
 										"sort-option-values",
-										"4"
+										"1"
 									]
 								}
 							},
@@ -1166,6 +1195,34 @@
 					"response": []
 				},
 				{
+					"name": "View Ads Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ads}}/1",
+							"host": [
+								"{{ads}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Category Ads",
 					"request": {
 						"method": "GET",
@@ -1342,7 +1399,7 @@
 		},
 		{
 			"key": "authorization",
-			"value": "Bearer 4|WHOkQ6MvGIIVAU5seda4h4vob0egPDaO5mMVFt2H"
+			"value": "Bearer 6|vDOBKYYyTgAamwnFQ9sUpdxVDr1cFh5P52dlbxBu"
 		},
 		{
 			"key": "auth",
