@@ -3,7 +3,9 @@
 namespace Tests\Feature\User;
 
 use App\Http\Resources\User\UserResource;
+use App\Jobs\UploadImage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\Traits\CreateCities;
@@ -178,6 +180,8 @@ test('cannot update profile picture with invalid file', function () {
 
 test('can update profile picture', function () {
     Storage::fake('s3');
+    Queue::fake();
+
     $file = UploadedFile::fake()->image('avatar.png');
     $data = ['image' => $file];
 
@@ -188,4 +192,6 @@ test('can update profile picture', function () {
     $this->assertEquals('success', $responseJson->status);
     $this->assertEquals('Profile picture successfully updated', $responseJson->message);
     $this->assertNotNull($responseJson->data->profile_picture);
+
+    Queue::assertPushed(UploadImage::class);
 });

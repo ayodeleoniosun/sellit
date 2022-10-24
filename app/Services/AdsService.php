@@ -9,6 +9,7 @@ use App\Http\Requests\Ads\CreateNewAdsRequest;
 use App\Http\Requests\Ads\UploadAdsPicturesRequest;
 use App\Http\Resources\Ads\AdsCollection;
 use App\Http\Resources\Ads\AdsResource;
+use App\Jobs\UploadImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -105,7 +106,9 @@ class AdsService implements AdsServiceInterface
             $picture = (object) $picture;
             $filename = $adsId.$key.time().'.'.$picture->extension();
 
-            Storage::disk('s3')->put($filename, file_get_contents($picture->getRealPath()));
+            Storage::disk('public')->put($filename, file_get_contents($picture->getRealPath()));
+            UploadImage::dispatch('s3', $filename);
+
             $paths[] = $filename;
         }
 

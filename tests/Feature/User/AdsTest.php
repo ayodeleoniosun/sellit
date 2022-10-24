@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\UploadImage;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\SortOptionSeeder;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
@@ -270,6 +272,7 @@ test('can upload valid ads pictures', function () {
 
     //upload pictures
     Storage::fake('s3');
+    Queue::fake();
 
     $picturesData = [
         'pictures' => [
@@ -286,6 +289,8 @@ test('can upload valid ads pictures', function () {
     $this->assertEquals('success', $responseJson->status);
     $this->assertEquals('Ads pictures successfully uploaded', $responseJson->message);
     $this->assertCount(3, $responseJson->data->pictures);
+
+    Queue::assertPushed(UploadImage::class);
 });
 
 test('cannot delete a non-existent picture', function () {

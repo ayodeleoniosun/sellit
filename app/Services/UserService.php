@@ -7,9 +7,11 @@ use App\Contracts\Services\UserServiceInterface;
 use App\Exceptions\CustomException;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
+use App\Jobs\UploadImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,7 +88,9 @@ class UserService implements UserServiceInterface
         $extension = $picture->extension();
         $filename = $user->id.''.time().'.'.$extension;
 
-        Storage::disk('s3')->put($filename, file_get_contents($picture->getRealPath()));
+        Storage::disk('public')->put($filename, file_get_contents($picture->getRealPath()));
+
+        UploadImage::dispatch('s3', $filename);
 
         return new UserResource($this->userRepo->updateProfilePicture($filename, $user));
     }
